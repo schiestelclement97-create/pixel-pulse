@@ -1,0 +1,28 @@
+{
+  "name": "Pixel Pulse",
+  "short_name": "Pixel Pulse",
+  "lang": "fr",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f3f4fb",
+  "theme_color": "#ff4f6d",
+  "description": "Jeux gratuits en ligne : tycoons et puzzles zen.",
+  "icons": [
+    {
+      "src": "/img/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/img/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/img/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

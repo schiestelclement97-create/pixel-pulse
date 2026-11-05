@@ -1,0 +1,6 @@
+METS TES 2 JEUX DANS CE DOSSIER, AVEC CES NOMS EXACTS :
+
+  tv-empire-tycoon.html   (ton jeu TV Empire Tycoon)
+  zen-games.html          (ton fichier Zen Games : celui qui a le menu et les 4 jeux)
+
+Tant qu'un fichier manque, son bouton Jouer affiche "Bientôt disponible".

@@ -1,0 +1,18 @@
+PIXEL PULSE - MODE D'EMPLOI
+===========================
+
+1. TES JEUX
+   Ouvre le dossier "jouer" et mets dedans :
+     - tv-empire-tycoon.html   = ton jeu TV Empire Tycoon
+     - zen-games.html          = ton fichier Zen Games (menu + 4 jeux)
+   Le nom doit etre EXACTEMENT celui-la (renomme le fichier si besoin).
+   Pulse Studio Tycoon n'a besoin de rien : le bouton ouvre ton site Netlify actuel.
+
+2. ESSAYER SUR TON ORDINATEUR
+   Double-clique sur index.html.
+
+3. METTRE EN LIGNE
+   app.netlify.com > Add new project > Deploy manually
+   > glisse CE DOSSIER entier (celui qui contient index.html).
+
+Un bouton Jouer qui affiche "Bientot disponible" = le fichier du jeu manque dans "jouer".

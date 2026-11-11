@@ -1,28 +1,124 @@
 {
-  "name": "Pixel Pulse",
+  "id": "/",
+  "name": "Pixel Pulse · Jeux gratuits",
   "short_name": "Pixel Pulse",
   "lang": "fr",
+  "dir": "ltr",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
+  "orientation": "any",
   "background_color": "#f3f4fb",
   "theme_color": "#ff4f6d",
-  "description": "Jeux gratuits en ligne : tycoons et puzzles zen.",
+  "description": "Jeux gratuits sans téléchargement : City Empire, TV Empire Tycoon, Pulse Studio Tycoon et Zen Games (Zen Blocks, Zen Match, Zen Tea, Zen Merge).",
+  "categories": [
+    "games",
+    "entertainment"
+  ],
   "icons": [
     {
       "src": "/img/icon-192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
     },
     {
       "src": "/img/icon-512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
     },
     {
       "src": "/img/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/img/app/phone-1.png",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Accueil Pixel Pulse"
+    },
+    {
+      "src": "/img/app/phone-2.png",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "City Empire"
+    },
+    {
+      "src": "/img/app/phone-3.png",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "TV Empire Tycoon"
+    },
+    {
+      "src": "/img/app/phone-4.png",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Zen Games"
+    },
+    {
+      "src": "/img/app/phone-5.png",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Sans téléchargement"
+    },
+    {
+      "src": "/img/app/wide-1.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Pixel Pulse sur ordinateur"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "City Empire",
+      "url": "/jouer/city-empire.html",
+      "icons": [
+        {
+          "src": "/img/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Pulse Studio Tycoon",
+      "url": "/jouer/pulse-studio/index.html",
+      "icons": [
+        {
+          "src": "/img/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "TV Empire Tycoon",
+      "url": "/jouer/tv-empire-tycoon.html",
+      "icons": [
+        {
+          "src": "/img/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Zen Games",
+      "url": "/jouer/zen/index.html",
+      "icons": [
+        {
+          "src": "/img/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
     }
   ]
 }

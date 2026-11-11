@@ -1,0 +1,8 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "fr.playpixelpulsing.app",
+        "sha256_cert_fingerprints": ["F9:41:D6:D5:AA:C3:61:93:E1:B8:C0:54:C0:28:B9:2E:F4:7A:63:D1:4B:05:7E:CB:E4:D3:3C:CF:93:10:3F:C1"]
+      }
+    }]

@@ -1,7 +1,0 @@
-METS TES 2 JEUX DANS CE DOSSIER, AVEC CES NOMS EXACTS :
-
-  tv-empire-tycoon.html   (TV Empire Tycoon, deja installe)
-  pulse-studio/           (Pulse Studio Tycoon, deja installe)
-  zen/                    (Zen Games, deja installe)
-
-Tant qu'un fichier manque, son bouton Jouer affiche "Bientôt disponible".

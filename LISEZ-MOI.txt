@@ -1,18 +1,10 @@
 PIXEL PULSE - MODE D'EMPLOI
 ===========================
 
-1. TES JEUX
-   Ouvre le dossier "jouer" et mets dedans :
-     - tv-empire-tycoon.html   = ton jeu TV Empire Tycoon
-     - zen-games.html          = ton fichier Zen Games (menu + 4 jeux)
-   Le nom doit etre EXACTEMENT celui-la (renomme le fichier si besoin).
-   Pulse Studio Tycoon n'a besoin de rien : le bouton ouvre ton site Netlify actuel.
+Le site est en ligne sur https://playpixelpulsing.fr (hebergement GitHub Pages, depot "pixel-pulse").
 
-2. ESSAYER SUR TON ORDINATEUR
-   Double-clique sur index.html.
+- Les jeux sont dans le dossier "jouer".
+- Les pages en anglais sont dans le dossier "en".
+- Les guides sont dans "astuces" (et "en/tips").
 
-3. METTRE EN LIGNE
-   app.netlify.com > Add new project > Deploy manually
-   > glisse CE DOSSIER entier (celui qui contient index.html).
-
-Un bouton Jouer qui affiche "Bientot disponible" = le fichier du jeu manque dans "jouer".
+Pour modifier un texte ou ajouter un jeu : demande a Claude.

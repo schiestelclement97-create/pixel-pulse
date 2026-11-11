@@ -103,7 +103,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 /* cartes */
 .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(16px,2.4vw,28px)}
 @media (max-width:960px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (max-width:600px){.grid{grid-template-columns:1fr}}
+#grille{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media (max-width:600px){.grid,#grille{grid-template-columns:1fr}}
 .card{display:flex;flex-direction:column;background:var(--surface);border-radius:var(--radius);overflow:hidden;box-shadow:0 1px 0 var(--line);transition:transform .2s ease,box-shadow .2s ease}
 .card:hover{transform:translateY(-4px);box-shadow:0 1px 0 var(--line),0 16px 36px rgb(var(--shadow) / .14)}
 .card-media{position:relative;display:block;aspect-ratio:8/5;overflow:hidden;background:var(--surface-2)}

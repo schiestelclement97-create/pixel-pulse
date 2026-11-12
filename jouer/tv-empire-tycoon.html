@@ -254,6 +254,9 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; col
 #expand , #dig { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: var(--radius); background: var(--white);
   border: 3px solid transparent; box-shadow: var(--shadow); font-size: 13px; font-weight: 700; color: var(--navy); text-align: left; flex: none; }
 #expand[hidden] , #dig[hidden] { display: none; }
+#adboost { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: var(--radius); background: var(--white); border: 3px solid var(--yellow); box-shadow: var(--shadow); font-size: 13px; font-weight: 700; color: var(--navy); text-align: left; flex: none; }
+#adboost .ab-i { font-size: 18px; } #adboost .ex-t { flex: 1; } #adboost b { font-weight: 800; white-space: nowrap; }
+#adboost.on { border-color: #2fbf71; } #adboost:disabled { opacity: .62; }
 #expand .ico , #dig .ico { width: 20px; height: 20px; }
 #expand .ex-t , #dig .ex-t { flex: 1; }
 #expand b , #dig b { font-weight: 800; }
@@ -369,6 +372,7 @@ body.city #goal, body.city #status { display: none; }
 .cp-tn small, .cp-name small { display: flex; flex-wrap: wrap; gap: 4px; align-items: center; margin-top: 2px; }
 
 </style>
+<script src="pp-ads.js"></script>
 </head>
 <body>
 
@@ -403,6 +407,7 @@ body.city #goal, body.city #status { display: none; }
       <button id="dig" class="pressable" hidden aria-label="Creuser un sous-sol">
         <span class="ico" data-icon="arrowDown"></span><span class="ex-t">Creuser un sous-sol</span><b id="dig-cost"></b>
       </button>
+      <button id="adboost" class="pressable" aria-label="Regarder une pub pour doubler les revenus pendant 3 minutes"><span class="ab-i">📺</span><span class="ex-t">Revenus ×2 pendant 3 min</span><b id="ab-t">Pub</b></button>
       <div id="actions">
         <div id="goal">
           <div class="goal-top"><span class="goal-k"><span class="ico" data-icon="target"></span>OBJECTIF</span><span class="goal-r" id="goal-reward"></span></div>
@@ -565,10 +570,29 @@ function studioRevenue(s, h, aud) {
   const perViewer = def.rev / def.viewers;                                   // $ par spectateur et par seconde
   return studioAudience(s, h) * perViewer * ADS[s.ad].rate * (1 + notoriety(aud)) * facRev();
 }
+let adBoostUntil = 0, adCdUntil = 0;
+function adBoostUI() {
+  const b = document.getElementById('adboost'), t = document.getElementById('ab-t'); if (!b) return;
+  const now = Date.now();
+  b.hidden = !state.studios.length;
+  if (now < adBoostUntil) { const s = Math.ceil((adBoostUntil - now) / 1000); b.classList.add('on'); b.disabled = true; t.textContent = '×2 · ' + Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); }
+  else if (now < adCdUntil) { const s = Math.ceil((adCdUntil - now) / 1000); b.classList.remove('on'); b.disabled = true; t.textContent = Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); }
+  else { b.classList.remove('on'); b.disabled = false; t.textContent = 'Pub'; }
+}
+function watchBoostAd() {
+  if (Date.now() < Math.max(adBoostUntil, adCdUntil) || !window.PPAds) return;
+  PPAds.reward('tv_x2', (ok, why) => {
+    if (!ok) { setStatus('Regarde la pub jusqu\'au bout pour avoir le bonus.'); return; }
+    adBoostUntil = Date.now() + 180000; adCdUntil = adBoostUntil + 90000;
+    setStatus(why === 'free' ? 'Bonus offert : revenus ×2 pendant 3 minutes !' : 'Merci ! Revenus ×2 pendant 3 minutes.'); adBoostUI();
+  });
+}
+setInterval(adBoostUI, 1000);
+(function () { const go = () => { const b = document.getElementById('adboost'); if (b && !b.dataset.w) { b.dataset.w = 1; b.addEventListener('click', watchBoostAd); } }; go(); document.addEventListener('DOMContentLoaded', go); })();
 function totalRevenue() {
   const h = hourNow(), aud = totalAudience(h); let r = 0;
   for (const s of state.studios) r += studioRevenue(s, h, aud);
-  return r;
+  return r * (Date.now() < adBoostUntil ? 2 : 1);
 }
 const studioById = (id) => state.studios.find((s) => s.id === id);
 const sellValue = (s) => Math.floor(s.paid * SELL_RATIO);
@@ -2425,7 +2449,9 @@ function buyStudio(type) {
   if (state.money < price) { setStatus(`Il te manque ${fmt(price - state.money)} $ pour ${STUDIOS[type].name}.`); return false; }
   const spot = findSpot(type);
   if (!spot) { setStatus(state.land < LANDS.length ? 'Immeuble plein : ajoute un étage.' : 'L\'immeuble est plein.'); return false; }
-  return placeStudio(type, spot.x, spot.y, spot.f);
+  const ok = placeStudio(type, spot.x, spot.y, spot.f);
+  if (ok && window.PPAds && state.studios.length > 2) PPAds.inter('tv_nouveau_studio');
+  return ok;
 }
 function giveStarter() {
   const spot = findSpot('news');

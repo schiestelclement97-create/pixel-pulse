@@ -1,4 +1,5 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style><script src="pp-ads.js"></script>
+</head><body>
 <title>City Empire</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -207,6 +208,7 @@ tr.me td{color:var(--brass2);font-weight:700}
   <button data-act="speed" data-arg="4" title="Vitesse x4">x4</button>
  </div>
  <div class="tbtns">
+  <button class="ibtn adb" data-act="adgift" id="adGift" title="Regarder une pub : subvention">📺<span class="lbl">Subvention</span></button>
   <button class="ibtn" data-act="sheet" data-arg="missions">🎯<span class="lbl">Missions</span><i class="dot" id="misDot" hidden></i></button>
   <button class="ibtn" data-act="sheet" data-arg="stats">📊<span class="lbl">Stats</span></button>
   <button class="ibtn" data-act="sheet" data-arg="rank">🏆<span class="lbl">Classement</span></button>
@@ -721,7 +723,7 @@ function simTick(){
  for(const b of BS)if(b.dmg&&b.owner==='private'&&S.day-b.dmgDay>90)b.dmg=0;
  // stades
  let ns=0;for(let i=0;i<STAGES.length;i++)if(S.pop>=STAGES[i].p)ns=i;
- if(ns>S.stage){S.stage=ns;const bonus=[0,15000,60000,200000,700000,2500000,8000000][ns];S.money+=bonus;
+ if(ns>S.stage){S.stage=ns;const bonus=[0,15000,60000,200000,700000,2500000,8000000][ns];S.money+=bonus;if(window.PPAds)setTimeout(()=>PPAds.inter("city_nouveau_palier"),1500);
   const unl=Object.values(B).filter(d=>d.st===ns&&!d.zone).map(d=>d.n);
   showModal({eb:'Nouvelle étape',title:`${S.name} devient : ${STAGES[ns].n} !`,body:`Votre ville franchit le cap des ${fmt(STAGES[ns].p)} habitants. Prime de développement : <b class="a">${eur(bonus)}</b>.<br><br><b>Nouveaux bâtiments :</b> ${unl.join(', ')||'—'}.`,choices:[{t:'Continuer à bâtir',f:()=>{}}]});
  }
@@ -1263,7 +1265,13 @@ function renderInsp(){const b=BMAP.get(sel);if(!b){closeInsp();return;}const d=B
  if(d.zone){const img=el.querySelector('img');const c=document.createElement('canvas');c.width=168;c.height=128;const x=c.getContext('2d');const prev=g;g=x;EMIT=false;const nt=NIGHT;NIGHT=0;const h=zoneLook(b.t,b.lvl,b.seed)[1]+20;const kk=Math.min(150/74,110/(32+h));x.setTransform(kk,0,0,kk,84,120-32*kk);const r0=cam.rot;cam.rot=0;drawStyleFor({...b,x:0,y:0});cam.rot=r0;g=prev;EMIT=true;NIGHT=nt;img.src=c.toDataURL();}
 }
 /* ---------- ACTIONS ---------- */
+let adCd=0;
+function adGiftAmt(){return Math.max(5000,Math.min(5e6,Math.round(S.money*0.08/1000)*1000))}
+function adGiftUI(){const b=document.getElementById('adGift');if(!b)return;const r=Math.ceil((adCd-Date.now())/1000);b.disabled=r>0;b.style.opacity=r>0?.45:1;const l=b.querySelector('.lbl');if(l)l.textContent=r>0?Math.floor(r/60)+':'+String(r%60).padStart(2,'0'):'Subvention';b.title=r>0?'Prochaine subvention bientôt':'Regarder une pub : +'+fmtM(adGiftAmt())}
+function fmtM(v){return v>=1e6?(v/1e6).toFixed(1).replace('.',',')+' M €':Math.round(v/1000)+' k €'}
+setInterval(adGiftUI,1000);
 const ACT={
+ adgift:()=>{if(Date.now()<adCd||!window.PPAds)return;PPAds.reward('city_subvention',(ok,why)=>{if(!ok){toast('Regarde la pub jusqu’au bout pour recevoir la subvention.');return}const g=adGiftAmt();S.money+=g;adCd=Date.now()+180000;adGiftUI();toast((why==='free'?'Subvention offerte : +':'Merci ! Subvention : +')+fmtM(g))})},
  speed:a=>setSpeed(a),
  menu:a=>openMenu(a),
  dtab:a=>{drawerTab=a;renderDrawer();},

@@ -93,6 +93,7 @@ button:focus-visible{outline:3px solid var(--b);outline-offset:2px}
 #adov h1{font-size:26px}
 #rm{gap:3px}#rm button{padding:4px 8px;font-size:10px}
 </style>
+<script src="../pp-ads.js"></script>
 </head>
 <body>
 <div id="g">
@@ -678,30 +679,17 @@ $("pok").onclick=function(){var v=$("pin").value.replace(/\s+/g," ").trim();if(!
 $("gps").onclick=showPseudo;$("trv").onclick=viewTrophy;
 function maybeGuide(){if(S.ch<0)return;if($("news").style.display==="flex"||$("pick").style.display==="flex")return;if(!S.pseudo){showPseudo();return}if(S.tuto)return;showGuide()}
 $("nk").onclick=function(){$("news").style.display="none";S.seen=VER;save();maybeGuide()};
-var ADS={test:true,client:"ca-pub-8151486169178097",slot:"0000000000"};
+var ADS={test:false,client:"ca-pub-8151486169178097",slot:"0000000000"};
 function adCd(){return S.adb>Date.now()}
 function mmss(ms){var q=Math.max(0,Math.ceil(ms/1000));return Math.floor(q/60)+":"+("0"+q%60).slice(-2)}
 var adReady=false,adBusy=false;
 function adUI(){var b=$("adb");if(!b)return;b.style.display=(ADS.test||adReady)?"block":"none";b.disabled=adBusy||buffOn()||adCd();b.textContent=buffOn()?"🔥 Buzz en cours":adCd()?"🎬 Pub dans "+mmss(S.adb-Date.now()):(adBusy?"Pub…":"🎬 Pub : Buzz viral")}
 function grantAd(){S.buff=Date.now()+20000;S.nbz++;S.adb=Date.now()+Math.max(30000,90000-10000*S.tl[3]);adBusy=false;toast("Buzz viral ! Revenus ×7 pendant 20 s");upd();save()}
 function watchAd(){if(adBusy||buffOn()||adCd())return;adBusy=true;adUI();
-  if(ADS.test){var o=$("adov"),n=10;o.style.display="flex";$("adn").textContent="Reste jusqu’à la fin pour recevoir ton bonus";$("adskip").style.display="none";$("adt").textContent="Pub de test… "+n+" s";var iv=setInterval(function(){n--;if(n>0){$("adt").textContent="Pub de test… "+n+" s";return}clearInterval(iv);o.style.display="none";grantAd()},1000);return}
-  try{adBreak({type:"reward",name:"x2_revenus",beforeReward:function(show){show()},adViewed:function(){grantAd()},adDismissed:function(){adBusy=false;toast("Regarde la pub jusqu’au bout pour avoir le bonus")},adBreakDone:function(i){if(adBusy&&i&&i.breakStatus!=="viewed"){adBusy=false;toast("Pas de pub disponible pour l’instant, réessaie plus tard")}}})}catch(e){adBusy=false}}
+  PPAds.reward("x2_revenus",function(ok,why){if(ok){grantAd();if(why==="free")toast("Bonus offert !")}else{adBusy=false;try{adUI()}catch(e){}toast("Regarde la pub jusqu’au bout pour avoir le bonus")}})}
 var interOn=false;
-function adInter(){if(interOn)return;
-  if(ADS.test){interOn=true;var o=$("adov"),k=$("adskip"),n=0,iv;o.style.display="flex";$("adt").textContent="Pub de test";$("adn").textContent="Merci de soutenir le jeu !";k.style.display="inline-block";k.disabled=true;k.textContent="Passer dans 5 s";
-    var end=function(){clearInterval(iv);o.style.display="none";k.style.display="none";interOn=false};
-    iv=setInterval(function(){n++;if(n<5)k.textContent="Passer dans "+(5-n)+" s";else{k.disabled=false;k.textContent="Passer ▶"}if(n>=15)end()},1000);
-    k.onclick=function(){if(!k.disabled)end()};return}
-  try{adBreak({type:"next",name:"ouverture_studio"})}catch(e){}}
-function initAds(){
-  $("adb").onclick=watchAd;var box=$("ad");
-  if(ADS.test){box.innerHTML='<span style="color:#64748b;font-size:12px">Espace publicitaire (mode test)</span>';return}
-  var q=document.createElement("script");q.async=true;q.src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client="+ADS.client;q.crossOrigin="anonymous";document.head.appendChild(q);
-  window.adsbygoogle=window.adsbygoogle||[];window.adBreak=window.adConfig=function(o){window.adsbygoogle.push(o)};
-  window.adConfig({preloadAdBreaks:"on",sound:"off",onReady:function(){adReady=true}});
-  box.innerHTML='<ins class="adsbygoogle" style="display:inline-block;width:320px;height:50px" data-ad-client="'+ADS.client+'" data-ad-slot="'+ADS.slot+'"></ins>';
-  try{window.adsbygoogle.push({})}catch(e){}}
+function adInter(){PPAds.inter("ouverture_studio")}
+function initAds(){$("adb").onclick=watchAd;var box=$("ad");if(box)box.style.display="none"}
 function build2(){$("ver").textContent=VER;
   rows.uk=[3,4].map(function(r){var c=r===3?U4:U5,nm=SN[r];return mk($("unlock"),r===3?"🎸":"🚀","Ouvrir le "+nm,function(){var f="u"+(r+1);if(S[f]||!unl(r-1)||S.m<c)return;S.m-=c;S[f]=1;toast(nm+" ouvert !");switchRoom(r);adInter()})});
   rows.u6=mk($("unlock"),"☕","Ouvrir la Cafétéria et la salle du personnel",function(){if(S.u6||S.m<U6)return;S.m-=U6;S.u6=1;toast("Cafétéria ouverte !");switchRoom(5);adInter()});

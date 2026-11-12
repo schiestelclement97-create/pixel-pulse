@@ -174,7 +174,7 @@ Z.load=k=>jget('zb_sv_'+k,null);
 Z.clear=k=>st.del('zb_sv_'+k);
 Z.award=(game,score)=>{Z.unlock('seed');Z.ev('end',1);return Z.addPts(Math.max(1,score/20))};
 /* ---------- pubs ---------- */
-Z.sdk=()=>window.CrazyGames&&CrazyGames.SDK;
+Z.sdk=()=>(window.CrazyGames&&CrazyGames.SDK)||(window.PPAds&&{ad:{requestAd:(t,c)=>t==='rewarded'?PPAds.reward('zen_bonus',ok=>ok?c.adFinished():c.adError()):(PPAds.inter('zen_pause'),c.adFinished())}});
 Z.canAd=()=>ADS_FAKE||!!(Z.sdk()&&Z.sdk().ad);
 Z.gp=on=>{try{const S=Z.sdk();S&&S.game&&S.game[on?'gameplayStart':'gameplayStop']()}catch(e){}};
 Z.ad=(type,cb)=>{const S=Z.sdk();let done=false;const fin=ok=>{if(done)return;done=true;Z.adOn=false;if(!ok)Z.toast(Z.t('Pub indisponible, réessaie plus tard','No ad available, try again later'));cb(ok)};
@@ -245,7 +245,8 @@ Z.applyTheme();
 @media (max-height:700px){#gpanel{max-height:50%}.gr{padding:8px 10px}}
 .gseg{display:flex;background:rgba(255,255,255,.07);border-radius:11px;padding:3px;margin-bottom:10px;flex:none}
 .gseg button{flex:1;border:0;background:transparent;color:#f3f5fa;font:inherit;font-size:13.5px;padding:8px 10px;border-radius:9px;cursor:pointer;letter-spacing:.03em;opacity:.7}.gseg button.on{background:#efe0bb;color:#241d0c;opacity:1;font-weight:600}
-</style></head><body>
+</style><script src="../pp-ads.js"></script>
+</head><body>
 <div id="hub"><h1>Zen Games</h1><p id="sub"></p><div id="stat"></div><div id="rk"></div><div id="gm"></div><div id="qs"></div><div class="bar" id="hb"></div><p id="foot"></p></div>
 <div id="stage" hidden></div>
 <script>

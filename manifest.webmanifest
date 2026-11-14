@@ -81,6 +81,16 @@
   ],
   "shortcuts": [
     {
+      "name": "Sainte-Agathe : Hôpital Hanté",
+      "url": "/jouer/sainte-agathe/index.html",
+      "icons": [
+        {
+          "src": "/img/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
       "name": "City Empire",
       "url": "/jouer/city-empire.html",
       "icons": [

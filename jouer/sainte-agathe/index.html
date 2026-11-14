@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<title>Sainte-Agathe : Hôpital Hanté · Pixel Pulse</title>
+<meta name="description" content="Jeu d'horreur gratuit en 1re personne : échappe-toi de l'hôpital psychiatrique Sainte-Agathe. Trouve les 5 fusibles, fuis les monstres.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<style>
+@font-face{font-family:Creepster;src:url(creepster.woff2) format('woff2');font-display:swap}
+@font-face{font-family:Elite;src:url(elite.woff2) format('woff2');font-display:swap}
+:root{--sang:#8a0000;--txt:#d9e2d4;--mut:#8f9a8c;--pan:rgba(10,12,11,.92);--ok:#ffc61a}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%;background:#000;color:var(--txt);font-family:Elite,"Courier New",monospace;overflow:hidden;user-select:none;-webkit-user-select:none;touch-action:none}
+#c{position:fixed;inset:0;width:100%;height:100%;display:block;outline:0}
+[hidden]{display:none!important}
+.fx{position:fixed;inset:0;pointer-events:none;transition:opacity .15s}
+#danger{background:radial-gradient(ellipse at center,transparent 45%,rgba(160,0,0,.75) 100%);opacity:0}
+#rouge{background:#7a0000;mix-blend-mode:multiply;opacity:0}
+#eclair{background:#cfd8ff;opacity:0;mix-blend-mode:screen;transition:opacity .05s}
+#folie{background:radial-gradient(ellipse at center,transparent 30%,rgba(20,0,30,.9) 100%);opacity:0;animation:folie 3s infinite alternate}
+@keyframes folie{to{filter:blur(2px);transform:scale(1.03)}}
+#givre{background:radial-gradient(ellipse at center,transparent 40%,rgba(190,220,255,.45) 100%);opacity:0;transition:opacity 1.2s}
+#vignette{background:radial-gradient(ellipse at center,transparent 55%,rgba(0,0,0,.65) 100%)}
+#vision{background:repeating-linear-gradient(0deg,rgba(0,0,0,.18) 0 2px,transparent 2px 4px);mix-blend-mode:multiply}
+#vision .rec{position:absolute;top:max(16px,env(safe-area-inset-top));left:20px;color:#ff3b3b;font:20px/1 Elite,monospace;letter-spacing:.1em;animation:clig 1s steps(2) infinite}
+#vision .vb{position:absolute;top:max(16px,env(safe-area-inset-top));right:20px;color:#8f8;font:16px Elite,monospace}
+@keyframes clig{50%{opacity:0}}
+#casier{background:repeating-linear-gradient(180deg,#000 0 7%,transparent 7% 12%);opacity:.9}
+#casier::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 25%,#000 70%)}
+#compte{position:fixed;top:12%;left:50%;transform:translateX(-50%);font:120px/1 Creepster,serif;color:#ff2a2a;text-shadow:0 0 30px #f00;pointer-events:none}
+.msg{position:fixed;left:50%;bottom:22%;transform:translateX(-50%);width:min(92vw,720px);text-align:center;font-size:clamp(15px,2.3vw,21px);line-height:1.35;color:var(--txt);text-shadow:0 2px 6px #000,0 0 2px #000;pointer-events:none;transition:opacity .6s;opacity:0}
+.msg.monstre,.msg.alerte{color:#ff6b6b;font-family:Creepster,serif;font-size:clamp(20px,3.2vw,32px);letter-spacing:.03em}
+.msg.bon{color:#ffd85a}.msg.murmure{font-style:italic;color:#b9a6c9}.msg.tel{color:#9fe0ff}
+#hud{position:fixed;left:max(14px,env(safe-area-inset-left));top:max(12px,env(safe-area-inset-top));pointer-events:none;font-size:13px;width:200px}
+#hud .fus{font:28px/1 Creepster,serif;color:var(--ok);text-shadow:0 0 8px rgba(255,198,26,.5)}
+#hud .fus small{font:13px Elite,monospace;color:var(--txt);display:block;margin-top:2px}
+.bar{height:7px;background:rgba(255,255,255,.12);border-radius:4px;overflow:hidden;margin:3px 0 7px}
+.bar i{display:block;height:100%;width:100%;background:#e8e2c0;transition:width .2s}
+#h-cam{background:#5cff7a!important}#h-sta{background:#7fc6ff!important}#h-sta.adr{background:#ff5ca8!important}#h-esp{background:#b48cff!important}
+#h-souffle-b{background:#9fe0ff!important}
+.lbl{display:flex;justify-content:space-between;color:var(--mut);font-size:11px;letter-spacing:.08em}
+#h-cle{color:#c49a6c;margin-top:4px}
+#aide{position:fixed;right:max(14px,env(safe-area-inset-right));top:max(12px,env(safe-area-inset-top));font-size:11px;color:var(--mut);text-align:right;line-height:1.6;pointer-events:none;opacity:.8}
+#prompt{position:fixed;left:50%;top:58%;transform:translateX(-50%);background:rgba(0,0,0,.65);border:1px solid rgba(255,255,255,.25);border-radius:8px;padding:8px 14px;display:flex;align-items:center;gap:10px;font-size:15px;pointer-events:none;overflow:hidden}
+#prompt-k{border:1px solid #ddd;border-radius:4px;padding:1px 7px;font-size:12px}
+#prompt-bar{position:absolute;left:0;bottom:0;height:3px;background:var(--ok);width:0}
+#marks{position:fixed;inset:0;pointer-events:none}
+.mk{position:absolute;transform:translate(-50%,-50%);font-size:20px;color:var(--ok);text-shadow:0 0 6px #000;text-align:center;line-height:1}
+.mk small{display:block;font-size:10px;color:#ddd}.mk.note{color:#9fe0ff}.mk.fus{color:#ffd85a}
+#croix{position:fixed;left:50%;top:50%;width:4px;height:4px;margin:-2px;border-radius:50%;background:rgba(255,255,255,.55);pointer-events:none}
+/* panneaux */
+.ecran{position:fixed;inset:0;display:grid;place-items:center;background:rgba(0,0,0,.82);padding:16px;z-index:5;overflow:auto}
+.box{background:var(--pan);border:1px solid #2c332e;border-radius:12px;padding:22px;width:min(760px,100%);max-height:calc(100vh - 32px);overflow:auto;box-shadow:0 20px 60px #000}
+.box h2{margin:0 0 12px;font:34px/1.05 Creepster,serif;color:#c21c1c;letter-spacing:.02em}
+.box p{line-height:1.5;margin:0 0 10px;white-space:pre-line}
+.btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+button.b{font:inherit;font-size:15px;color:var(--txt);background:#1b201c;border:1px solid #3a443c;border-radius:8px;padding:10px 16px;cursor:pointer;min-height:44px}
+button.b:hover{border-color:#8a9a8c}button.b.rouge{background:#5a0b0b;border-color:#a32020}button.b.or{background:#4a3a08;border-color:#b8901a}
+#note .box{background:#d9d0b4;color:#2a2116;font-size:17px}#note h2{color:#5a0000;font-size:28px}
+#plan canvas{width:100%;height:auto;border-radius:8px;display:block;background:#0d0f0d}
+#guide h3{color:#e2c46a;margin:18px 0 6px;font-weight:400}#guide p{color:#cfd8cb}
+/* menu */
+#menu .box{text-align:left}
+.titre{font:clamp(44px,8vw,78px)/.95 Creepster,serif;color:#b51010;text-shadow:0 0 22px rgba(200,0,0,.5);margin:0}
+.sous{color:var(--mut);letter-spacing:.3em;font-size:13px;margin:6px 0 18px}
+#roles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:14px}
+@media (max-width:640px){#roles{grid-template-columns:1fr}}
+.role{font:inherit;color:var(--txt);text-align:left;background:#141815;border:1px solid #39423b;border-radius:10px;padding:14px;cursor:pointer;min-height:44px}
+.role:hover{border-color:#c21c1c;background:#1e1414}.role b{display:block;font:22px Creepster,serif;color:#e44;margin-bottom:6px;font-weight:400}.role span{font-size:13px;color:#b9c3b5}
+#load{position:fixed;inset:0;display:grid;place-items:center;background:#000;z-index:9}
+#load .w{width:min(420px,86vw);text-align:center}
+#load .bar{height:4px}#load-b{background:#a01010!important;width:0}
+#load-t{color:var(--mut);font-size:13px}
+.astuce{font-size:12px;color:var(--mut);margin-top:14px}
+#mort h2{font-size:52px}
+/* tactile */
+#touch{position:fixed;inset:0;pointer-events:none;z-index:3}
+#joy{position:absolute;left:max(18px,env(safe-area-inset-left));bottom:max(22px,env(safe-area-inset-bottom));width:130px;height:130px;border-radius:50%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.18);pointer-events:auto}
+#joy-k{position:absolute;left:40px;top:40px;width:50px;height:50px;border-radius:50%;background:rgba(255,255,255,.22)}
+.tb{position:absolute;pointer-events:auto;width:58px;height:58px;border-radius:50%;border:1px solid rgba(255,255,255,.28);background:rgba(0,0,0,.45);color:#eee;font:11px Elite,monospace;display:grid;place-items:center;text-align:center;line-height:1.1}
+.tb.on{background:rgba(255,198,26,.35);border-color:#ffc61a}
+#b-e{right:calc(max(18px,env(safe-area-inset-right)) + 0px);bottom:calc(max(22px,env(safe-area-inset-bottom)) + 70px);width:72px;height:72px;font-size:13px}
+#b-run{right:calc(max(18px,env(safe-area-inset-right)) + 80px);bottom:max(22px,env(safe-area-inset-bottom))}
+#b-lampe{right:max(18px,env(safe-area-inset-right));bottom:max(22px,env(safe-area-inset-bottom));width:58px;height:58px}
+#b-cam{right:calc(max(18px,env(safe-area-inset-right)) + 80px);bottom:calc(max(22px,env(safe-area-inset-bottom)) + 70px)}
+#b-flash{right:calc(max(18px,env(safe-area-inset-right)) + 150px);bottom:calc(max(22px,env(safe-area-inset-bottom)) + 30px)}
+#b-souffle{right:calc(max(18px,env(safe-area-inset-right)) + 0px);bottom:calc(max(22px,env(safe-area-inset-bottom)) + 156px)}
+#b-plan{right:calc(max(18px,env(safe-area-inset-right)) + 66px);top:max(12px,env(safe-area-inset-top));width:46px;height:46px}
+#b-menu{right:max(18px,env(safe-area-inset-right));top:max(12px,env(safe-area-inset-top));width:46px;height:46px;font-size:20px}
+.coarse #aide{display:none}
+.coarse .msg{bottom:auto;top:22%}
+.coarse #hud{transform:scale(.82);transform-origin:0 0}
+input[type=range]{width:200px;accent-color:#a01010}
+</style>
+</head>
+<body>
+<canvas id="c" tabindex="0"></canvas>
+<div class="fx" id="vignette"></div>
+<div class="fx" id="vision" hidden><span class="rec">● REC</span><span class="vb" id="vis-bat"></span></div>
+<div class="fx" id="casier" hidden></div>
+<div class="fx" id="danger"></div><div class="fx" id="folie"></div><div class="fx" id="givre"></div><div class="fx" id="rouge"></div><div class="fx" id="eclair"></div>
+<div id="marks"></div><div id="croix"></div>
+<div id="compte" hidden>20</div>
+<div class="msg" id="msg"></div>
+<div id="prompt" hidden><span id="prompt-k">E</span><span id="prompt-t"></span><i id="prompt-bar"></i></div>
+
+<div id="hud" hidden>
+  <div class="fus">⚡ <span id="h-fus">0/5</span><small>fusibles au générateur</small></div>
+  <div id="h-cle" hidden>🗝 clé de la Salle 0</div>
+  <div class="lbl" style="margin-top:8px"><span>LAMPE</span></div><div class="bar"><i id="h-bat"></i></div>
+  <div class="lbl"><span>CAMÉSCOPE</span></div><div class="bar"><i id="h-cam"></i></div>
+  <div class="lbl"><span>ENDURANCE</span></div><div class="bar"><i id="h-sta"></i></div>
+  <div class="lbl"><span>ESPRIT</span></div><div class="bar"><i id="h-esp"></i></div>
+  <div id="h-souffle" hidden><div class="lbl"><span>SOUFFLE (ESPACE)</span></div><div class="bar"><i id="h-souffle-b"></i></div></div>
+</div>
+<div id="aide" hidden>E interagir · F lampe · V caméscope · R flash<br>Maj courir · M plan · G guide · Échap pause</div>
+
+<div id="touch" hidden>
+  <div id="joy"><div id="joy-k"></div></div>
+  <div class="tb" id="b-e">MAIN</div>
+  <div class="tb" id="b-run">COURIR</div>
+  <div class="tb" id="b-lampe">LAMPE</div>
+  <div class="tb" id="b-cam">CAMÉ-<br>SCOPE</div>
+  <div class="tb" id="b-flash">FLASH</div>
+  <div class="tb" id="b-souffle">SOUFFLE</div>
+  <div class="tb" id="b-plan">PLAN</div>
+  <div class="tb" id="b-menu">☰</div>
+</div>
+
+<div class="ecran" id="note" hidden><div class="box"><h2 id="note-t"></h2><p id="note-x"></p><div class="btns"><button class="b" id="note-ok">Reposer la note</button></div></div></div>
+<div class="ecran" id="plan" hidden><div class="box"><h2 id="plan-h">PLAN</h2><canvas id="plan-c" width="1000" height="420"></canvas><p class="astuce">▲ rouge : toi. Le plan affiche l'étage où tu te trouves.</p><div class="btns"><button class="b" id="plan-ok">Fermer</button></div></div></div>
+<div class="ecran" id="guide" hidden><div class="box"><h2>GUIDE DE SURVIE</h2><div id="guide-x"></div><div class="btns"><button class="b" id="guide-ok">Fermer</button></div></div></div>
+<div class="ecran" id="pause" hidden><div class="box">
+  <h2>PAUSE</h2>
+  <div class="btns"><button class="b rouge" id="reprendre">▶ Reprendre</button><button class="b" id="p-guide">Guide</button><button class="b" id="p-plan">Plan</button><button class="b" id="q-btn">Graphismes : <span id="q-t">HAUTE</span></button><button class="b" id="p-quitter">Quitter</button></div>
+  <p style="margin-top:16px">Sensibilité de la souris / du doigt</p><input type="range" id="sens" min="0.3" max="2.5" step="0.1" value="1">
+  <h2 style="font-size:26px;margin-top:20px">BONUS</h2>
+  <p class="astuce" style="margin-top:0">Regarde une courte pub pour obtenir un coup de pouce (gratuit).</p>
+  <div class="btns"><button class="b or" id="bn-piles">🔋 Piles neuves</button><button class="b or" id="bn-adr">💉 Adrénaline (45 s)</button><button class="b or" id="bn-ind">🔍 Indice (30 s)</button></div>
+</div></div>
+<div class="ecran" id="mort" hidden><div class="box" style="text-align:center"><h2 id="mort-t">Il t'a attrapé.</h2><p id="mort-why"></p>
+  <div class="btns" style="justify-content:center"><button class="b or" id="m-revivre">📺 Revivre dans le hall (pub)</button><button class="b rouge" id="m-rejouer">Recommencer la nuit</button></div>
+  <p class="astuce">En revivant, tu gardes tes fusibles.</p></div></div>
+<div class="ecran" id="victoire" hidden><div class="box" style="text-align:center"><h2 style="color:#ffc61a">TU T'ES ÉCHAPPÉ !</h2><p id="vic-t"></p><p id="vic-b" class="astuce"></p>
+  <p>Mais Sainte-Agathe n'oublie jamais un visiteur…</p><div class="btns" style="justify-content:center"><button class="b rouge" id="v-rejouer">Nouvelle nuit</button></div></div></div>
+
+<div class="ecran" id="menu" hidden><div class="box">
+  <h1 class="titre">SAINTE-AGATHE</h1><div class="sous">HÔPITAL HANTÉ</div>
+  <p id="intro-x"></p>
+  <p style="color:#e44;margin-top:14px">Choisis ton rôle :</p>
+  <div id="roles"></div>
+  <p class="astuce">🎧 Joue avec un casque, dans le noir. Contenu effrayant : déconseillé aux plus jeunes.</p>
+</div></div>
+<div id="load"><div class="w"><h1 class="titre" style="font-size:52px">SAINTE-AGATHE</h1><div class="bar"><i id="load-b"></i></div><div id="load-t">Chargement…</div></div></div>
+
+<script src="three.min.js"></script>
+<script src="engine.js"></script>
+<script src="data.js"></script>
+<script src="../pp-ads.js"></script>
+<script src="game.js"></script>
+<script>
+if (matchMedia('(pointer: coarse)').matches) document.body.classList.add('coarse');
+document.addEventListener('contextmenu', (e) => e.preventDefault());
+document.addEventListener('mousedown', (e) => { if (e.button === 2 && document.pointerLockElement) dispatchEvent(new KeyboardEvent('keydown', { key: 'r', code: 'KeyR' })); });
+</script>
+</body>
+</html>

@@ -89,7 +89,8 @@
     try { await Promise.all([document.fonts.load('40px Creepster'), document.fonts.load('40px Elite')]); } catch (e) {}
     prog('Construction des salles…', 0.25); await frame();
     renderer = new T.WebGLRenderer({ canvas: $('#c'), antialias: false, powerPreference: 'high-performance' });
-    renderer.setPixelRatio(Q.px); renderer.setSize(innerWidth, innerHeight);
+    let px0 = Q.px; try { const v = +localStorage.getItem('sa_px'); if (v > 0.3 && v < Q.px) px0 = v; } catch (e) {}
+    renderer.setPixelRatio(px0); renderer.setSize(innerWidth, innerHeight);
     scene = new T.Scene(); scene.background = new T.Color(0x020203); scene.fog = new T.FogExp2(0x040405, 0.022);
     camera = new T.PerspectiveCamera(72, innerWidth / innerHeight, 0.08, 170); scene.add(camera);
     scene.add(new T.AmbientLight(0x2a2c34, 0.55)); AMB = scene.children[scene.children.length - 1];
@@ -881,12 +882,21 @@
     // regard
     const sens = 0.0022 * (+($('#sens').value || 1));
     P.yaw -= look.dx * sens; P.pitch = clamp(P.pitch - look.dy * sens, -1.35, 1.35); look.dx = look.dy = 0;
-    if (!S.paused && !S.dead && !S.won) tick(dt);
+    if (!S.paused && !S.dead && !S.won) { tick(dt); adapt(dt); }
     for (let i = anims.length - 1; i >= 0; i--) if (anims[i](perfT)) anims.splice(i, 1);
     for (const p of pickups) { p.t += dt; p.mesh.rotation.y += dt * 1.5; p.mesh.children[p.mesh.children.length - 1].scale.setScalar(1 + Math.sin(p.t * 3) * 0.15); }
     for (const s of ['G', 'D']) { const d = dyn['gate:Portail' + s]; if (d && d.target != null) d.grp.position.z = lerp(d.grp.position.z, d.c[2] + d.target, dt * 0.8); }
     camUpdate(dt); updateLightPool(); cullT -= dt; if (cullT <= 0) { cullT = 0.25; cullUpdate(); }
     renderer.render(scene, camera);
+  }
+  // résolution automatique : baisse la définition si l'ordinateur rame, la remonte s'il est à l'aise
+  const AD = { t: 0, n: 0, px: null };
+  function adapt(dt) {
+    if (document.hidden) return; AD.t += dt; AD.n++;
+    if (AD.t < 2.5) return; const fps = AD.n / AD.t; AD.t = 0; AD.n = 0;
+    if (AD.px == null) AD.px = renderer.getPixelRatio();
+    let np = AD.px; if (fps < 40 && AD.px > 0.5) np = Math.max(0.5, AD.px * 0.8); else if (fps > 57 && AD.px < Q.px) np = Math.min(Q.px, AD.px * 1.12);
+    if (Math.abs(np - AD.px) > 0.01) { AD.px = np; renderer.setPixelRatio(np); renderer.setSize(innerWidth, innerHeight); try { localStorage.setItem('sa_px', np.toFixed(2)); } catch (e) {} }
   }
   function tick(dt) {
     {
@@ -949,7 +959,7 @@
   function setQuality(q) {
     try { localStorage.setItem('sa_q', q); } catch (e) {}
     Q = q === 'haute' ? { px: Math.min(devicePixelRatio || 1, 1.5), lights: 8 } : q === 'moyenne' ? { px: 1, lights: 6 } : { px: 0.75, lights: 4 };
-    renderer.setPixelRatio(Q.px); for (let i = 0; i < pool.length; i++) pool[i].visible = true; // le nombre de lumières reste fixe (pas de recompilation)
+    renderer.setPixelRatio(Q.px); renderer.setSize(innerWidth, innerHeight); AD.px = Q.px; try { localStorage.removeItem('sa_px'); } catch (e) {} for (let i = 0; i < pool.length; i++) pool[i].visible = true; // le nombre de lumières reste fixe (pas de recompilation)
     for (let i = Q.lights; i < pool.length; i++) pool[i].intensity = 0;
     $('#q-t').textContent = q.toUpperCase();
   }

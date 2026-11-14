@@ -189,7 +189,7 @@
     for (const p of pickups) p.mesh.visible = Math.hypot(p.x - c.x, p.y - c.y, p.z - c.z) < 70;
   }
   let cullT = 0;
-  const frame = () => new Promise((r) => requestAnimationFrame(() => r()));
+  const frame = () => new Promise((r) => { let done = false; const f = () => { if (!done) { done = true; r(); } }; requestAnimationFrame(f); setTimeout(f, 60); });
 
   function addSign(s) {
     const blood = s.t.startsWith('!'), text = blood ? s.t.slice(1) : s.t;

@@ -37,7 +37,7 @@
 <a class="skip" href="#contenu">Skip to content</a>
 <header class="site-header"><div class="wrap nav">
 <a class="logo" href="../en/index.html" aria-label="Pixel Pulse, home"><svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#ff4f6d"/><path d="M4 17h6l3-9 5 17 3-11 2 3h5" fill="none" stroke="#fff" stroke-width="3.2" stroke-linejoin="miter" stroke-linecap="square"/></svg><span>Pixel Pulse</span></a>
-<div class="nav-right"><nav aria-label="Main navigation"><ul><li><a href="../en/index.html#jeux" aria-current="page">Games</a></li><li><a href="../en/tips/index.html">Tips</a></li><li class="opt"><a href="../en/about/index.html">About</a></li><li class="opt"><a href="../en/contact/index.html">Contact</a></li></ul></nav>
+<div class="nav-right"><nav aria-label="Main navigation"><ul><li><a href="../en/index.html#jeux" aria-current="page">Games</a></li><li><a href="../en/tips/index.html">Tips</a></li><li class="opt"><a href="../en/news/index.html">News</a></li><li class="opt"><a href="../en/about/index.html">About</a></li><li class="opt"><a href="../en/contact/index.html">Contact</a></li></ul></nav>
 <a class="lang" href="../index.html" hreflang="fr" lang="fr" aria-label="Version française">FR</a></div>
 </div></header>
 <main id="contenu">
@@ -47,7 +47,7 @@
 <p class="eyebrow">5 games · 100% free</p>
 <h1 style="margin-top:12px">Free games, ready in <em>one click</em>.</h1>
 <p class="lead">Dare to enter a haunted hospital, build your city, grow a TV empire or unwind in a zen garden. Every Pixel Pulse game runs in your browser, on desktop and mobile.</p>
-<div class="hero-actions"><a class="btn btn-play btn-big" href="#jeux"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M2 1h3v1h2v1h2v1h2v1h1v4h-1v1H9v1H7v1H5v1H2z" fill="currentColor"/></svg>See the games</a><a class="btn btn-ghost btn-big" href="../en/sainte-agathe/index.html">Featured game</a></div>
+<div class="hero-actions"><a class="btn btn-play btn-big" href="#jeux"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M2 1h3v1h2v1h2v1h2v1h1v4h-1v1H9v1H7v1H5v1H2z" fill="currentColor"/></svg>See the games</a><a class="btn btn-ghost btn-big" href="../en/sainte-agathe/index.html">Featured game</a><button type="button" class="btn btn-ghost btn-big" id="install" hidden>📲 Install the app</button></div>
 <ul class="hero-facts"><li>No download</li><li>No sign-up</li><li>Desktop, tablet and mobile</li></ul>
 </div>
 <div class="hero-stack" aria-hidden="true">
@@ -79,8 +79,9 @@
 
 <section class="section" id="jeux" aria-labelledby="tous"><div class="wrap">
 <div class="section-head"><div><h2 id="tous">All games</h2><p>A truly scary horror game, three tycoons to build an empire, and Zen Games, four relaxing puzzles in one game.</p></div></div>
+<div class="filters" role="group" aria-label="Games"><button type="button" class="chip" data-f="" aria-pressed="true">All <small>5</small></button><button type="button" class="chip" data-f="horreur" aria-pressed="false">Horror <small>1</small></button><button type="button" class="chip" data-f="tycoon" aria-pressed="false">Management <small>3</small></button><button type="button" class="chip" data-f="zen" aria-pressed="false">Zen <small>1</small></button></div>
 <div class="grid" id="grille">
-<article class="card">
+<article class="card" data-fam="horreur">
 <a class="card-media" href="../en/sainte-agathe/index.html" tabindex="-1" aria-hidden="true"><img src="../img/jeux/sainte-agathe.webp" srcset="../img/jeux/sainte-agathe-400.webp 400w, ../img/jeux/sainte-agathe.webp 800w" sizes="(max-width:600px) 100vw, (max-width:960px) 50vw, 560px" width="800" height="500" alt="Preview of Sainte-Agathe : Hôpital Hanté" loading="lazy" decoding="async"><span class="badge">New</span></a>
 <div class="card-body">
 <p class="card-genre">Horror · Survival</p>
@@ -88,7 +89,7 @@
 <p>A first-person horror game: find the 5 fuses, restart the generator and escape Sainte-Agathe hospital before the monsters find you.</p>
 <div class="card-actions"><a class="btn btn-play" href="../jouer/sainte-agathe/index.html" data-game="sainte-agathe" data-local data-name="Sainte-Agathe : Hôpital Hanté" aria-label="Play Sainte-Agathe : Hôpital Hanté"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M2 1h3v1h2v1h2v1h2v1h1v4h-1v1H9v1H7v1H5v1H2z" fill="currentColor"/></svg>Play</a><a class="more" href="../en/sainte-agathe/index.html">Game details</a></div>
 </div>
-</article><article class="card">
+</article><article class="card" data-fam="tycoon">
 <a class="card-media" href="../en/city-empire/index.html" tabindex="-1" aria-hidden="true"><img src="../img/jeux/city-empire.webp" srcset="../img/jeux/city-empire-400.webp 400w, ../img/jeux/city-empire.webp 800w" sizes="(max-width:600px) 100vw, (max-width:960px) 50vw, 560px" width="800" height="500" alt="Preview of City Empire" loading="lazy" decoding="async"><span class="badge">New</span></a>
 <div class="card-body">
 <p class="card-genre">Simulation · City</p>
@@ -96,7 +97,7 @@
 <p>Lay roads, zone your districts, manage your budget and grow your village into a futuristic megacity.</p>
 <div class="card-actions"><a class="btn btn-play" href="../jouer/city-empire.html" data-game="city-empire" data-local data-name="City Empire" aria-label="Play City Empire"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M2 1h3v1h2v1h2v1h2v1h1v4h-1v1H9v1H7v1H5v1H2z" fill="currentColor"/></svg>Play</a><a class="more" href="../en/city-empire/index.html">Game details</a></div>
 </div>
-</article><article class="card">
+</article><article class="card" data-fam="tycoon">
 <a class="card-media" href="../en/pulse-studio-tycoon/index.html" tabindex="-1" aria-hidden="true"><img src="../img/jeux/pulse-studio-tycoon.webp" srcset="../img/jeux/pulse-studio-tycoon-400.webp 400w, ../img/jeux/pulse-studio-tycoon.webp 800w" sizes="(max-width:600px) 100vw, (max-width:960px) 50vw, 560px" width="800" height="500" alt="Preview of Pulse Studio Tycoon" loading="lazy" decoding="async"><span class="badge">3D</span></a>
 <div class="card-body">
 <p class="card-genre">Tycoon · Management</p>
@@ -104,7 +105,7 @@
 <p>Grow your building of live studios, equip your sets and climb the world streamer leaderboard.</p>
 <div class="card-actions"><a class="btn btn-play" href="../jouer/pulse-studio/index.html" data-game="pulse-studio-tycoon" data-local data-name="Pulse Studio Tycoon" aria-label="Play Pulse Studio Tycoon"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M2 1h3v1h2v1h2v1h2v1h1v4h-1v1H9v1H7v1H5v1H2z" fill="currentColor"/></svg>Play</a><a class="more" href="../en/pulse-studio-tycoon/index.html">Game details</a></div>
 </div>
-</article><article class="card">
+</article><article class="card" data-fam="tycoon">
 <a class="card-media" href="../en/tv-empire-tycoon/index.html" tabindex="-1" aria-hidden="true"><img src="../img/jeux/tv-empire-tycoon.webp" srcset="../img/jeux/tv-empire-tycoon-400.webp 400w, ../img/jeux/tv-empire-tycoon.webp 800w" sizes="(max-width:600px) 100vw, (max-width:960px) 50vw, 560px" width="800" height="500" alt="Preview of TV Empire Tycoon" loading="lazy" decoding="async"><span class="badge">New</span></a>
 <div class="card-body">
 <p class="card-genre">Tycoon · Idle</p>
@@ -112,7 +113,7 @@
 <p>Open 7 studios, expand your building, grow your city and watch your channel earn money every second.</p>
 <div class="card-actions"><a class="btn btn-play" href="../jouer/tv-empire-tycoon.html" data-game="tv-empire-tycoon" data-local data-name="TV Empire Tycoon" aria-label="Play TV Empire Tycoon"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M2 1h3v1h2v1h2v1h2v1h1v4h-1v1H9v1H7v1H5v1H2z" fill="currentColor"/></svg>Play</a><a class="more" href="../en/tv-empire-tycoon/index.html">Game details</a></div>
 </div>
-</article><article class="card">
+</article><article class="card" data-fam="zen">
 <a class="card-media" href="../en/zen-games/index.html" tabindex="-1" aria-hidden="true"><img src="../img/jeux/zen-games.webp" srcset="../img/jeux/zen-games-400.webp 400w, ../img/jeux/zen-games.webp 800w" sizes="(max-width:600px) 100vw, (max-width:960px) 50vw, 560px" width="800" height="500" alt="Preview of Zen Games" loading="lazy" decoding="async"><span class="badge">4 games in 1</span></a>
 <div class="card-body">
 <p class="card-genre">Puzzle · Brain</p>
@@ -122,6 +123,11 @@
 </div>
 </article>
 </div>
+</div></section>
+
+<section class="section" aria-labelledby="news-h" style="padding-top:0"><div class="wrap">
+<div class="section-head"><div><h2 id="news-h">News</h2></div><a class="more" href="../en/news/index.html">All news</a></div>
+<ol class="news"><li class="news-it"><time datetime="2026-11-14">November 14, 2026</time><h3>New game: Sainte-Agathe: Haunted Hospital</h3><p>Our first horror game lands on Pixel Pulse. Escape an abandoned psychiatric hospital: find the 5 fuses, hide in lockers and survive the Watcher, the Crawler, the Puppet and the Surgeon. Play with headphones, in the dark. <a class="more" href="../en/sainte-agathe/index.html">See the game</a></p></li><li class="news-it"><time datetime="2026-11-12">November 12, 2026</time><h3>Bonuses in every game</h3><p>In City Empire, TV Empire Tycoon, Pulse Studio Tycoon and Zen Games, a 📺 button now gives you a boost: doubled income, a city grant, extra points…</p></li><li class="news-it"><time datetime="2026-11-11">November 11, 2026</time><h3>Pixel Pulse in English, tips and screenshots</h3><p>The site is now available in English. Every game has a gallery of real screenshots and a tips guide. The home page also remembers your latest games so you can pick up where you left off.</p></li></ol>
 </div></section>
 
 <section class="section" aria-labelledby="tips-h"><div class="wrap">
@@ -160,7 +166,7 @@
 <div><a class="logo" href="../en/index.html"><svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#ff4f6d"/><path d="M4 17h6l3-9 5 17 3-11 2 3h5" fill="none" stroke="#fff" stroke-width="3.2" stroke-linejoin="miter" stroke-linecap="square"/></svg><span>Pixel Pulse</span></a>
 <p>Free games to play right in your browser: tycoons, puzzles and zen brain teasers, on desktop and mobile.</p></div>
 <nav aria-label="Site links"><ul>
-<li><a href="../en/index.html#jeux">All games</a></li><li><a href="../en/tips/index.html">Tips</a></li>
+<li><a href="../en/index.html#jeux">All games</a></li><li><a href="../en/tips/index.html">Tips</a></li><li><a href="../en/news/index.html">News</a></li>
 <li><a href="../en/about/index.html">About</a></li><li><a href="../en/contact/index.html">Contact</a></li>
 <li><a href="../en/privacy/index.html">Privacy</a></li><li><a href="../en/legal/index.html">Legal notice</a></li>
 </ul></nav>
@@ -204,6 +210,13 @@ document.querySelectorAll('[data-native]').forEach(function(b){
   b.addEventListener('click',function(){navigator.share({title:b.getAttribute('data-title'),url:b.getAttribute('data-native')}).catch(function(){});});
 });
 try{if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol))navigator.serviceWorker.register('/sw.js').catch(function(){});}catch(e){}
+document.querySelectorAll('.filters .chip').forEach(function(b){b.addEventListener('click',function(){var f=b.getAttribute('data-f');
+  document.querySelectorAll('.filters .chip').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false')});
+  document.querySelectorAll('#grille .card').forEach(function(c){c.hidden=!!f&&c.getAttribute('data-fam')!==f});});});
+var ib=document.getElementById('install'),dp=null;
+window.addEventListener('beforeinstallprompt',function(ev){ev.preventDefault();dp=ev;if(ib)ib.hidden=false;});
+if(ib)ib.addEventListener('click',function(){if(!dp)return;dp.prompt();dp.userChoice.then(function(){dp=null;ib.hidden=true;});});
+window.addEventListener('appinstalled',function(){if(ib)ib.hidden=true;});
 var rec=document.getElementById('recent');
 if(rec&&window.PP_GAMES){try{
   var list=JSON.parse(localStorage.getItem('pp_recent')||'[]').filter(function(x){return PP_GAMES[x.s]});

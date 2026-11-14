@@ -93,6 +93,9 @@ button.b:hover{border-color:#8a9a8c}button.b.rouge{background:#5a0b0b;border-col
 .coarse #aide{display:none}
 .coarse .msg{bottom:auto;top:22%}
 .coarse #hud{transform:scale(.82);transform-origin:0 0}
+
+.cmds{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:6px 14px;margin-top:16px;font-size:13px;color:#b9c3b5}
+.cmds b{display:inline-block;min-width:44px;color:#e2c46a;font-weight:400}
 input[type=range]{width:200px;accent-color:#a01010}
 </style>
 </head>
@@ -152,6 +155,8 @@ input[type=range]{width:200px;accent-color:#a01010}
   <p id="intro-x"></p>
   <p style="color:#e44;margin-top:14px">Choisis ton rôle :</p>
   <div id="roles"></div>
+  <div class="cmds" id="cmds"></div>
+  <p class="astuce" id="best" hidden></p>
   <p class="astuce">🎧 Joue avec un casque, dans le noir. Contenu effrayant : déconseillé aux plus jeunes.</p>
 </div></div>
 <div id="load"><div class="w"><h1 class="titre" style="font-size:52px">SAINTE-AGATHE</h1><div class="bar"><i id="load-b"></i></div><div id="load-t">Chargement…</div></div></div>

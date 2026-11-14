@@ -972,6 +972,10 @@
     $('#load').hidden = true; $('#menu').hidden = false; $('#intro-x').textContent = TXT.intro;
     $('#roles').innerHTML = TXT.roles.map((r) => `<button class="role" data-r="${r.id}"><b>${r.nom}</b><span>${r.desc}</span></button>`).join('');
     document.querySelectorAll('.role').forEach((b) => b.addEventListener('click', () => startGame(b.dataset.r)));
+    const CM = isTouch ? [['Joystick', 'se déplacer'], ['Glisser', 'regarder'], ['MAIN', 'interagir'], ['COURIR', 'courir'], ['LAMPE', 'lampe torche'], ['☰', 'pause, guide, plan']]
+      : [['ZQSD', 'se déplacer'], ['Souris', 'regarder'], ['E', 'interagir (maintenir)'], ['Maj', 'courir'], ['F', 'lampe torche'], ['V', 'caméscope'], ['R', 'flash'], ['Espace', 'retenir son souffle'], ['M', 'plan'], ['G', 'guide']];
+    $('#cmds').innerHTML = CM.map(([k, v]) => `<span><b>${k}</b> ${v}</span>`).join('');
+    try { const b = +localStorage.getItem('sa_best'); if (b) { $('#best').hidden = false; $('#best').textContent = `🏆 Ton meilleur temps : ${Math.floor(b / 60)} min ${String(Math.floor(b % 60)).padStart(2, '0')} s`; } } catch (e) {}
     $('#q-t').textContent = (localStorage.getItem('sa_q') || (isTouch ? 'moyenne' : 'haute')).toUpperCase();
     if (isTouch) setupTouch();
     // boutons

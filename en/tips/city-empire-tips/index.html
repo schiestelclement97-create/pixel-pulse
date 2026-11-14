@@ -37,7 +37,7 @@
 <a class="skip" href="#contenu">Skip to content</a>
 <header class="site-header"><div class="wrap nav">
 <a class="logo" href="../../../en/index.html" aria-label="Pixel Pulse, home"><svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#ff4f6d"/><path d="M4 17h6l3-9 5 17 3-11 2 3h5" fill="none" stroke="#fff" stroke-width="3.2" stroke-linejoin="miter" stroke-linecap="square"/></svg><span>Pixel Pulse</span></a>
-<div class="nav-right"><nav aria-label="Main navigation"><ul><li><a href="../../../en/index.html#jeux">Games</a></li><li><a href="../../../en/tips/index.html" aria-current="page">Tips</a></li><li class="opt"><a href="../../../en/about/index.html">About</a></li><li class="opt"><a href="../../../en/contact/index.html">Contact</a></li></ul></nav>
+<div class="nav-right"><nav aria-label="Main navigation"><ul><li><a href="../../../en/index.html#jeux">Games</a></li><li><a href="../../../en/tips/index.html" aria-current="page">Tips</a></li><li class="opt"><a href="../../../en/news/index.html">News</a></li><li class="opt"><a href="../../../en/about/index.html">About</a></li><li class="opt"><a href="../../../en/contact/index.html">Contact</a></li></ul></nav>
 <a class="lang" href="../../../astuces/astuces-city-empire/index.html" hreflang="fr" lang="fr" aria-label="Version française">FR</a></div>
 </div></header>
 <main id="contenu">
@@ -100,7 +100,7 @@
 <div><a class="logo" href="../../../en/index.html"><svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#ff4f6d"/><path d="M4 17h6l3-9 5 17 3-11 2 3h5" fill="none" stroke="#fff" stroke-width="3.2" stroke-linejoin="miter" stroke-linecap="square"/></svg><span>Pixel Pulse</span></a>
 <p>Free games to play right in your browser: tycoons, puzzles and zen brain teasers, on desktop and mobile.</p></div>
 <nav aria-label="Site links"><ul>
-<li><a href="../../../en/index.html#jeux">All games</a></li><li><a href="../../../en/tips/index.html">Tips</a></li>
+<li><a href="../../../en/index.html#jeux">All games</a></li><li><a href="../../../en/tips/index.html">Tips</a></li><li><a href="../../../en/news/index.html">News</a></li>
 <li><a href="../../../en/about/index.html">About</a></li><li><a href="../../../en/contact/index.html">Contact</a></li>
 <li><a href="../../../en/privacy/index.html">Privacy</a></li><li><a href="../../../en/legal/index.html">Legal notice</a></li>
 </ul></nav>
@@ -144,6 +144,13 @@ document.querySelectorAll('[data-native]').forEach(function(b){
   b.addEventListener('click',function(){navigator.share({title:b.getAttribute('data-title'),url:b.getAttribute('data-native')}).catch(function(){});});
 });
 try{if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol))navigator.serviceWorker.register('/sw.js').catch(function(){});}catch(e){}
+document.querySelectorAll('.filters .chip').forEach(function(b){b.addEventListener('click',function(){var f=b.getAttribute('data-f');
+  document.querySelectorAll('.filters .chip').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false')});
+  document.querySelectorAll('#grille .card').forEach(function(c){c.hidden=!!f&&c.getAttribute('data-fam')!==f});});});
+var ib=document.getElementById('install'),dp=null;
+window.addEventListener('beforeinstallprompt',function(ev){ev.preventDefault();dp=ev;if(ib)ib.hidden=false;});
+if(ib)ib.addEventListener('click',function(){if(!dp)return;dp.prompt();dp.userChoice.then(function(){dp=null;ib.hidden=true;});});
+window.addEventListener('appinstalled',function(){if(ib)ib.hidden=true;});
 var rec=document.getElementById('recent');
 if(rec&&window.PP_GAMES){try{
   var list=JSON.parse(localStorage.getItem('pp_recent')||'[]').filter(function(x){return PP_GAMES[x.s]});

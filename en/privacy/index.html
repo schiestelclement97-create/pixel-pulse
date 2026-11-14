@@ -46,6 +46,7 @@
 <p>Pixel Pulse aims to collect as little data as possible. This page explains what the site and games store, and why.</p>
 <h2>Your saved games</h2><p>Your progress (money, levels, settings) and the list of your latest games are stored in your browser's local storage, on your device. They are not sent to our servers, and you can erase them by clearing the site's data in your browser.</p>
 <h2>Online leaderboards</h2><p>If you choose a nickname, that nickname and your score are sent to our database (Supabase, hosted in the European Union) to show the leaderboards. Do not use your real name or personal information as a nickname. To have an entry removed, write to us.</p>
+<h2>Game ratings</h2><p>When you rate a game, your rating (1 to 5 stars) is stored with a random anonymous ID kept in your browser, so that only one rating counts per device. Nothing else is sent (Supabase, hosted in the European Union).</p>
 <h2>Advertising</h2><p>The site shows Google AdSense ads, and some games offer to watch an ad in exchange for a bonus. Google and its partners may use cookies to show and measure these ads. Where the law requires it, your consent is asked before any advertising cookie, and you can withdraw it at any time.</p>
 <h2>Hosting</h2><p>The site is hosted by GitHub, Inc. (GitHub Pages service), 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA, github.com. The host keeps technical logs (IP address, date, requested page) for security and to keep the service running.</p>
 <h2>Your rights</h2><p>Under the GDPR you can ask to access, correct or delete data about you by writing to:</p><p class="mail">contact@playpixelpulsing.fr</p>
@@ -71,7 +72,7 @@
 </div></div>
 <script>
 (function(){
-var T={"copied": "Link copied!", "copy": "Copy link", "resume": "Continue"};
+var T={"copied": "Link copied!", "copy": "Copy link", "resume": "Continue", "votes": "votes", "vote1": "vote", "thanks": "Thanks for rating!", "no_votes": "Be the first to rate this game"};
 var box=document.getElementById('soon'),nm=document.getElementById('soon-name'),cl=document.getElementById('soon-close');
 function show(n){nm.textContent=n;box.hidden=false;cl.focus();}
 function hide(){box.hidden=true;}
@@ -106,6 +107,25 @@ var ib=document.getElementById('install'),dp=null;
 window.addEventListener('beforeinstallprompt',function(ev){ev.preventDefault();dp=ev;if(ib)ib.hidden=false;});
 if(ib)ib.addEventListener('click',function(){if(!dp)return;dp.prompt();dp.userChoice.then(function(){dp=null;ib.hidden=true;});});
 window.addEventListener('appinstalled',function(){if(ib)ib.hidden=true;});
+var SB='https://dsusopmsomtqecnjnnlg.supabase.co',SK='sb_publishable_lFiWPSCEPS-m-GOIjCPNCQ_-oRclUPL';
+function rpc(f,body){return fetch(SB+'/rest/v1/rpc/'+f,{method:'POST',headers:{'apikey':SK,'Content-Type':'application/json'},body:JSON.stringify(body||{})}).then(function(r){if(!r.ok)throw 0;return r.json();});}
+function fmt(a){return (Math.round(a*10)/10).toLocaleString(document.documentElement.lang)}
+function votesTxt(n){return n+' '+(n>1?T.votes:T.vote1)}
+var rt=document.querySelector('.rating'),minis=document.querySelectorAll('.r-mini');
+if(rt||minis.length){rpc('pp_ratings').then(function(rows){var m={};rows.forEach(function(r){m[r.game]=r});
+  minis.forEach(function(el){var r=m[el.getAttribute('data-game')];if(r&&r.n>0){el.textContent='★ '+fmt(r.avg);el.title=votesTxt(r.n);el.hidden=false;}});
+  if(rt){var r=m[rt.getAttribute('data-game')];showAvg(r);}}).catch(function(){if(rt)showAvg(null)});}
+function showAvg(r){var el=rt.querySelector('.r-avg');el.textContent=r&&r.n>0?('★ '+fmt(r.avg)+' / 5 · '+votesTxt(r.n)):T.no_votes;}
+function mine(){try{return JSON.parse(localStorage.getItem('pp_votes')||'{}')}catch(e){return {}}}
+function paint(v){rt.querySelectorAll('.r-stars button').forEach(function(b){b.classList.toggle('on',+b.getAttribute('data-v')<=v);b.setAttribute('aria-pressed',+b.getAttribute('data-v')===v?'true':'false')});}
+if(rt){var g=rt.getAttribute('data-game');paint(mine()[g]||0);
+  rt.querySelectorAll('.r-stars button').forEach(function(b){
+    b.addEventListener('mouseenter',function(){paint(+b.getAttribute('data-v'))});
+    b.addEventListener('mouseleave',function(){paint(mine()[g]||0)});
+    b.addEventListener('click',function(){var v=+b.getAttribute('data-v'),id;
+      try{id=localStorage.getItem('pp_voter');if(!id){id=(crypto.randomUUID?crypto.randomUUID():'10000000-1000-4000-8000-100000000000'.replace(/[018]/g,function(c){return(c^Math.random()*16>>c/4).toString(16)}));localStorage.setItem('pp_voter',id);}}catch(e){id='00000000-0000-4000-8000-'+String(Date.now()).slice(-12).padStart(12,'0');}
+      var mv=mine();mv[g]=v;try{localStorage.setItem('pp_votes',JSON.stringify(mv))}catch(e){}paint(v);
+      rpc('pp_rate',{p_game:g,p_voter:id,p_stars:v}).then(function(r){var x=r&&r[0];showAvg(x);rt.querySelector('.r-avg').textContent+=' — '+T.thanks;}).catch(function(){});});});}
 var rec=document.getElementById('recent');
 if(rec&&window.PP_GAMES){try{
   var list=JSON.parse(localStorage.getItem('pp_recent')||'[]').filter(function(x){return PP_GAMES[x.s]});

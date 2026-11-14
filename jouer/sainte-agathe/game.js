@@ -4,6 +4,12 @@
   const T = THREE, $ = (s) => document.querySelector(s), R = Math.random;
   const clamp = (x, a, b) => Math.max(a, Math.min(b, x)), lerp = (a, b, t) => a + (b - a) * t, rr = (a, b) => a + R() * (b - a);
   const isTouch = matchMedia('(pointer: coarse)').matches || 'ontouchstart' in window;
+  // langue : ?lang=en, choix mémorisé, page anglaise du site, ou langue du navigateur
+  let LANG = 'fr';
+  try { const q = new URLSearchParams(location.search).get('lang'); const m = localStorage.getItem('sa_lang');
+    LANG = q === 'en' || q === 'fr' ? q : m || (/\/en\//.test(document.referrer) ? 'en' : (/^fr/i.test(navigator.language || 'fr') ? 'fr' : 'en')); } catch (e) {}
+  if (LANG === 'en' && (typeof SA_EN !== 'undefined')) { Object.assign(TXT, SA_EN.TXT); for (const k in SA_EN.M) Object.assign(CFG.M[k], SA_EN.M[k]); }
+  const tr = (s) => { if (LANG !== 'en' || !(typeof SA_EN !== 'undefined') || typeof s !== 'string') return s; if (SA_EN.TR[s]) return SA_EN.TR[s]; for (const [re, f] of SA_EN.PAT) { const m = s.match(re); if (m) return f(m); } return s; };
   let Q = { px: Math.min(devicePixelRatio || 1, 1.5), lights: 8 };   // qualité
   try { const q = localStorage.getItem('sa_q'); if (q === 'moyenne') Q = { px: 1, lights: 6 }; if (q === 'basse') Q = { px: 0.75, lights: 4 }; } catch (e) {}
   if (isTouch && !localStorage.getItem('sa_q')) Q = { px: Math.min(devicePixelRatio || 1, 1.25), lights: 5 };
@@ -662,7 +668,7 @@
     for (const k in monsters) if (monsters[k].nm === nm) monsters[k].grp.visible = false;
     setTimeout(() => {
       scene.remove(fl); $('#rouge').style.opacity = 0;
-      $('#mort-t').textContent = (MORT[nm] || 'Quelque chose') + ' t\'a attrapé.'; $('#mort-why').textContent = why || conseil(nm);
+      $('#mort-t').textContent = LANG === 'en' ? tr(MORT[nm] || 'Quelque chose') + ' got you.' : (MORT[nm] || 'Quelque chose') + ' t\'a attrapé.'; $('#mort-why').textContent = tr(why || conseil(nm));
       $('#mort').hidden = false; exitLock();
       if (jsGroup) { scene.remove(jsGroup); jsGroup = null; }
     }, 1500);
@@ -768,10 +774,10 @@
 
   /* =============================================================== HUD & INTERFACE */
   let msgT = 0;
-  function msg(t, d, style) { const el = $('#msg'); el.textContent = t; el.className = 'msg ' + (style || ''); el.style.opacity = 1; msgT = d || 3; }
+  function msg(t, d, style) { const el = $('#msg'); el.textContent = tr(t); el.className = 'msg ' + (style || ''); el.style.opacity = 1; msgT = d || 3; }
   function showPrompt(p) {
     const el = $('#prompt'); if (!p) { el.hidden = true; if (isTouch) $('#b-e').classList.remove('on'); return; }
-    el.hidden = false; $('#prompt-t').textContent = p.label; $('#prompt-k').textContent = isTouch ? 'MAIN' : 'E';
+    el.hidden = false; $('#prompt-t').textContent = tr(p.label); $('#prompt-k').textContent = isTouch ? tr('MAIN') : 'E';
     $('#prompt-bar').style.width = p.hold >= 99 ? '0%' : clamp(holdT / (p.hold || 0.0001), 0, 1) * 100 + '%'; if (isTouch) $('#b-e').classList.add('on');
   }
   function hud(dt, nearest) {
@@ -811,8 +817,8 @@
     g.fillStyle = '#0d0f0d'; g.fillRect(0, 0, W2, H2);
     let zones = plan.z0, titre = 'REZ-DE-CHAUSSÉE';
     if (P.y > CFG.EY2 - 3) { zones = plan.z2; titre = '2e ÉTAGE — BLOC OPÉRATOIRE'; } else if (P.y > CFG.EY - 3) { zones = plan.z1; titre = '1er ÉTAGE — AILE PSYCHIATRIQUE'; }
-    if (P.y < -6) { g.fillStyle = '#7a0000'; g.font = '34px Creepster, serif'; g.textAlign = 'center'; g.fillText('AUCUN PLAN DU SOUS-SOL', W2 / 2, H2 / 2); g.font = '16px Elite, serif'; g.fillStyle = '#9a9'; g.fillText('Tu es seul ici.', W2 / 2, H2 / 2 + 34); $('#plan-h').textContent = 'SOUS-SOL'; return; }
-    $('#plan-h').textContent = titre;
+    if (P.y < -6) { g.fillStyle = '#7a0000'; g.font = '34px Creepster, serif'; g.textAlign = 'center'; g.fillText(tr('AUCUN PLAN DU SOUS-SOL'), W2 / 2, H2 / 2); g.font = '16px Elite, serif'; g.fillStyle = '#9a9'; g.fillText(tr('Tu es seul ici.'), W2 / 2, H2 / 2 + 34); $('#plan-h').textContent = tr('SOUS-SOL'); return; }
+    $('#plan-h').textContent = tr(titre);
     const x0 = -128, x1 = 206, z0 = -92, z1 = 42, sc = Math.min((W2 - 20) / (x1 - x0), (H2 - 20) / (z1 - z0));
     const X = (x) => 10 + (x - x0) * sc, Z = (z) => 10 + (z1 - z) * sc;
     const col = { couloir: '#2b302b', salle: '#1e2420', depart: '#1d3a27', cour: '#232a33', sortie: '#3a3215', escalier: '#33281e', generateur: '#3a2a12' };
@@ -922,8 +928,8 @@
   function victoire() {
     S.won = true; exitLock(); const t = S.time; const m = Math.floor(t / 60), s = Math.floor(t % 60);
     let best = null; try { best = +localStorage.getItem('sa_best') || null; if (!best || t < best) { localStorage.setItem('sa_best', t); best = t; } } catch (e) {}
-    $('#vic-t').textContent = `Tu t'es échappé en ${m} min ${String(s).padStart(2, '0')} s.`;
-    $('#vic-b').textContent = best ? `Meilleur temps : ${Math.floor(best / 60)} min ${String(Math.floor(best % 60)).padStart(2, '0')} s` : '';
+    $('#vic-t').textContent = tr(`Tu t'es échappé en ${m} min ${String(s).padStart(2, '0')} s.`);
+    $('#vic-b').textContent = best ? tr(`Meilleur temps : ${Math.floor(best / 60)} min ${String(Math.floor(best % 60)).padStart(2, '0')} s`) : '';
     $('#victoire').hidden = false; SND.generateur();
   }
 
@@ -961,7 +967,7 @@
     Q = q === 'haute' ? { px: Math.min(devicePixelRatio || 1, 1.5), lights: 8 } : q === 'moyenne' ? { px: 1, lights: 6 } : { px: 0.75, lights: 4 };
     renderer.setPixelRatio(Q.px); renderer.setSize(innerWidth, innerHeight); AD.px = Q.px; try { localStorage.removeItem('sa_px'); } catch (e) {} for (let i = 0; i < pool.length; i++) pool[i].visible = true; // le nombre de lumières reste fixe (pas de recompilation)
     for (let i = Q.lights; i < pool.length; i++) pool[i].intensity = 0;
-    $('#q-t').textContent = q.toUpperCase();
+    $('#q-t').textContent = tr(q.toUpperCase());
   }
 
   async function main() {
@@ -969,14 +975,22 @@
     try { await build(prog); } catch (e) { $('#load-t').textContent = 'Erreur de chargement : ' + e.message; console.error(e); return; }
     buildGuide();
     Object.assign(P, { x: -104, y: 0.2, z: 0 }); camUpdate(0); updateLamps(0); updateLightPool();
+    if (LANG === 'en' && (typeof SA_EN !== 'undefined')) {
+      document.documentElement.lang = 'en'; document.title = 'Sainte-Agathe: Haunted Hospital · Pixel Pulse';
+      for (const id in SA_EN.UI) { const el = document.getElementById(id); if (el) el.innerHTML = SA_EN.UI[id]; }
+      for (const [sel, txt] of SA_EN.SEL) { const els = document.querySelectorAll(sel); els.forEach((el, i) => { const t = Array.isArray(txt) ? txt[i] : txt; if (t != null) el.textContent = t; }); }
+      $('#q-btn').innerHTML = 'Graphics: <span id="q-t"></span>'; $('#guide-x') && buildGuide();
+    }
+    $('#lang-btn').textContent = LANG === 'en' ? '🇫🇷 Jouer en français' : '🇬🇧 Play in English';
+    $('#lang-btn').addEventListener('click', () => { const n = LANG === 'en' ? 'fr' : 'en'; try { localStorage.setItem('sa_lang', n); } catch (e) {} location.href = location.pathname + '?lang=' + n; });
     $('#load').hidden = true; $('#menu').hidden = false; $('#intro-x').textContent = TXT.intro;
     $('#roles').innerHTML = TXT.roles.map((r) => `<button class="role" data-r="${r.id}"><b>${r.nom}</b><span>${r.desc}</span></button>`).join('');
     document.querySelectorAll('.role').forEach((b) => b.addEventListener('click', () => startGame(b.dataset.r)));
     const CM = isTouch ? [['Joystick', 'se déplacer'], ['Glisser', 'regarder'], ['MAIN', 'interagir'], ['COURIR', 'courir'], ['LAMPE', 'lampe torche'], ['☰', 'pause, guide, plan']]
       : [['ZQSD', 'se déplacer'], ['Souris', 'regarder'], ['E', 'interagir (maintenir)'], ['Maj', 'courir'], ['F', 'lampe torche'], ['V', 'caméscope'], ['R', 'flash'], ['Espace', 'retenir son souffle'], ['M', 'plan'], ['G', 'guide']];
-    $('#cmds').innerHTML = CM.map(([k, v]) => `<span><b>${k}</b> ${v}</span>`).join('');
-    try { const b = +localStorage.getItem('sa_best'); if (b) { $('#best').hidden = false; $('#best').textContent = `🏆 Ton meilleur temps : ${Math.floor(b / 60)} min ${String(Math.floor(b % 60)).padStart(2, '0')} s`; } } catch (e) {}
-    $('#q-t').textContent = (localStorage.getItem('sa_q') || (isTouch ? 'moyenne' : 'haute')).toUpperCase();
+    $('#cmds').innerHTML = CM.map(([k, v]) => `<span><b>${tr(k)}</b> ${tr(v)}</span>`).join('');
+    try { const b = +localStorage.getItem('sa_best'); if (b) { $('#best').hidden = false; $('#best').textContent = tr(`🏆 Ton meilleur temps : ${Math.floor(b / 60)} min ${String(Math.floor(b % 60)).padStart(2, '0')} s`); } } catch (e) {}
+    $('#q-t').textContent = tr((localStorage.getItem('sa_q') || (isTouch ? 'moyenne' : 'haute')).toUpperCase());
     if (isTouch) setupTouch();
     // boutons
     const on = (sel, f) => $(sel).addEventListener('click', f);

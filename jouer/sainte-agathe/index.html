@@ -96,6 +96,15 @@ button.b:hover{border-color:#8a9a8c}button.b.rouge{background:#5a0b0b;border-col
 
 .cmds{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:6px 14px;margin-top:16px;font-size:13px;color:#b9c3b5}
 .cmds b{display:inline-block;min-width:44px;color:#e2c46a;font-weight:400}
+#hud .niv{font-size:12px;color:#d9c9ff;margin-bottom:6px}#hud .niv .bar{height:4px;margin-top:3px}#h-xp{background:#b48cff!important;width:0}
+#xp-pop{position:fixed;left:50%;top:30%;transform:translateX(-50%);font:22px Creepster,serif;color:#d9c9ff;text-shadow:0 0 10px #7a4dff,0 2px 4px #000;opacity:0;pointer-events:none}
+#xp-pop.go{animation:xpp 1.8s ease-out}
+@keyframes xpp{0%{opacity:0;transform:translate(-50%,10px)}15%{opacity:1;transform:translate(-50%,0)}75%{opacity:1}100%{opacity:0;transform:translate(-50%,-30px)}}
+.progbox{background:#121613;border:1px solid #2f3a32;border-radius:10px;padding:12px 14px;margin-top:14px;font-size:13px;line-height:1.5}
+.progbox b{color:#e2c46a;font-weight:400}.progbox small{color:#8f9a8c}
+.xpbar{display:inline-block;vertical-align:middle;width:110px;height:6px;background:#2a2f2b;border-radius:3px;overflow:hidden;margin:0 6px}.xpbar i{display:block;height:100%;background:#b48cff}
+.defi{color:#cfd8cb}.defi.ok{color:#8fd99a}
+.defis b{display:block;margin-bottom:4px}
 input[type=range]{width:200px;accent-color:#a01010}
 </style>
 </head>
@@ -108,9 +117,11 @@ input[type=range]{width:200px;accent-color:#a01010}
 <div id="marks"></div><div id="croix"></div>
 <div id="compte" hidden>20</div>
 <div class="msg" id="msg"></div>
+<div id="xp-pop"></div>
 <div id="prompt" hidden><span id="prompt-k">E</span><span id="prompt-t"></span><i id="prompt-bar"></i></div>
 
 <div id="hud" hidden>
+  <div class="niv"><span id="h-niv">Niv. 1</span><div class="bar xp"><i id="h-xp"></i></div></div>
   <div class="fus">⚡ <span id="h-fus">0/5</span><small>fusibles au générateur</small></div>
   <div id="h-cle" hidden>🗝 clé de la Salle 0</div>
   <div class="lbl" style="margin-top:8px"><span>LAMPE</span></div><div class="bar"><i id="h-bat"></i></div>
@@ -140,6 +151,7 @@ input[type=range]{width:200px;accent-color:#a01010}
   <h2>PAUSE</h2>
   <div class="btns"><button class="b rouge" id="reprendre">▶ Reprendre</button><button class="b" id="p-guide">Guide</button><button class="b" id="p-plan">Plan</button><button class="b" id="q-btn">Graphismes : <span id="q-t">HAUTE</span></button><button class="b" id="p-quitter">Quitter</button></div>
   <p style="margin-top:16px">Sensibilité de la souris / du doigt</p><input type="range" id="sens" min="0.3" max="2.5" step="0.1" value="1">
+  <div class="progbox defis" style="margin-top:16px"></div>
   <h2 style="font-size:26px;margin-top:20px">BONUS</h2>
   <p class="astuce" style="margin-top:0">Regarde une courte pub pour obtenir un coup de pouce (gratuit).</p>
   <div class="btns"><button class="b or" id="bn-piles">🔋 Piles neuves</button><button class="b or" id="bn-adr">💉 Adrénaline (45 s)</button><button class="b or" id="bn-ind">🔍 Indice (30 s)</button></div>
@@ -155,6 +167,7 @@ input[type=range]{width:200px;accent-color:#a01010}
   <p id="intro-x"></p>
   <p style="color:#e44;margin-top:14px">Choisis ton rôle :</p>
   <div id="roles"></div>
+  <div class="progbox"><div id="prog-menu"></div><div class="defis"></div></div>
   <div class="cmds" id="cmds"></div>
   <p class="astuce" id="best" hidden></p>
   <p class="astuce">🎧 Joue avec un casque, dans le noir. Contenu effrayant : déconseillé aux plus jeunes.</p>

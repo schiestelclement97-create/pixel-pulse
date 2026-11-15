@@ -277,6 +277,7 @@
     for (const nm in monsters) { const M = monsters[nm]; Object.assign(M, { x: M.home.x, y: M.home.y, z: M.home.z, state: 'sommeil', path: null, stun: 0, repit: 0, sawHide: false, chaseT: 0 }); M.grp.visible = true; placeMonster(M); }
     Object.assign(P, { x: -104, y: 0.2, z: 0, yaw: -Math.PI / 2, pitch: 0, vy: 0 });
     Object.assign(S, { time: 0, dead: false, won: false, bat: S.batMax, lampe: true, cam: CFG.cam.bat, camOn: false, stam: S.stamMax, esprit: 100, cache: null, adren: 0 });
+    tirerNuit();
     timers.coupure = CFG.coupure.first; timers.hurleur = rr(CFG.hurleur.min, CFG.hurleur.max); timers.screamer = rr(CFG.screamers.min, CFG.screamers.max);
     timers.peur = rr(35, 80); timers.orage = rr(25, 60); timers.murmure = rr(20, 50);
     coupure.phase = 0; hurl.phase = 0; ombre.on = false; ombre.t = 0; if (ombre.grp) ombre.grp.visible = false;
@@ -462,7 +463,7 @@
   function updateChasseur(M, dt) {
     const C = M.C, furie = S.courant; M.t += dt; if (M.repit > 0) M.repit -= dt;
     if (M.stun > 0) { M.stun -= dt; M.speed = 0; return; }
-    const sp = (s) => furie ? C.vf : s;
+    const sp = (s) => (furie ? C.vf : s) * nuit.vitesse;
     const see = C.aveugle ? (Math.hypot(P.x - M.x, P.z - M.z) < C.prox && Math.abs(P.y - M.y) < 6 && !S.cache && !CFG.hall(P)) : sees(M, C.vue, C.angle);
     // respiration dans un casier
     if (S.cache && !S.retenu && C.ouieCasier && Math.hypot(P.x - M.x, P.z - M.z) < C.ouieCasier && M.state !== 'chasse') { M.sawHide = true; M.state = 'chasse'; M.chaseT = 0; }
@@ -519,7 +520,7 @@
     if (M.wasW) { M.wasW = false; M.inner = (M.inner || 0) + 1; M.grp.children[0].rotation.z = rr(-0.25, 0.25); }
     const d = Math.hypot(P.x - M.x, P.z - M.z);
     const near = d < C.portee && Math.abs(P.y - M.y) < 8 && !CFG.hall(P) && !S.cache;
-    if (near) { M.repath = (M.repath || 0) - dt; if (!M.path || M.repath <= 0) { M.repath = 0.8; goTo(M, P.x, P.y, P.z); } follow(M, S.courant ? C.vf : C.v, dt); faceTo(M, P.x, P.z, dt, 12); }
+    if (near) { M.repath = (M.repath || 0) - dt; if (!M.path || M.repath <= 0) { M.repath = 0.8; goTo(M, P.x, P.y, P.z); } follow(M, (S.courant ? C.vf : C.v) * nuit.vitesse, dt); faceTo(M, P.x, P.z, dt, 12); }
     else { if (!M.path || M.pi >= M.path.length) { const t = patrolTarget(M); goTo(M, t.x, t.y, t.z); } follow(M, C.v * 0.5, dt); }
     if (catchable(M)) mort(M.nm);
   }
@@ -658,7 +659,7 @@
   function lightning() { $('#eclair').style.opacity = 0.55; setTimeout(() => ($('#eclair').style.opacity = 0.1), 90); setTimeout(() => ($('#eclair').style.opacity = 0.4), 180); setTimeout(() => ($('#eclair').style.opacity = 0), 330); }
   const MORT = { Veilleur: 'Le Veilleur', Rampante: 'La Rampante', Pantin: 'Le Pantin', Chirurgienne: 'La Chirurgienne', Rodeur: 'Le Rôdeur', Hurleur: 'Le Hurleur', Ombre: "L'Ombre" };
   function mort(nm, why) {
-    if (S.dead || S.won) return; S.dead = true; S.morts++;
+    if (S.dead || S.won) return; S.dead = true; S.morts++; progres('Mort');
     S.cache = null; showPrompt(null);
     const g = modelGroup(SCREAM[nm] || SCREAM.Veilleur, 2.2); const box = new T.Box3().setFromObject(g); const h = box.max.y - box.min.y;
     P.pitch = 0; placeFace(g, 6, P.yaw); scene.add(g); jsGroup = g;
@@ -700,7 +701,7 @@
   function take(p) {
     scene.remove(p.mesh); pickups.splice(pickups.indexOf(p), 1); SND.ping();
     if (p.kind === 'fusible') {
-      S.fusTrouves++; S.fusPortes++; noise(P.x, P.y, P.z, 1, 'fort');
+      S.fusTrouves++; S.fusPortes++; noise(P.x, P.y, P.z, 1, 'fort'); progres('Fusible');
       msg(`Fusible trouvé ! (${S.fusTrouves}/5) — apporte-le au GÉNÉRATEUR.`, 4, 'bon');
       if (p.salle0) { msg('Le fusible de la cage… Quelque chose hurle dans le crématorium. REMONTE !', 5, 'alerte'); salle0Scene(); }
       checkWakes();
@@ -718,7 +719,7 @@
     SND.cri(0.9); shake(0.08, 1.5);
   }
   function inserer() {
-    S.fusInseres += S.fusPortes; S.fusPortes = 0; SND.generateur(); noise(gen.x, gen.y, gen.z, 1.2, 'fort');
+    progres('Insertion', S.fusPortes); S.fusInseres += S.fusPortes; S.fusPortes = 0; SND.generateur(); noise(gen.x, gen.y, gen.z, 1.2, 'fort');
     gen.slots.forEach((s, i) => setGroupColor(s, i < S.fusInseres ? 0xffc61a : 0x222222));
     if (S.fusInseres >= CFG.fuses) {
       S.courant = true; setGroupColor(gen.voyant, 0x30ff60); openGate(true); coupure.phase = 0; $('#compte').hidden = true; setLampMode('normal');
@@ -730,7 +731,7 @@
     S.cache = Object.assign(L, { yaw: Math.atan2(-L.fx, -L.fz) + Math.PI });
     // un monstre te voit-il entrer ?
     S.cacheVu = false; for (const nm in monsters) { const M = monsters[nm]; if (M.state !== 'sommeil' && M.C.type === 'chasseur' && !M.C.aveugle) { S.cache = null; const v = sees(M, M.C.vuCache, 180, true); S.cache = L; if (v) { S.cacheVu = true; M.sawHide = true; M.state = 'chasse'; M.chaseT = 0; M.lastSeen = S.time; } } }
-    P.yaw = S.cache.yaw; P.pitch = 0; SND.grincement(0); $('#casier').hidden = false;
+    P.yaw = S.cache.yaw; P.pitch = 0; SND.grincement(0); $('#casier').hidden = false; progres('Cache');
   }
   function sortirCasier() { const L = S.cache; S.cache = null; S.retenu = false; P.x = L.x + L.fx * 2.6; P.z = L.z + L.fz * 2.6; P.y = L.y; SND.grincement(0); $('#casier').hidden = true; }
   function lireNote(n) { n.lu = true; const t = TXT.notes[(n.i - 1) % TXT.notes.length]; $('#note-t').textContent = t[0]; $('#note-x').textContent = t[1]; openPanel('#note'); SND.clic(); }
@@ -742,8 +743,9 @@
   function doFlash() {
     if (S.flashT > 0 || S.cam < CFG.flash.cout) { msg(S.cam < CFG.flash.cout ? 'Pas assez de batterie pour le flash.' : 'Le flash se recharge…', 2); return; }
     S.cam -= CFG.flash.cout; S.flashT = CFG.flash.recharge; SND.flash(); $('#eclair').style.opacity = 0.9; setTimeout(() => ($('#eclair').style.opacity = 0), 140);
-    _v.set(0, 0, -1).applyQuaternion(camera.quaternion);
-    for (const nm in monsters) { const M = monsters[nm]; if (M.C.aveugle || M.state === 'sommeil') continue; const dx = M.x - P.x, dy = M.y + 5 - camera.position.y, dz = M.z - P.z, d = Math.hypot(dx, dy, dz); if (d < CFG.flash.portee && (dx * _v.x + dy * _v.y + dz * _v.z) / d > 0.45 && !W.blocked(camera.position.x, camera.position.y, camera.position.z, M.x, M.y + 5, M.z)) { M.stun = CFG.flash.duree; if (M.C.type === 'chasseur') { M.state = 'patrouille'; M.repit = 6; M.path = null; } msg(M.C.nom + ' est ébloui !', 2, 'bon'); } }
+    _v.set(0, 0, -1).applyQuaternion(camera.quaternion); let touches = 0;
+    for (const nm in monsters) { const M = monsters[nm]; if (M.C.aveugle || M.state === 'sommeil') continue; const dx = M.x - P.x, dy = M.y + 5 - camera.position.y, dz = M.z - P.z, d = Math.hypot(dx, dy, dz); if (d < CFG.flash.portee && (dx * _v.x + dy * _v.y + dz * _v.z) / d > 0.45 && !W.blocked(camera.position.x, camera.position.y, camera.position.z, M.x, M.y + 5, M.z)) { M.stun = CFG.flash.duree; if (M.C.type === 'chasseur') { M.state = 'patrouille'; M.repit = 6; M.path = null; } msg(M.C.nom + ' est ébloui !', 2, 'bon'); touches++; } }
+    if (touches) progres('Flash', touches);
   }
   function updateTools(dt) {
     if (S.lampe) { S.bat -= dt * (S.role === 'Electricien' ? 0.5 : 1); if (S.bat <= 0) { S.bat = 0; S.lampe = false; msg('Ta lampe s\'est éteinte… elle se recharge.', 3); } }
@@ -752,7 +754,9 @@
     flash.intensity = S.lampe && !S.cache ? (lowBat && R() < 0.08 ? 0.3 : 2.2 * (lowBat ? 0.6 + S.bat / 50 : 1)) : 0;
     if (S.camOn) { S.cam -= dt; if (S.cam <= 0) { S.cam = 0; S.camOn = false; $('#vision').hidden = true; msg('Caméscope déchargé.', 2); } }
     AMB.intensity = S.camOn ? 3.2 : 0.55; AMB.color.set(S.camOn ? 0x7dff8a : 0x2a2c34);
-    scene.fog.density = S.camOn ? 0.012 : (lampMode === 'noir' ? 0.035 : 0.022);
+    scene.fog.density = (S.camOn ? 0.012 : (lampMode === 'noir' ? 0.035 : 0.022)) * (nuit.brouillard ? 2.6 : 1);
+    scene.fog.color.setHex(nuit.brouillard ? 0x1a1c1e : nuit.teinte ? 0x140303 : 0x040405);
+    if (!S.camOn) AMB.color.setHex(nuit.teinte ? 0x4a1c1c : nuit.brouillard ? 0x34363a : 0x2a2c34);
     if (S.flashT > 0) S.flashT -= dt; if (S.adren > 0) S.adren -= dt; if (S.indice > 0) S.indice -= dt;
   }
   function updateEsprit(dt, nearest) {
@@ -770,6 +774,75 @@
     if (timers.murmure <= 0) { timers.murmure = rr(25, 60); SND.murmure(); if (S.esprit < 60 || R() < 0.4) msg('« ' + TXT.murmures[Math.floor(R() * TXT.murmures.length)] + ' »', 2.5, 'murmure'); }
     if (timers.peur <= 0) { timers.peur = rr(35, 80); const k = R(); if (k < 0.4) { for (let i = 0; i < 4; i++) setTimeout(() => SND.pas(false), i * 300); } else if (k < 0.7) SND.grincement(rr(-1, 1)); else SND.impact(); }
     if (timers.screamer <= 0 && !S.cache && !S.dead && coupure.phase === 0) { timers.screamer = rr(CFG.screamers.min, CFG.screamers.max) * (P.y < -6 ? 0.6 : 1); const list = ['Patiente', 'Pendue', 'Veilleur', 'Rampante', 'Pantin']; screamerVisage(list[Math.floor(R() * list.length)], 0.5); }
+  }
+
+  /* =============================================================== PROGRESSION & DÉFIS DU JOUR (mise à jour 3) */
+  const PR = { xp: 0, evasions: 0, fusibles: 0, morts: 0, defis: null };
+  try { Object.assign(PR, JSON.parse(localStorage.getItem('sa_prog') || '{}')); } catch (e) {}
+  const nuit = { nom: '', xp: 1, vitesse: 1, mort: false, plaf: {} };
+  function saveProg() { try { localStorage.setItem('sa_prog', JSON.stringify(PR)); } catch (e) {} }
+  function niveauDe(xp) { let n = 1, r = xp; for (;;) { const b = CFG.prog.base + CFG.prog.pas * (n - 1); if (r < b || n >= 99) return [n, r, b]; r -= b; n++; } }
+  function titreDe(n) { let t = CFG.prog.titres[0][1]; for (const [k, v] of CFG.prog.titres) if (n >= k) t = v; return t; }
+  function lampeDe(n) { let l = CFG.prog.lampes[0]; for (const e of CFG.prog.lampes) if (n >= e[0]) l = e; return l; }
+  function jour() { return Math.floor(Date.now() / 86400000); }
+  function defisDuJour(j) { // les mêmes pour tout le monde, comme sur Roblox
+    let seed = (j * 7919 + 13) >>> 0; const rnd = () => ((seed = (seed * 1664525 + 1013904223) >>> 0) / 4294967296);
+    const pool = CFG.defis.slice(), out = [], evts = {};
+    while (out.length < 3 && pool.length) { const d = pool.splice(Math.floor(rnd() * pool.length), 1)[0]; if (!evts[d.evt]) { evts[d.evt] = 1; out.push(d); } }
+    return out;
+  }
+  function etatDefis() { const j = jour(); if (!PR.defis || PR.defis.jour !== j) PR.defis = { jour: j, prog: {}, faits: {} }; return PR.defis; }
+  let xpPop = null;
+  function gagner(montant, raison) {
+    if (montant <= 0) return; const g = Math.round(montant * nuit.xp); const avant = niveauDe(PR.xp)[0];
+    PR.xp += g; saveProg(); const apres = niveauDe(PR.xp)[0];
+    const el = $('#xp-pop'); el.textContent = `+${g} XP · ${tr(raison)}`; el.classList.remove('go'); void el.offsetWidth; el.classList.add('go');
+    if (apres > avant) {
+      const la = lampeDe(avant), lb = lampeDe(apres);
+      setTimeout(() => { msg(tr('NIVEAU') + ` ${apres} — ${tr(titreDe(apres))}` + (la[1] !== lb[1] ? ' · ' + tr('Nouvelle lampe :') + ' ' + tr(lb[1]) : ''), 5, 'bon'); SND.ping(); applyLampe(); }, 400);
+    }
+    progUI();
+  }
+  function avancerDefi(evt, n) {
+    const ed = etatDefis();
+    for (const d of defisDuJour(ed.jour)) {
+      if (d.evt !== evt || ed.faits[d.cle]) continue;
+      ed.prog[d.cle] = Math.min(d.obj, (ed.prog[d.cle] || 0) + (n || 1));
+      if (ed.prog[d.cle] >= d.obj) { ed.faits[d.cle] = true; setTimeout(() => { msg('🎯 ' + tr('Défi réussi :') + ' ' + tr(d.texte) + ` (+${d.xp} XP)`, 5, 'bon'); gagner(d.xp, 'Défi du jour'); }, 1200); }
+    }
+    saveProg(); defisUI();
+  }
+  function plafond(cle, max) { nuit.plaf[cle] = (nuit.plaf[cle] || 0) + 1; return nuit.plaf[cle] <= max; }
+  function progres(evt, val) {
+    const X = CFG.prog.xp;
+    if (evt === 'Fusible') { PR.fusibles++; gagner(X.Fusible, 'Fusible trouvé'); avancerDefi('Fusible', 1); }
+    else if (evt === 'Insertion') { const n = clamp(val || 1, 1, 10); gagner(X.Insertion * n, 'Générateur'); avancerDefi('Insertion', n); }
+    else if (evt === 'Cache') { if (plafond('Cache', 12)) gagner(X.Cache, 'Caché'); avancerDefi('Cache', 1); }
+    else if (evt === 'Flash') { const n = clamp(val || 1, 1, 5); if (plafond('Flash', 8)) gagner(X.Flash * n, 'Monstre ébloui'); avancerDefi('Flash', n); }
+    else if (evt === 'Mort') { PR.morts++; nuit.mort = true; gagner(X.Mort, 'Courage'); }
+    else if (evt === 'Evasion') {
+      PR.evasions++; gagner(X.Evasion, 'Évasion !'); avancerDefi('Evasion', 1);
+      if (val <= CFG.prog.rapide) { gagner(X.EvasionRapide, 'Évasion rapide'); avancerDefi('EvasionRapide', 1); }
+      if (!nuit.mort) avancerDefi('EvasionIntacte', 1);
+    }
+  }
+  function applyLampe() { const l = lampeDe(niveauDe(PR.xp)[0]); if (flash) flash.color.setHex(l[2]); }
+  function progUI() {
+    const [n, r, b] = niveauDe(PR.xp);
+    $('#h-niv').textContent = tr('Niv.') + ' ' + n + ' · ' + tr(titreDe(n)); $('#h-xp').style.width = (r / b * 100) + '%';
+    const pm = $('#prog-menu'); if (pm) pm.innerHTML = `<b>${tr('Niveau')} ${n}</b> · ${tr(titreDe(n))} <span class="xpbar"><i style="width:${(r / b * 100).toFixed(0)}%"></i></span> <small>${r} / ${b} XP · ${tr('Lampe')} : ${tr(lampeDe(n)[1])}</small>`;
+    defisUI();
+  }
+  function defisUI() {
+    const ed = etatDefis(); const html = `<b>🎯 ${tr('Défis du jour')}</b>` + defisDuJour(ed.jour).map((d) => { const p = ed.prog[d.cle] || 0, ok = ed.faits[d.cle]; return `<div class="defi${ok ? ' ok' : ''}">${ok ? '✅' : '◻'} ${tr(d.texte)} <small>${ok ? '' : p + '/' + d.obj + ' · '}+${d.xp} XP</small></div>`; }).join('');
+    document.querySelectorAll('.defis').forEach((el) => (el.innerHTML = html));
+  }
+  function tirerNuit() {
+    Object.assign(nuit, { nom: '', xp: 1, vitesse: 1, mort: false, plaf: {} }); nuit.teinte = nuit.brouillard = false;
+    if (S.nuit < 2) return; let tot = 0; for (const n of CFG.nuits) tot += n.poids; let r = R() * tot, ch = CFG.nuits[0];
+    for (const n of CFG.nuits) { r -= n.poids; if (r <= 0) { ch = n; break; } }
+    Object.assign(nuit, { nom: ch.nom, xp: ch.xp || 1, vitesse: ch.vitesse || 1, teinte: !!ch.teinte, brouillard: !!ch.brouillard });
+    if (ch.msg) setTimeout(() => msg(tr(ch.msg), 6, 'alerte'), 7000);
   }
 
   /* =============================================================== HUD & INTERFACE */
@@ -926,7 +999,7 @@
   }
 
   function victoire() {
-    S.won = true; exitLock(); const t = S.time; const m = Math.floor(t / 60), s = Math.floor(t % 60);
+    S.won = true; exitLock(); const t = S.time; progres('Evasion', t); const m = Math.floor(t / 60), s = Math.floor(t % 60);
     let best = null; try { best = +localStorage.getItem('sa_best') || null; if (!best || t < best) { localStorage.setItem('sa_best', t); best = t; } } catch (e) {}
     $('#vic-t').textContent = tr(`Tu t'es échappé en ${m} min ${String(s).padStart(2, '0')} s.`);
     $('#vic-b').textContent = best ? tr(`Meilleur temps : ${Math.floor(best / 60)} min ${String(Math.floor(best % 60)).padStart(2, '0')} s`) : '';
@@ -936,7 +1009,7 @@
   /* =============================================================== MENUS */
   function startGame(role) {
     S.role = role; S.batMax = role === 'Electricien' ? CFG.batMax * 2 : CFG.batMax; S.stamMax = role === 'Infirmiere' ? CFG.stamMax * 1.6 : CFG.stamMax;
-    newNight(false); S.bat = S.batMax; S.stam = S.stamMax;
+    newNight(false); S.bat = S.batMax; S.stam = S.stamMax; applyLampe(); progUI();
     $('#menu').hidden = true; $('#hud').hidden = false; $('#aide').hidden = isTouch; S.started = true; S.paused = false; audioInit(); lockPointer();
     msg('Trouve les 5 fusibles. Appuie sur G pour le guide, M pour le plan.', 6);
     if (isTouch) msg('Trouve les 5 fusibles. Bouton ☰ : guide et plan.', 6);
@@ -988,6 +1061,7 @@
     document.querySelectorAll('.role').forEach((b) => b.addEventListener('click', () => startGame(b.dataset.r)));
     const CM = isTouch ? [['Joystick', 'se déplacer'], ['Glisser', 'regarder'], ['MAIN', 'interagir'], ['COURIR', 'courir'], ['LAMPE', 'lampe torche'], ['☰', 'pause, guide, plan']]
       : [['ZQSD', 'se déplacer'], ['Souris', 'regarder'], ['E', 'interagir (maintenir)'], ['Maj', 'courir'], ['F', 'lampe torche'], ['V', 'caméscope'], ['R', 'flash'], ['Espace', 'retenir son souffle'], ['M', 'plan'], ['G', 'guide']];
+    progUI();
     $('#cmds').innerHTML = CM.map(([k, v]) => `<span><b>${tr(k)}</b> ${tr(v)}</span>`).join('');
     try { const b = +localStorage.getItem('sa_best'); if (b) { $('#best').hidden = false; $('#best').textContent = tr(`🏆 Ton meilleur temps : ${Math.floor(b / 60)} min ${String(Math.floor(b % 60)).padStart(2, '0')} s`); } } catch (e) {}
     $('#q-t').textContent = tr((localStorage.getItem('sa_q') || (isTouch ? 'moyenne' : 'haute')).toUpperCase());

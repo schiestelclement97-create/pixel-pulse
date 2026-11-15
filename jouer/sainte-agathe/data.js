@@ -40,6 +40,30 @@ const CFG = {
   ],
 };
 
+// Mise à jour 3 (reprise du jeu Roblox) : nuits spéciales, progression, défis du jour
+CFG.nuits = [
+  { nom: '', poids: 5 },
+  { nom: 'Lune rouge', poids: 2, xp: 2, teinte: true, msg: "🌕 LUNE ROUGE — cette nuit, toute l'expérience gagnée est DOUBLÉE." },
+  { nom: 'Brouillard', poids: 2, xp: 1.5, brouillard: true, msg: "🌫 BROUILLARD — on n'y voit presque rien... expérience x1,5." },
+  { nom: 'Nuit de chasse', poids: 2, xp: 1.5, vitesse: 1.12, msg: '🩸 NUIT DE CHASSE — les monstres sont plus rapides. Expérience x1,5.' },
+];
+CFG.prog = {
+  xp: { Fusible: 15, Insertion: 8, Evasion: 120, EvasionRapide: 60, Flash: 10, Cache: 2, Mort: 5 }, rapide: 360, base: 100, pas: 40,
+  titres: [[1, 'Visiteur'], [3, 'Stagiaire'], [6, 'Aide-soignant'], [10, 'Infirmier de nuit'], [15, 'Interne'], [20, 'Chirurgien'], [30, 'Chef de service'], [40, 'Directeur'], [50, 'Légende de Sainte-Agathe']],
+  lampes: [[1, 'Classique', 0xffeecd], [5, 'Néon froid', 0xbee1ff], [10, 'Vert chimique', 0xbeffbe], [20, 'Violet spectral', 0xdcbeff], [30, 'Or de Sainte-Agathe', 0xffd782]],
+};
+CFG.defis = [
+  { cle: 'Fusibles3', texte: 'Ramasse 3 fusibles', evt: 'Fusible', obj: 3, xp: 60 },
+  { cle: 'Fusibles8', texte: 'Ramasse 8 fusibles', evt: 'Fusible', obj: 8, xp: 120 },
+  { cle: 'Evasion1', texte: 'Échappe-toi de Sainte-Agathe', evt: 'Evasion', obj: 1, xp: 100 },
+  { cle: 'Evasion2', texte: 'Échappe-toi 2 fois', evt: 'Evasion', obj: 2, xp: 160 },
+  { cle: 'Rapide', texte: 'Échappe-toi en moins de 6 minutes', evt: 'EvasionRapide', obj: 1, xp: 150 },
+  { cle: 'Intact', texte: 'Échappe-toi sans mourir de la nuit', evt: 'EvasionIntacte', obj: 1, xp: 150 },
+  { cle: 'Flash3', texte: 'Éblouis 3 monstres avec le flash', evt: 'Flash', obj: 3, xp: 90 },
+  { cle: 'Generateur', texte: 'Insère 5 fusibles dans le générateur', evt: 'Insertion', obj: 5, xp: 90 },
+  { cle: 'Casiers', texte: 'Cache-toi dans 6 casiers', evt: 'Cache', obj: 6, xp: 70 },
+];
+
 const TXT = {
   intro: "Novembre 2026. Pour un pari, ton groupe s'est introduit dans l'hôpital psychiatrique Sainte-Agathe, fermé en 1987 après la disparition de 43 patients.\n\nLa porte d'entrée s'est refermée derrière vous. Toute seule.\n\nLa seule sortie : le portail de la cour, verrouillé électriquement. Trouve les 5 fusibles cachés dans l'hôpital et remets le générateur en marche.\n\nMais tu n'es pas seul. Ils sont trois. Et ils se réveillent un par un...",
   roles: [

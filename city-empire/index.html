@@ -38,6 +38,7 @@
 <header class="site-header"><div class="wrap nav">
 <a class="logo" href="../index.html" aria-label="Pixel Pulse, accueil"><svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#ff4f6d"/><path d="M4 17h6l3-9 5 17 3-11 2 3h5" fill="none" stroke="#fff" stroke-width="3.2" stroke-linejoin="miter" stroke-linecap="square"/></svg><span>Pixel Pulse</span></a>
 <div class="nav-right"><nav aria-label="Navigation principale"><ul><li><a href="../index.html#jeux" aria-current="page">Jeux</a></li><li><a href="../astuces/index.html">Astuces</a></li><li class="opt"><a href="../nouveautes/index.html">Nouveautés</a></li><li class="opt"><a href="../a-propos/index.html">À propos</a></li><li class="opt"><a href="../contact/index.html">Contact</a></li></ul></nav>
+<button type="button" class="appbtn" data-install aria-haspopup="dialog" aria-label="Installer l'appli"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="2.5" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M12 6.5v7M8.8 10.5 12 13.7l3.2-3.2" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 18.5h4" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg><span>Appli</span></button>
 <a class="lang" href="../en/city-empire/index.html" hreflang="en" lang="en" aria-label="English version">EN</a></div>
 </div></header>
 <main id="contenu">
@@ -53,7 +54,7 @@
 <div><dt>Prix</dt><dd>Gratuit</dd></div><div><dt>Langue</dt><dd>Français</dd></div>
 <div><dt>Appareils</dt><dd>PC et mobile</dd></div><div><dt>Installation</dt><dd>Aucune</dd></div>
 </dl>
-<a class="btn btn-play btn-big" href="../jouer/city-empire.html" data-game="city-empire" data-local data-name="City Empire"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M2 1h3v1h2v1h2v1h2v1h1v4h-1v1H9v1H7v1H5v1H2z" fill="currentColor"/></svg>Jouer à City Empire</a>
+<a class="btn btn-play btn-big" id="mainplay" href="../jouer/city-empire.html" data-game="city-empire" data-local data-name="City Empire"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M2 1h3v1h2v1h2v1h2v1h1v4h-1v1H9v1H7v1H5v1H2z" fill="currentColor"/></svg>Jouer à City Empire</a>
 <div class="rating" data-game="city-empire"><span class="r-lbl">Note ce jeu :</span><span class="r-stars" role="group" aria-label="Note ce jeu :"><button type="button" data-v="1" aria-label="1 étoile">★</button><button type="button" data-v="2" aria-label="2 étoiles">★</button><button type="button" data-v="3" aria-label="3 étoiles">★</button><button type="button" data-v="4" aria-label="4 étoiles">★</button><button type="button" data-v="5" aria-label="5 étoiles">★</button></span><span class="r-avg" aria-live="polite"></span></div>
 <div class="share"><span>Partager :</span>
 <a class="sh" href="https://wa.me/?text=City%20Empire%20%C2%B7%20Pixel%20Pulse%20https%3A%2F%2Fplaypixelpulsing.fr%2Fcity-empire%2F" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1.3-3.9A8 8 0 1 1 8 19z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9 9.5c.3 2.2 2.3 4.2 4.5 4.5l1-1.2 1.7.8-.4 1.6c-3.6.2-7-3.2-6.8-6.8L10.6 8l.8 1.7z" fill="currentColor"/></svg>WhatsApp</a>
@@ -99,6 +100,9 @@
 </article></div>
 </section>
 </div>
+<div class="playbar" id="playbar" hidden><img src="../img/jeux/city-empire-400.webp" width="64" height="40" alt=""><b>City Empire</b><a class="btn btn-play" href="../jouer/city-empire.html" data-game="city-empire" data-local data-name="City Empire"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M2 1h3v1h2v1h2v1h2v1h1v4h-1v1H9v1H7v1H5v1H2z" fill="currentColor"/></svg>Jouer</a></div>
+<script>(function(){var m=document.getElementById('mainplay'),b=document.getElementById('playbar');if(!m||!b||!('IntersectionObserver' in window))return;
+new IntersectionObserver(function(x){b.hidden=x[0].isIntersecting||x[0].boundingClientRect.top>0;}).observe(m);})();</script>
 </main>
 <footer class="site-footer">
 <div class="wrap foot">
@@ -107,7 +111,7 @@
 <nav aria-label="Liens du site"><ul>
 <li><a href="../index.html#jeux">Tous les jeux</a></li><li><a href="../astuces/index.html">Astuces</a></li><li><a href="../nouveautes/index.html">Nouveautés</a></li>
 <li><a href="../a-propos/index.html">À propos</a></li><li><a href="../contact/index.html">Contact</a></li>
-<li><a href="../confidentialite/index.html">Confidentialité</a></li><li><a href="../mentions-legales/index.html">Mentions légales</a></li>
+<li><a href="../installer/index.html">Installer l'appli</a></li><li><a href="../confidentialite/index.html">Confidentialité</a></li><li><a href="../mentions-legales/index.html">Mentions légales</a></li>
 </ul></nav>
 </div>
 <div class="wrap copy">© 2026 Pixel Pulse. Tous droits réservés.</div>
@@ -118,6 +122,18 @@
 <h2 id="soon-t"><span id="soon-name">Ce jeu</span> arrive très bientôt</h2>
 <p>Il est en train d'être installé sur Pixel Pulse. Reviens dans quelques jours ! En attendant, les autres jeux sont déjà jouables.</p>
 <div class="soon-actions"><a class="btn btn-play" href="../index.html#jeux"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M2 1h3v1h2v1h2v1h2v1h1v4h-1v1H9v1H7v1H5v1H2z" fill="currentColor"/></svg>Tous les jeux</a><button class="btn btn-ghost" type="button" id="soon-close">Fermer</button></div>
+</div></div>
+<div class="soon" id="appdlg" hidden>
+<div class="soon-box app-box" role="dialog" aria-modal="true" aria-labelledby="app-t">
+<button type="button" class="app-x" id="app-close" aria-label="Fermer">×</button>
+<div class="app-panel"><p class="eyebrow"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="2.5" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M12 6.5v7M8.8 10.5 12 13.7l3.2-3.2" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 18.5h4" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>Installer l'appli</p><h2 id="app-t">Installer l'appli Pixel Pulse</h2><p class="app-lead">Mets tous les jeux sur ton écran d'accueil : ils s'ouvrent en plein écran, comme une vraie appli. Gratuit, sans compte, très léger.</p>
+<p class="app-done" hidden>✅ C'est installé ! Retrouve Pixel Pulse sur ton écran d'accueil.</p>
+<div class="app-now" hidden><button type="button" class="btn btn-play btn-big app-go"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="2.5" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M12 6.5v7M8.8 10.5 12 13.7l3.2-3.2" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 18.5h4" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>Installer maintenant</button><small>Ton navigateur peut installer l'appli en un clic.</small></div>
+<div class="app-inapp" hidden><p></p><div class="app-row"><a class="btn btn-play app-chrome" hidden href="#">Ouvrir dans Chrome</a><button type="button" class="btn btn-ghost app-copy">Copier le lien</button></div></div>
+<div class="app-tabs" role="tablist"><button type="button" role="tab" data-p="android" aria-selected="true">Android</button><button type="button" role="tab" data-p="ios" aria-selected="false">iPhone / iPad</button><button type="button" role="tab" data-p="pc" aria-selected="false">Ordinateur</button></div>
+<div class="app-pane" data-pane="android" role="tabpanel"><ol class="steps"><li><span>Ouvre <b>playpixelpulsing.fr</b> dans <b>Chrome</b>.</span></li><li><span>Touche le menu <b>⋮</b> en haut à droite.</span></li><li><span>Choisis <b>Ajouter à l'écran d'accueil</b> puis <b>Installer</b>.</span></li><li><span>L'icône Pixel Pulse apparaît sur ton écran d'accueil. Touche-la pour jouer.</span></li></ol><p class="note">Samsung Internet marche aussi : menu ☰ → Ajouter la page à → Écran d&#x27;accueil.</p></div><div class="app-pane" data-pane="ios" role="tabpanel" hidden><ol class="steps"><li><span>Ouvre <b>playpixelpulsing.fr</b> dans <b>Safari</b>.</span></li><li><span>Touche le bouton <b>Partager</b> (le carré avec une flèche vers le haut), en bas de l'écran.</span></li><li><span>Fais défiler et choisis <b>Sur l'écran d'accueil</b>.</span></li><li><span>Touche <b>Ajouter</b> en haut à droite. C'est prêt !</span></li></ol><p class="note">Sur iPhone, Chrome marche aussi (iOS 16.4 ou plus) : bouton Partager à droite de la barre d&#x27;adresse.</p></div><div class="app-pane" data-pane="pc" role="tabpanel" hidden><ol class="steps"><li><span>Ouvre <b>playpixelpulsing.fr</b> dans <b>Chrome</b> ou <b>Edge</b>.</span></li><li><span>Clique sur l'icône <b>Installer</b> (un petit écran avec une flèche) à droite de la barre d'adresse.</span></li><li><span>Sinon : menu <b>⋮</b> → <b>Caster, enregistrer et partager</b> → <b>Installer la page en tant qu'application</b> (Edge : <b>…</b> → <b>Applications</b>).</span></li><li><span>Clique sur <b>Installer</b> : Pixel Pulse s'ouvre dans sa propre fenêtre.</span></li></ol><p class="note">Firefox et Safari sur Mac ne savent pas encore installer les sites : utilise Chrome ou Edge.</p></div>
+<div class="app-play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 3l10 9-10 9z" fill="#00c3ff"/><path d="M4 3l13 7.4-3 1.6z" fill="#00e07a"/><path d="M4 21l13-7.4-3-1.6z" fill="#ff3a44"/><path d="M17 10.4 21 12.6l-4 2.2-3-2.8z" fill="#ffd400"/></svg><span><b>Bientôt sur Google Play</b><small>L'appli arrive sur le Play Store. En attendant, l'installation depuis Chrome donne la même appli, avec les mêmes jeux.</small></span></div><p class="app-help"><a class="more" href="../installer/index.html">Aide complète</a></p>
+</div>
 </div></div>
 <script>
 (function(){
@@ -152,10 +168,6 @@ try{if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol))navigat
 document.querySelectorAll('.filters .chip').forEach(function(b){b.addEventListener('click',function(){var f=b.getAttribute('data-f');
   document.querySelectorAll('.filters .chip').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false')});
   document.querySelectorAll('#grille .card').forEach(function(c){c.hidden=!!f&&c.getAttribute('data-fam')!==f});});});
-var ib=document.getElementById('install'),dp=null;
-window.addEventListener('beforeinstallprompt',function(ev){ev.preventDefault();dp=ev;if(ib)ib.hidden=false;});
-if(ib)ib.addEventListener('click',function(){if(!dp)return;dp.prompt();dp.userChoice.then(function(){dp=null;ib.hidden=true;});});
-window.addEventListener('appinstalled',function(){if(ib)ib.hidden=true;});
 var SB='https://dsusopmsomtqecnjnnlg.supabase.co',SK='sb_publishable_lFiWPSCEPS-m-GOIjCPNCQ_-oRclUPL';
 function rpc(f,body){return fetch(SB+'/rest/v1/rpc/'+f,{method:'POST',headers:{'apikey':SK,'Content-Type':'application/json'},body:JSON.stringify(body||{})}).then(function(r){if(!r.ok)throw 0;return r.json();});}
 function fmt(a){return (Math.round(a*10)/10).toLocaleString(document.documentElement.lang)}
@@ -184,6 +196,43 @@ if(rec&&window.PP_GAMES){try{
       a.querySelector('b').textContent=g.name;row.appendChild(a);});
     rec.hidden=false;}
 }catch(e){}}
+})();
+</script>
+<script>
+(function(){
+var I={"inapp": "Tu es dans le navigateur d'une autre appli (Instagram, Facebook, TikTok…). Elle ne permet pas d'installer : ouvre d'abord la page dans {b}.", "copy": "Copier le lien", "copied": "Lien copié !"},ua=navigator.userAgent,dp=null,done=false;
+var ios=/iPad|iPhone|iPod/.test(ua)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1),and=/Android/i.test(ua);
+var inapp=/FBAN|FBAV|FB_IAB|Instagram|TikTok|musical_ly|Snapchat|Line\/|LinkedInApp|Twitter/i.test(ua);
+function sa(){try{return matchMedia('(display-mode: standalone)').matches||navigator.standalone===true}catch(e){return false}}
+var plat=ios?'ios':and?'android':'pc';
+var panels=document.querySelectorAll('.app-panel');
+function sel(pn,k){pn.querySelectorAll('.app-tabs [data-p]').forEach(function(b){b.setAttribute('aria-selected',b.getAttribute('data-p')===k?'true':'false')});
+  pn.querySelectorAll('[data-pane]').forEach(function(d){d.hidden=d.getAttribute('data-pane')!==k});}
+function upd(){var inst=done||sa();
+  document.querySelectorAll('[data-install]').forEach(function(b){b.hidden=inst});
+  panels.forEach(function(pn){pn.querySelector('.app-done').hidden=!inst;pn.querySelector('.app-now').hidden=inst||!dp;
+    var ia=pn.querySelector('.app-inapp');ia.hidden=inst||!inapp;});}
+panels.forEach(function(pn){
+  pn.querySelectorAll('.app-tabs [data-p]').forEach(function(b){b.addEventListener('click',function(){sel(pn,b.getAttribute('data-p'))});});
+  sel(pn,plat);
+  var ia=pn.querySelector('.app-inapp');ia.querySelector('p').textContent=I.inapp.replace('{b}',ios?'Safari':'Chrome');
+  if(and){var c=ia.querySelector('.app-chrome');c.hidden=false;c.href='intent://'+location.host+location.pathname+'#Intent;scheme=https;package=com.android.chrome;end';}
+  var cp=ia.querySelector('.app-copy');cp.addEventListener('click',function(){var u=location.origin+location.pathname;
+    function ok(){cp.textContent=I.copied;setTimeout(function(){cp.textContent=I.copy},2200)}
+    if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(u).then(ok,function(){});});
+  pn.querySelector('.app-go').addEventListener('click',function(){if(!dp)return;var d=dp;d.prompt();d.userChoice.then(function(r){if(r&&r.outcome==='accepted')done=true;dp=null;upd();}).catch(function(){});});
+});
+window.addEventListener('beforeinstallprompt',function(ev){ev.preventDefault();dp=ev;upd();});
+window.addEventListener('appinstalled',function(){done=true;dp=null;upd();});
+var dlg=document.getElementById('appdlg'),last=null;
+function open(){last=document.activeElement;dlg.hidden=false;document.documentElement.style.overflow='hidden';document.getElementById('app-close').focus();}
+function close(){if(dlg.hidden)return;dlg.hidden=true;document.documentElement.style.overflow='';if(last&&last.focus)last.focus();}
+document.addEventListener('click',function(ev){var b=ev.target.closest&&ev.target.closest('[data-install]');if(b){ev.preventDefault();open();}});
+document.getElementById('app-close').addEventListener('click',close);
+dlg.addEventListener('click',function(ev){if(ev.target===dlg)close();});
+document.addEventListener('keydown',function(ev){if(ev.key==='Escape')close();});
+if(location.hash==='#appli'||location.hash==='#app')open();
+upd();
 })();
 </script>
 </body></html>

@@ -254,6 +254,8 @@ a[aria-busy="true"]{opacity:.7;cursor:progress}
 .guide-play h3{font-size:1.1rem;margin-bottom:8px}
 @media (max-width:520px){.guide-play{grid-template-columns:1fr}}
 .note{font-size:.95rem;color:var(--muted);margin-top:8px}
+.rbx{margin-left:10px}.rbx small{font-weight:700;opacity:.7}
+@media (max-width:600px){.rbx{margin:10px 0 0;width:100%;justify-content:center}}
 
 /* bouton appli (en-tête) */
 .appbtn{display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:0 12px;border:0;border-radius:999px;background:var(--surface-2);color:var(--ink);font:800 .9rem/1 var(--f-body);cursor:pointer}

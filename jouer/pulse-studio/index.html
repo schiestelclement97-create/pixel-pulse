@@ -92,6 +92,18 @@ button:focus-visible{outline:3px solid var(--b);outline-offset:2px}
 #adov{position:fixed;inset:0;z-index:58;background:rgba(10,8,18,.95);display:none;align-items:center;justify-content:center;flex-direction:column;gap:12px;color:#fff;text-align:center}
 #adov h1{font-size:26px}
 #rm{gap:3px}#rm button{padding:4px 8px;font-size:10px}
+#hint{display:none;margin:0 2px 10px;padding:9px 12px;border-radius:14px;background:rgba(251,191,36,.1);border:1px dashed var(--g);font-size:13px;line-height:1.4}
+.row.best{border-color:var(--g);box-shadow:0 0 0 2px rgba(251,191,36,.35)}
+.row.best .ic::after{content:"★";position:absolute;margin:-30px 0 0 30px;font-size:14px;color:var(--g)}
+.row .ic{position:relative}
+#rec.pls{animation:rp 1s infinite alternate}@keyframes rp{to{box-shadow:0 0 0 8px rgba(244,114,182,.35),0 8px 28px rgba(139,92,246,.7)}}
+#guest{position:absolute;display:none;right:10px;bottom:106px;border:0;border-radius:18px;padding:9px 13px;max-width:190px;font:800 13px "Outfit",system-ui,sans-serif;background:linear-gradient(90deg,#22d3ee,#8b5cf6);color:#fff;cursor:pointer;box-shadow:0 0 24px rgba(34,211,238,.7);animation:pls .7s infinite alternate;z-index:7;text-align:left;line-height:1.25}
+#tick{position:absolute;left:10px;right:150px;bottom:64px;font-size:11px;line-height:1.3;color:#fff;text-shadow:0 1px 6px #000;pointer-events:none;text-align:left;opacity:0;transition:opacity .4s}
+#tick.on{opacity:.95}
+.fan{font-size:13px;padding:7px 10px;border-radius:12px;background:var(--card);border:1px solid var(--line);margin-bottom:5px}.fan b{color:var(--b)}
+.opts{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+html.big .tx b{font-size:18px}html.big .tx small{font-size:15px}html.big .sub{font-size:16px}html.big h2{font-size:24px}html.big .pr{font-size:17px}html.big .mini{font-size:16px}html.big #tabs button{font-size:13px}html.big .rk,html.big .fan{font-size:16px}html.big .stats{font-size:14px}
+html.calm *{animation:none!important;transition:none!important}
 </style>
 <script src="../pp-ads.js"></script>
 </head>
@@ -99,22 +111,24 @@ button:focus-visible{outline:3px solid var(--b);outline-offset:2px}
 <div id="g">
   <div id="stage">
     <div class="hud"><div class="money" id="money">0 €</div><div class="cps" id="cps"></div><div id="pseu"></div></div>
-    <div id="buff"></div>
+    <div id="buff"></div><div id="tick"></div><button id="guest"></button>
     <div id="rm"><button id="r0" class="on">Studio 1</button><button id="r1">Studio 2 🔒</button><button id="r2">Live Cuisine 🔒</button><button id="r3">Live Musique 🔒</button><button id="r4">Live Orbite 🔒</button><button id="r5">Café 🔒</button></div>
     <button id="rec">🎬 Tourner<small id="cv"></small></button>
     <button id="adb">🎬 Pub : Buzz viral</button>
     <button id="buzz">🔥 Buzz viral !</button>
   </div>
-  <div class="stats"><span id="st1"></span><span id="st2"></span><span id="st3"></span></div>
-  <section class="pg on" id="p0"><div id="unlock"></div><div id="slv"></div><h2 id="t0">Équipement</h2><p class="sub" id="ri"></p><div id="shop"></div></section>
+  <div class="stats"><span id="st1"></span><span id="st2"></span><span id="st3"></span><span id="st4" style="width:100%;text-align:center;color:var(--g)"></span></div>
+  <section class="pg on" id="p0"><div id="hint"></div><div id="unlock"></div><div id="slv"></div><h2 id="t0">Équipement</h2><p class="sub" id="ri"></p><div id="shop"></div></section>
   <section class="pg" id="p1"><h2 id="t1">Décoration</h2><p class="sub">Chaque objet de déco ajoute 5 % de revenus et change la pièce.</p><div id="deco"></div><p class="sub" id="nodeco" style="display:none">Pas de décoration dans ce studio : elle ne collait pas avec le thème (cuisine en direct et station spatiale).</p><h2 id="t1b">Chambre</h2><p class="sub" id="t1s">La chambre te protège de la fatigue la nuit. Le jour dure 4 min, la nuit 2 min. La cafétéria est maintenant un bâtiment à part (chip « Café » à gauche de la salle).</p><div id="annex"></div></section>
-  <section class="pg" id="p2"><h2>Collaborations</h2><p class="sub">Recrute des créateurs (+10 % de revenus chacun), puis invite-les : ×3 pendant 30 s, pause de 90 s.</p><div id="collab"></div><h2>Assistants</h2><div id="asst"></div><h2>Personnel du café</h2><p class="sub">Les serveurs, cuisiniers, baristas et le reste de l’équipe travaillent dans la cafétéria le jour, et se reposent dans la salle du personnel la nuit. Ouvre d’abord la cafétéria (chip « Café »).</p><div id="staff"></div></section>
+  <section class="pg" id="p2"><h2>Collaborations</h2><p class="sub">Recrute des créateurs (+10 % de revenus chacun), puis invite-les : ×3 pendant 30 s, pause de 90 s.</p><div id="collab"></div><h2>Journal télévisé</h2><p class="sub" id="jts"></p><div id="jt"></div><h2>Assistants</h2><div id="asst"></div><h2>Personnel du café</h2><p class="sub">Les serveurs, cuisiniers, baristas et le reste de l’équipe travaillent dans la cafétéria le jour, et se reposent dans la salle du personnel la nuit. Ouvre d’abord la cafétéria (chip « Café »).</p><div id="staff"></div></section>
   <section class="pg" id="p3"><h2 id="t3">Niveaux d’amélioration</h2><p class="sub">Améliore chaque équipement : revenus ×2 par niveau, jusqu’au niveau 6. Il grossit dans la pièce.</p><div id="lvls"></div></section>
   <section class="pg" id="p4"><h2>Aujourd’hui</h2><div id="daily"></div><div id="missions"></div><h2>Succès</h2><p class="sub">Chaque succès donne +2 % de revenus.</p><div id="ach"></div>
     <h2>Sauvegarde</h2><p class="sub">Sauvegarde automatique toutes les 5 secondes et à chaque fois que tu quittes le jeu. Dernière sauvegarde : <span id="sv">—</span><br>Version du jeu : <span id="ver"></span></p><textarea id="bkt" rows="3" placeholder="Code de sauvegarde" style="width:100%;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:8px;font:12px monospace"></textarea><div style="display:flex;gap:8px;margin-top:8px"><button class="mini" id="bk">Copier ma sauvegarde</button><button class="mini" id="im">Restaurer</button></div>
+    <p class="sub" style="margin-top:12px">Sauvegarde en ligne : un code court (8 caractères) pour retrouver ta partie sur un autre appareil.</p><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="mini" id="cs">Sauvegarder en ligne</button><input id="cc" maxlength="9" placeholder="Code" autocomplete="off" style="width:110px;padding:8px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:700 14px Outfit,sans-serif;text-transform:uppercase"><button class="mini" id="cl">Charger</button></div><p class="sub" id="cm" style="margin-top:6px"></p>
+    <h2>Options</h2><div class="opts"><button class="mini" id="obig">Gros texte : non</button><button class="mini" id="ocalm">Animations réduites : non</button><button class="mini" id="olang">Language : Français</button></div>
     <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:14px"><button class="mini" id="gps">Changer de pseudo</button><button class="mini" id="gh">Revoir le guide</button><button class="mini" id="chg">Changer de personnage</button><button class="mini" id="rs">Réinitialiser</button></div></section>
-  <section class="pg" id="p5"><h2>Étoiles</h2><p class="sub" id="pd2"></p><div id="talents"></div><h2>Renaissance</h2><button class="row pre" id="pre"><span class="ic">⭐</span><span class="tx"><b id="pt">Repars à zéro avec des étoiles</b><small id="pd"></small></span></button></section>
-  <section class="pg" id="p6"><h2>Ma chaîne</h2><div id="chn"></div><h2 id="rkh">Classement des streamers</h2><p class="sub"><span id="rks"></span> <b id="rkt"></b></p><div id="rk"></div><h2>Salle des trophées</h2><p class="sub" id="trs"></p><button class="mini" id="trv">Voir la salle des trophées en 3D</button><div id="trl"></div></section>
+  <section class="pg" id="p5"><h2>Étoiles</h2><p class="sub" id="pd2"></p><div id="talents"></div><h2>Garde-robe</h2><p class="sub">Change la tenue de tes créateurs. Achète avec des étoiles (elles ne baissent pas tes revenus) ou regarde une pub.</p><div id="skins"></div><h2>Renaissance</h2><button class="row pre" id="pre"><span class="ic">⭐</span><span class="tx"><b id="pt">Repars à zéro avec des étoiles</b><small id="pd"></small></span></button></section>
+  <section class="pg" id="p6"><h2>Ma chaîne</h2><div id="chn"></div><h2 id="rkh">Classement des streamers</h2><p class="sub"><span id="rks"></span> <b id="rkt"></b></p><div id="rk"></div><h2>Commentaires des fans</h2><div id="fans"></div><h2>Salle des trophées</h2><p class="sub" id="trs"></p><button class="mini" id="trv">Voir la salle des trophées en 3D</button><div id="trl"></div></section>
   <div id="ft"><a href="comment-jouer.html" target="_blank" rel="noopener">Comment jouer</a> · <a href="a-propos.html" target="_blank" rel="noopener">À propos</a> · <a href="privacy.html" target="_blank" rel="noopener">Confidentialité</a> · <a href="contact.html" target="_blank" rel="noopener">Contact</a></div>
 </div>
 <nav id="tabs">
@@ -129,127 +143,139 @@ button:focus-visible{outline:3px solid var(--b);outline-offset:2px}
 <div class="toast" id="toast"></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
+var LANG=(function(){var q=/[?&]lang=(fr|en)\b/.exec(location.search);if(q){try{localStorage.setItem("pulseLang",q[1])}catch(e){}return q[1]}try{var s=localStorage.getItem("pulseLang");if(s==="fr"||s==="en")return s}catch(e){}try{var l=(navigator.language||"en").toLowerCase();return l.indexOf("fr")===0?"fr":"en"}catch(e){return"en"}})(),DEC=LANG==="fr"?",":".";
+function __L(f,e){return LANG==="fr"?f:e}
+window.LOWQ=!!(navigator.deviceMemory&&navigator.deviceMemory<=4);
+var PREF={big:0,calm:0};try{PREF=Object.assign(PREF,JSON.parse(localStorage.getItem("pulsePrefs")||"{}"))}catch(e){}
+document.documentElement.classList.toggle("big",!!PREF.big);document.documentElement.classList.toggle("calm",!!PREF.calm);
+var HT={"Journal télévisé": "News show", "Commentaires des fans": "Fan comments", "Garde-robe": "Wardrobe", "Options": "Options", "Change la tenue de tes créateurs. Achète avec des étoiles (elles ne baissent pas tes revenus) ou regarde une pub.": "Change your creators’ outfits. Buy with stars (they do not lower your income) or watch an ad.", "Sauvegarde en ligne : un code court (8 caractères) pour retrouver ta partie sur un autre appareil.": "Online save: a short code (8 characters) to get your game back on another device.", "Sauvegarder en ligne": "Save online", "Charger": "Load", "Code": "Code", "Gros texte : non": "Large text: off", "Animations réduites : non": "Reduced motion: off", "À propos": "About", "Confidentialité": "Privacy", "Comment jouer": "How to play", "Contact": "Contact", "🎬 Pub en cours": "🎬 Ad playing", "Reste jusqu'à la fin pour recevoir ton bonus": "Stay until the end to get your bonus", "Choisis ton pseudo": "Choose your username", "C'est le nom de ta chaîne : il apparaît dans le classement des streamers.": "This is your channel name: it appears in the streamer leaderboard.", "Ton pseudo": "Your username", "Valider": "Confirm", "Café 🔒": "Cafe 🔒", "🎬 Tourner": "🎬 Film", "🔥 Buzz viral !": "🔥 Viral buzz!", "Équipement": "Gear", "Décoration": "Decor", "Chaque objet de déco ajoute 5 % de revenus et change la pièce.": "Every decor item adds 5% income and changes the room.", "Pas de décoration dans ce studio : elle ne collait pas avec le thème (cuisine en direct et station spatiale).": "No decor in this studio: it did not fit the theme (live cooking and space station).", "Chambre": "Bedroom", "La chambre te protège de la fatigue la nuit. Le jour dure 4 min, la nuit 2 min. La cafétéria est maintenant un bâtiment à part (chip « Café » à gauche de la salle).": "The bedroom protects you from night-time tiredness. Day lasts 4 min, night 2 min. The cafeteria is now a separate building (the “Cafe” chip on the left of the room).", "Recrute des créateurs (+10 % de revenus chacun), puis invite-les : ×3 pendant 30 s, pause de 90 s.": "Recruit creators (+10% income each), then invite them: ×3 for 30 s, 90 s cooldown.", "Personnel du café": "Cafe staff", "Les serveurs, cuisiniers, baristas et le reste de l'équipe travaillent dans la cafétéria le jour, et se reposent dans la salle du personnel la nuit. Ouvre d'abord la cafétéria (chip « Café »).": "Waiters, cooks, baristas and the rest of the team work in the cafeteria during the day and rest in the staff room at night. Open the cafeteria first (the “Cafe” chip).", "Niveaux d'amélioration": "Upgrade levels", "Améliore chaque équipement : revenus ×2 par niveau, jusqu'au niveau 6. Il grossit dans la pièce.": "Upgrade each item: income ×2 per level, up to level 6. It grows in the room.", "Aujourd'hui": "Today", "Succès": "Awards", "Chaque succès donne +2 % de revenus.": "Each award gives +2% income.", "Sauvegarde": "Save", "Sauvegarde automatique toutes les 5 secondes et à chaque fois que tu quittes le jeu. Dernière sauvegarde :": "Autosave every 5 seconds and whenever you leave the game. Last save:", "Version du jeu :": "Game version:", "Copier ma sauvegarde": "Copy my save", "Restaurer": "Restore", "Changer de pseudo": "Change username", "Revoir le guide": "Replay the guide", "Changer de personnage": "Change character", "Réinitialiser": "Reset", "Étoiles": "Stars", "Renaissance": "Rebirth", "Repars à zéro avec des étoiles": "Restart from zero with stars", "Ma chaîne": "My channel", "Classement des streamers": "Streamer ranking", "Salle des trophées": "Trophy room", "Voir la salle des trophées en 3D": "View the trophy room in 3D", "Matériel": "Gear", "Déco": "Decor", "Niveaux": "Upgrades", "Abonnés": "Subs", "Nouveautés · version": "What’s new · version", "OK, c'est parti": "OK, let’s go", "Choisis ton pseudo": "Choose your username", "C'est le nom de ta chaîne : il apparaît dans le classement des streamers.": "This is your channel name: it appears in the streamer ranking.", "Valider": "Confirm", "Passer": "Skip", "Suivant": "Next", "Choisis ton créateur": "Choose your creator", "Code de sauvegarde": "Save code", "Ton pseudo": "Your username"};
+function trDom(){var w=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,null),n,ls=[];while(n=w.nextNode()){var p=n.parentNode&&n.parentNode.nodeName;if(p==="SCRIPT"||p==="STYLE")continue;ls.push(n)}
+ls.forEach(function(n){var m=n.nodeValue.match(/^(\s*)([\s\S]*?)(\s*)$/);if(!m[2])return;var k=m[2].replace(/[\u00a0\u202f\u2009]/g," ").replace(/’/g,"'");if(HT[k]!==undefined)n.nodeValue=m[1]+HT[k]+m[3]});
+[].forEach.call(document.querySelectorAll("[placeholder],[title]"),function(e){["placeholder","title"].forEach(function(a){var v=e.getAttribute(a);if(v){var k=v.replace(/[\u00a0\u202f\u2009]/g," ").replace(/’/g,"'");if(HT[k]!==undefined)e.setAttribute(a,HT[k])}})});document.documentElement.lang="en"}
+if(LANG!=="fr"){trDom();document.title="Pulse Studio Tycoon"}
 var CH=[{n:"Léa",s:0xf1c27d,h:0x3b1f6e,t:0xf472b6,p:0x312e81},{n:"Max",s:0x8d5524,h:0x111111,t:0x22d3ee,p:0x1e293b},{n:"Sam",s:0xffdbac,h:0xf59e0b,t:0x8b5cf6,p:0x111827}];
-var PM=[1,30,900,27000,810000,3],IM=[1,10,100,1000,10000,2],U2=5e6,U3=5e9,U4=3e12,U5=1e14,U6=20000,CX=[2,2,2,2,2,0],SN=["Studio 1","Studio 2","Live Cuisine","Live Musique","Live Orbite","Cafétéria et équipe"];
+var PM=[1,30,900,27000,810000,3],IM=[1,10,100,1000,10000,2],U2=5e6,U3=5e9,U4=3e12,U5=1e14,U6=20000,CX=[2,2,2,2,2,0],SN=["Studio 1","Studio 2",__L("Live Cuisine","Live Cooking"),__L("Live Musique","Live Music"),__L("Live Orbite","Live Orbit"),__L("Cafétéria et équipe","Cafeteria & staff")];
 var EQ=[
-{n:"Téléphone",i:"📱",c:15,p:0.3,d:"Sur son support, face à toi"},
-{n:"Micro",i:"🎙️",c:100,p:1.3,d:"Micro sur bras, puis 2e et 3e micro"},
-{n:"Ring light",i:"💡",c:600,p:5.5,d:"Éclairage doux sur le visage"},
-{n:"Caméra",i:"🎥",c:4000,p:24,d:"Caméras sur trépied"},
-{n:"Ordinateur de montage",i:"🖥️",c:30000,p:120,d:"Jusqu’à 3 écrans"},
-{n:"Table de mixage",i:"🎚️",c:250000,p:700,d:"Le son d’un vrai studio"},
-{n:"Fond LED et néons",i:"🌈",c:2000000,p:4000,d:"Panneaux lumineux au mur"}];
+{n:__L("Téléphone","Phone"),i:"📱",c:15,p:0.3,d:__L("Sur son support, face à toi","On its stand, facing you")},
+{n:__L("Micro","Microphone"),i:"🎙️",c:100,p:1.3,d:__L("Micro sur bras, puis 2e et 3e micro","Boom-arm mic, then a 2nd and 3rd mic")},
+{n:"Ring light",i:"💡",c:600,p:5.5,d:__L("Éclairage doux sur le visage","Soft light on your face")},
+{n:__L("Caméra","Camera"),i:"🎥",c:4000,p:24,d:__L("Caméras sur trépied","Cameras on tripods")},
+{n:__L("Ordinateur de montage","Editing computer"),i:"🖥️",c:30000,p:120,d:__L("Jusqu’à 3 écrans","Up to 3 screens")},
+{n:__L("Table de mixage","Mixing desk"),i:"🎚️",c:250000,p:700,d:__L("Le son d’un vrai studio","The sound of a real studio")},
+{n:__L("Fond LED et néons","LED backdrop & neon lights"),i:"🌈",c:2000000,p:4000,d:__L("Panneaux lumineux au mur","Light panels on the wall")}];
 var EQ3=[
-{n:"Plan de travail",i:"🥕",c:15,p:0.3,d:"Planche, légumes et ingrédients frais"},
-{n:"Plaque et casseroles",i:"🍳",c:100,p:1.3,d:"Ça mijote en direct, avec de la vapeur"},
-{n:"Éclairage et caméras live",i:"🎥",c:600,p:5.5,d:"Ring lights et caméras pour le live"},
-{n:"Écrans de réaction",i:"📺",c:4000,p:24,d:"Réagis aux vidéos des autres"},
-{n:"Coin canapé et poufs",i:"🛋️",c:30000,p:120,d:"Des invités viennent réagir avec toi"},
-{n:"Bruitages et écran de chat",i:"💬",c:250000,p:700,d:"Soundboard et chat en direct sur les murs"},
-{n:"Public en direct",i:"🎉",c:2000000,p:4000,d:"Des fans dansent devant ta scène"}];
+{n:__L("Plan de travail","Countertop"),i:"🥕",c:15,p:0.3,d:__L("Planche, légumes et ingrédients frais","Cutting board, vegetables and fresh ingredients")},
+{n:__L("Plaque et casseroles","Stove and pots"),i:"🍳",c:100,p:1.3,d:__L("Ça mijote en direct, avec de la vapeur","Simmering live, with steam")},
+{n:__L("Éclairage et caméras live","Live lighting & cameras"),i:"🎥",c:600,p:5.5,d:__L("Ring lights et caméras pour le live","Ring lights and cameras for the live show")},
+{n:__L("Écrans de réaction","Reaction screens"),i:"📺",c:4000,p:24,d:__L("Réagis aux vidéos des autres","React to other people’s videos")},
+{n:__L("Coin canapé et poufs","Sofa corner & poufs"),i:"🛋️",c:30000,p:120,d:__L("Des invités viennent réagir avec toi","Guests join you to react")},
+{n:__L("Bruitages et écran de chat","Sound effects & chat screen"),i:"💬",c:250000,p:700,d:__L("Soundboard et chat en direct sur les murs","Soundboard and live chat on the walls")},
+{n:__L("Public en direct","Live audience"),i:"🎉",c:2000000,p:4000,d:__L("Des fans dansent devant ta scène","Fans dance in front of your stage")}];
 var EQ4=[
-{n:"Guitare électrique",i:"🎸",c:15,p:0.3,d:"Une guitare sur son pied"},
-{n:"Micro de chant",i:"🎤",c:100,p:1.3,d:"Pieds de micro avec filtre anti-pop"},
-{n:"Batterie",i:"🥁",c:600,p:5.5,d:"Grosse caisse, toms et cymbales"},
-{n:"Claviers et synthés",i:"🎹",c:4000,p:24,d:"Claviers qui s’illuminent"},
-{n:"Enceintes et amplis",i:"🔊",c:30000,p:120,d:"Murs d’enceintes qui vibrent"},
-{n:"Table de mixage DJ",i:"🎧",c:250000,p:700,d:"Platines tournantes et barres de lumière"},
-{n:"Scène et public",i:"🎆",c:2000000,p:4000,d:"Projecteurs géants et foule en délire"}];
+{n:__L("Guitare électrique","Electric guitar"),i:"🎸",c:15,p:0.3,d:__L("Une guitare sur son pied","A guitar on its stand")},
+{n:__L("Micro de chant","Vocal mic"),i:"🎤",c:100,p:1.3,d:__L("Pieds de micro avec filtre anti-pop","Mic stands with pop filters")},
+{n:__L("Batterie","Drum kit"),i:"🥁",c:600,p:5.5,d:__L("Grosse caisse, toms et cymbales","Bass drum, toms and cymbals")},
+{n:__L("Claviers et synthés","Keyboards & synths"),i:"🎹",c:4000,p:24,d:__L("Claviers qui s’illuminent","Keyboards that light up")},
+{n:__L("Enceintes et amplis","Speakers & amps"),i:"🔊",c:30000,p:120,d:__L("Murs d’enceintes qui vibrent","Walls of speakers that shake")},
+{n:__L("Table de mixage DJ","DJ mixing desk"),i:"🎧",c:250000,p:700,d:__L("Platines tournantes et barres de lumière","Turntables and light bars")},
+{n:__L("Scène et public","Stage & crowd"),i:"🎆",c:2000000,p:4000,d:__L("Projecteurs géants et foule en délire","Giant spotlights and a roaring crowd")}];
 var EQ5=[
-{n:"Drones caméras",i:"🛸",c:15,p:0.3,d:"Des caméras flottent autour de toi"},
-{n:"Console de contrôle",i:"🕹️",c:100,p:1.3,d:"Tableaux de bord lumineux"},
-{n:"Panneaux solaires",i:"☀️",c:600,p:5.5,d:"De l’énergie à l’infini, dehors"},
-{n:"Terre et Lune",i:"🌍",c:4000,p:24,d:"La planète tourne derrière la station"},
-{n:"Robots assistants",i:"🤖",c:30000,p:120,d:"Des robots flottants t’aident"},
-{n:"Antennes géantes",i:"📡",c:250000,p:700,d:"Diffusion vers toute la galaxie"},
-{n:"Vaisseaux amarrés",i:"🚀",c:2000000,p:4000,d:"Des vaisseaux livrent tes fans"}];
+{n:__L("Drones caméras","Camera drones"),i:"🛸",c:15,p:0.3,d:__L("Des caméras flottent autour de toi","Cameras float around you")},
+{n:__L("Console de contrôle","Control console"),i:"🕹️",c:100,p:1.3,d:__L("Tableaux de bord lumineux","Glowing dashboards")},
+{n:__L("Panneaux solaires","Solar panels"),i:"☀️",c:600,p:5.5,d:__L("De l’énergie à l’infini, dehors","Endless energy, outside")},
+{n:__L("Terre et Lune","Earth & Moon"),i:"🌍",c:4000,p:24,d:__L("La planète tourne derrière la station","The planet spins behind the station")},
+{n:__L("Robots assistants","Assistant robots"),i:"🤖",c:30000,p:120,d:__L("Des robots flottants t’aident","Floating robots help you")},
+{n:__L("Antennes géantes","Giant antennas"),i:"📡",c:250000,p:700,d:__L("Diffusion vers toute la galaxie","Broadcasting across the whole galaxy")},
+{n:__L("Vaisseaux amarrés","Docked spaceships"),i:"🚀",c:2000000,p:4000,d:__L("Des vaisseaux livrent tes fans","Spaceships deliver to your fans")}];
 var EQ6=[
-{n:"Machines à café",i:"☕",c:15,p:0.3,d:"Sur le comptoir, jusqu’à 3 machines"},
-{n:"Vitrines pâtisseries",i:"🥐",c:100,p:1.3,d:"Gâteaux et viennoiseries"},
-{n:"Tables et chaises",i:"🪑",c:600,p:5.5,d:"Jusqu’à 6 tables dans la salle"},
-{n:"Cuisine et four",i:"🍳",c:4000,p:24,d:"Four, frigo et grill"},
-{n:"Terrasse fleurie",i:"⛱️",c:30000,p:120,d:"Parasols et jardinières"},
-{n:"Distributeurs et bornes",i:"🥤",c:250000,p:700,d:"Distributeurs lumineux et bornes de commande"},
-{n:"Enseigne, lustre et trophée",i:"🏆",c:2000000,p:4000,d:"Néon, lustre doré et coupe du meilleur café"}];
+{n:__L("Machines à café","Coffee machines"),i:"☕",c:15,p:0.3,d:__L("Sur le comptoir, jusqu’à 3 machines","On the counter, up to 3 machines")},
+{n:__L("Vitrines pâtisseries","Pastry displays"),i:"🥐",c:100,p:1.3,d:__L("Gâteaux et viennoiseries","Cakes and pastries")},
+{n:__L("Tables et chaises","Tables & chairs"),i:"🪑",c:600,p:5.5,d:__L("Jusqu’à 6 tables dans la salle","Up to 6 tables in the room")},
+{n:__L("Cuisine et four","Kitchen & oven"),i:"🍳",c:4000,p:24,d:__L("Four, frigo et grill","Oven, fridge and grill")},
+{n:__L("Terrasse fleurie","Flower terrace"),i:"⛱️",c:30000,p:120,d:__L("Parasols et jardinières","Parasols and planters")},
+{n:__L("Distributeurs et bornes","Vending machines & kiosks"),i:"🥤",c:250000,p:700,d:__L("Distributeurs lumineux et bornes de commande","Glowing vending machines and order kiosks")},
+{n:__L("Enseigne, lustre et trophée","Sign, chandelier & trophy"),i:"🏆",c:2000000,p:4000,d:__L("Néon, lustre doré et coupe du meilleur café","Neon sign, golden chandelier and best-coffee cup")}];
 function EQL(r){return [EQ,EQ,EQ3,EQ4,EQ5,EQ6][r]}
 var DECO=[
-{n:"Plante verte",i:"🪴",c:250},{n:"Tapis",i:"🟫",c:1500},{n:"Bibliothèque",i:"📚",c:7000},{n:"Canapé",i:"🛋️",c:30000},
-{n:"Fenêtre avec vue",i:"🪟",c:120000},{n:"Cadres au mur",i:"🖼️",c:500000},{n:"Lampadaire",i:"🏮",c:2000000},{n:"Jungle de plantes",i:"🌴",c:8000000}];
+{n:__L("Plante verte","Green plant"),i:"🪴",c:250},{n:__L("Tapis","Rug"),i:"🟫",c:1500},{n:__L("Bibliothèque","Bookshelf"),i:"📚",c:7000},{n:__L("Canapé","Sofa"),i:"🛋️",c:30000},
+{n:__L("Fenêtre avec vue","Window with a view"),i:"🪟",c:120000},{n:__L("Cadres au mur","Wall frames"),i:"🖼️",c:500000},{n:__L("Lampadaire","Floor lamp"),i:"🏮",c:2000000},{n:__L("Jungle de plantes","Plant jungle"),i:"🌴",c:8000000}];
 var COL=[
 {n:"Jade",i:"👩‍🎤",c:2000,o:{s:0xe0ac69,h:0xdb2777,t:0xfacc15,p:0x1f2937}},
 {n:"Karim",i:"🧑‍🍳",c:15000,o:{s:0x8d5524,h:0x222222,t:0xffffff,p:0x374151}},
 {n:"Nora",i:"👩‍🔬",c:120000,o:{s:0xffdbac,h:0x0ea5e9,t:0x10b981,p:0x0f172a}},
 {n:"Théo",i:"🧑‍🎤",c:1000000,o:{s:0xf1c27d,h:0xef4444,t:0x111827,p:0x7c3aed}}];
 var AS=[
-{n:"Community manager",i:"💬",c:400,g:1.9,max:10,d:"Filme 1 vidéo de plus par seconde"},
-{n:"Monteur IA",i:"🤖",c:5000,g:2.2,max:10,d:"+20 % de revenus par niveau"},
-{n:"Manager",i:"📋",c:8000,g:2.2,max:5,d:"+10 % de gains hors ligne par niveau"}];
+{n:"Community manager",i:"💬",c:400,g:1.9,max:10,d:__L("Filme 1 vidéo de plus par seconde","Films 1 more video per second")},
+{n:__L("Monteur IA","AI editor"),i:"🤖",c:5000,g:2.2,max:10,d:__L("+20 % de revenus par niveau","+20% income per level")},
+{n:"Manager",i:"📋",c:8000,g:2.2,max:5,d:__L("+10 % de gains hors ligne par niveau","+10% offline earnings per level")}];
 var ACH=[
-["Première vidéo","1 vidéo tournée",function(){return S.clicks>=1}],
-["Régulier","50 vidéos tournées",function(){return S.clicks>=50}],
-["Machine à contenu","500 vidéos tournées",function(){return S.clicks>=500}],
-["Premiers euros","1 000 € gagnés",function(){return S.tot>=1e3}],
-["Millionnaire","1 M€ gagné",function(){return S.tot>=1e6}],
-["Milliardaire","1 Md€ gagné",function(){return S.tot>=1e9}],
-["Voix d’or","3 micros dans le Studio 1",function(){return S.r[0].own[1]>=9}],
-["Chez soi","4 objets de déco",function(){return dsum()>=4}],
-["Duo de choc","Lancer une collab",function(){return S.nc>=1}],
-["Perfectionniste","Un équipement au niveau 4",function(){return maxLv()>=3}],
-["Directeur","Ouvrir le Studio 2",function(){return S.u2}],["Chef de live","Ouvrir le Live Cuisine",function(){return S.u3}],["Rockstar","Ouvrir le Live Musique",function(){return S.u4}],["Astronaute","Ouvrir le Live Orbite",function(){return S.u5}],["Bon appétit","Construire une cafétéria",function(){return S.u6}],["Bonne nuit","Construire une chambre",function(){return S.r.some(function(x){return x.an[1]>0})}]];
+[__L("Première vidéo","First video"),__L("1 vidéo tournée","1 video filmed"),function(){return S.clicks>=1}],
+[__L("Régulier","Regular"),__L("50 vidéos tournées","50 videos filmed"),function(){return S.clicks>=50}],
+[__L("Machine à contenu","Content machine"),__L("500 vidéos tournées","500 videos filmed"),function(){return S.clicks>=500}],
+[__L("Premiers euros","First euros"),__L("1 000 € gagnés","€1,000 earned"),function(){return S.tot>=1e3}],
+[__L("Millionnaire","Millionaire"),__L("1 M€ gagné","€1M earned"),function(){return S.tot>=1e6}],
+[__L("Milliardaire","Billionaire"),__L("1 Md€ gagné","€1B earned"),function(){return S.tot>=1e9}],
+[__L("Voix d’or","Golden voice"),__L("3 micros dans le Studio 1","3 mics in Studio 1"),function(){return S.r[0].own[1]>=9}],
+[__L("Chez soi","Home sweet home"),__L("4 objets de déco","4 decor items"),function(){return dsum()>=4}],
+[__L("Duo de choc","Dynamic duo"),__L("Lancer une collab","Start a collab"),function(){return S.nc>=1}],
+[__L("Perfectionniste","Perfectionist"),__L("Un équipement au niveau 4","One item at level 4"),function(){return maxLv()>=3}],
+[__L("Directeur","Director"),__L("Ouvrir le Studio 2","Open Studio 2"),function(){return S.u2}],[__L("Chef de live","Live chef"),__L("Ouvrir le Live Cuisine","Open Live Cooking"),function(){return S.u3}],["Rockstar",__L("Ouvrir le Live Musique","Open Live Music"),function(){return S.u4}],[__L("Astronaute","Astronaut"),__L("Ouvrir le Live Orbite","Open Live Orbit"),function(){return S.u5}],[__L("Bon appétit","Bon appétit"),__L("Construire une cafétéria","Build a cafeteria"),function(){return S.u6}],[__L("Bonne nuit","Good night"),__L("Construire une chambre","Build a bedroom"),function(){return S.r.some(function(x){return x.an[1]>0})}]];
 function z(){return 0}
 function rfresh(){return{own:EQ.map(z),lv:EQ.map(z),deco:DECO.map(z),an:[0,0],sl:0}}
-function fresh(){return{m:0,tot:0,r:[rfresh(),rfresh(),rfresh(),rfresh(),rfresh(),rfresh()],sf:[0,0,0,0,0],u2:0,u3:0,u4:0,u5:0,u6:0,ph:0,adb:0,col:COL.map(z),as:AS.map(z),ach:{},nc:0,cb:0,cd:0,gi:0,stars:0,seen:"",sp:0,tl:[0,0,0,0,0],day:"",streak:0,mday:"",msn:null,nb:0,nbz:0,tr:{i:-1,until:0,next:0},clicks:0,t:Date.now(),buff:0,ch:-1,tuto:0,bzDone:0,lt:0,pseudo:"",ct:Date.now(),sl:0,tn:0,dev:""}}
+function fresh(){return{m:0,tot:0,r:[rfresh(),rfresh(),rfresh(),rfresh(),rfresh(),rfresh()],sf:[0,0,0,0,0],u2:0,u3:0,u4:0,u5:0,u6:0,ph:0,adb:0,col:COL.map(z),as:AS.map(z),ach:{},nc:0,cb:0,cd:0,gi:0,stars:0,seen:"",sp:0,tl:[0,0,0,0,0],day:"",streak:0,mday:"",msn:null,nb:0,nbz:0,tr:{i:-1,until:0,next:0},clicks:0,t:Date.now(),buff:0,ch:-1,tuto:0,bzDone:0,lt:0,pseudo:"",ct:Date.now(),sl:0,tn:0,dev:"",jt:0,jg:{n:"",until:0,next:0},ni:0,vs:0,ev:{next:0,pol:0},skin:0,skins:[1,0,0,0,0],cloud:""}}
 var S=fresh(),view=0;
 function $(i){return document.getElementById(i)}
 function sum(a){return a.reduce(function(x,y){return x+y},0)}
 function dsum(){var t=0;S.r.forEach(function(x){t+=sum(x.deco)});return t}
-function fmt(n){if(n<1000)return n<10&&n%1?n.toFixed(1).replace(".",","):Math.floor(n).toString();var s=["K","M","Md","Bn","Bd"],i=-1;while(n>=1000&&i<s.length-1){n/=1000;i++}return n.toFixed(n<10?2:n<100?1:0).replace(".",",")+" "+s[i]}
+function fmt(n){if(n<1000)return n<10&&n%1?n.toFixed(1).replace(".",DEC):Math.floor(n).toString();var s=["K","M","Md","Bn","Bd","Tn","Td","Qn"],i=-1;while(n>=1000&&i<s.length-1){n/=1000;i++}return n.toFixed(n<10?2:n<100?1:0).replace(".",DEC)+" "+s[i]}
 function toast(t){var e=$("toast");e.textContent=t;e.classList.add("on");clearTimeout(toast.t);toast.t=setTimeout(function(){e.classList.remove("on")},2500)}
 function buffOn(){return S.buff>Date.now()}
 function collabOn(){return S.cb>Date.now()}
 function crLvl(){return Math.floor(Math.sqrt(S.clicks/5))+1}
-function mulAll(){return (1+.1*S.stars)*(1+.05*dsum())*(1+.1*sum(S.col))*(1+.02*Object.keys(S.ach).length)*(1+.2*S.as[1])*(1+staffB())*(1+.02*(crLvl()-1))*(1+.02*trN())}
+function mulAll(){return (1+.1*S.stars)*(1+.05*dsum())*(1+.1*sum(S.col))*(1+.02*Object.keys(S.ach).length)*(1+.2*S.as[1])*(1+staffB())*(1+.02*(crLvl()-1))*(1+.02*trN())*(1+.06*S.jt)}
 function roomCps(r){var s=0;EQL(r).forEach(function(e,i){s+=e.p*S.r[r].own[i]*Math.pow(2,S.r[r].lv[i])*mil(S.r[r].own[i])*(trOn()&&S.tr.i===i?3:1)});return s*IM[r]}
-function share(r){return roomCps(r)*mulAll()*(buffOn()?7:1)*(collabOn()?3:1)*nmul(r)}
+function evRoom(){var r=Math.floor(Date.now()/864e5)%6;return unl(r)?r:0}
+function polOn(){return S.ev.pol>Date.now()}
+function share(r){return roomCps(r)*mulAll()*(buffOn()?7:1)*(collabOn()?3:1)*nmul(r)*(evRoom()===r?1.5:1)*(polOn()?.85:1)}
 function cps(){var s=0;for(var r=0;r<6;r++)if(unl(r))s+=share(r);return s}
 function clickVal(){return Math.pow(2,S.r[view].lv[0])*Math.pow(2,S.tl[0])*mulAll()+cps()*.005}
 function starsGain(){return Math.max(0,Math.floor(Math.sqrt(S.tot/2e9))-S.stars)}
 function gain(n){S.m+=n;S.tot+=n;S.lt+=n}
-function subs(){return Math.floor(5*Math.pow(Math.max(0,S.lt),.42))}
+function subs(){return Math.floor(5*Math.pow(Math.max(0,S.lt),.42))+Math.floor(S.vs||0)}
 var SL=[0,10,50,100,250,500,1e3,2.5e3,5e3,1e4,2.5e4,5e4,1e5,2.5e5,5e5,1e6,2.5e6,5e6,1e7],
-SLN=["Débutant","Apprenti","Créateur","Régulier","Montant","Connu","Populaire","Influenceur","Vedette","Star","Superstar","Célébrité","Icône","Légende","Mythique","Phénomène","Roi du web","Empereur","Dieu du stream"],
-TR=[[100,"Plaque Bronze","🥉"],[1e3,"Coupe Argent","🏆"],[1e4,"Bouton Argent","▶️"],[1e5,"Bouton Or","🥇"],[5e5,"Trophée Cristal","💎"],[1e6,"Bouton Diamant","💠"],[5e6,"Statue d’or","🗽"],[1e7,"Bouton Rubis","❤️"],[5e7,"Couronne","👑"],[1e8,"Trophée Légende","🌟"]],
-RV=[["Mia_Plays",40],["ChefKevin",120],["LunaVlogs",300],["TheoMusic",700],["ZenZoé",1500],["BigNoah",4e3],["Capsule",9e3],["StarLab",2e4],["NovaTV",5e4],["PixelPapa",1.2e5],["MamieZap",3e5],["DJ Comète",8e5],["MegaLéo",2e6],["Titan Stream",6e6]];
+SLN=[__L("Débutant","Beginner"),__L("Apprenti","Apprentice"),__L("Créateur","Creator"),__L("Régulier","Regular"),__L("Montant","Rising"),__L("Connu","Known"),__L("Populaire","Popular"),__L("Influenceur","Influencer"),__L("Vedette","Headliner"),"Star","Superstar",__L("Célébrité","Celebrity"),__L("Icône","Icon"),__L("Légende","Legend"),__L("Mythique","Mythic"),__L("Phénomène","Phenomenon"),__L("Roi du web","King of the web"),__L("Empereur","Emperor"),__L("Dieu du stream","Stream god")],
+TR=[[100,__L("Plaque Bronze","Bronze Plaque"),"🥉"],[1e3,__L("Coupe Argent","Silver Cup"),"🏆"],[1e4,__L("Bouton Argent","Silver Play Button"),"▶️"],[1e5,__L("Bouton Or","Gold Play Button"),"🥇"],[5e5,__L("Trophée Cristal","Crystal Trophy"),"💎"],[1e6,__L("Bouton Diamant","Diamond Play Button"),"💠"],[5e6,__L("Statue d’or","Golden Statue"),"🗽"],[1e7,__L("Bouton Rubis","Ruby Play Button"),"❤️"],[5e7,__L("Couronne","Crown"),"👑"],[1e8,__L("Trophée Légende","Legend Trophy"),"🌟"]],
+RV=[["Mia_Plays",40],["ChefKevin",120],["LunaVlogs",300],["TheoMusic",700],["ZenZoé",1500],["BigNoah",4e3],["Capsule",9e3],["StarLab",2e4],["NovaTV",5e4],["PixelPapa",1.2e5],[__L("MamieZap","GrannyZap"),3e5],[__L("DJ Comète","DJ Comet"),8e5],["MegaLéo",2e6],["Titan Stream",6e6]];
 function sLvl(){var s=subs(),i=0;while(i+1<SL.length&&s>=SL[i+1])i++;return i}
 function trN(){var s=subs(),n=0;TR.forEach(function(q){if(s>=q[0])n++});return n}
 function rvSubs(i){var h=(Date.now()-(S.ct||Date.now()))/36e5;return Math.floor(RV[i][1]*Math.exp(.03*Math.min(Math.max(h,0),100)))}
 function ranking(){var l=RV.map(function(r,i){return{n:r[0],s:rvSubs(i)}});l.push({n:S.pseudo||"Toi",s:subs(),me:1});l.sort(function(a,b){return b.s-a.s});return l}
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
 function renderChan(){var s=subs(),l=sLvl(),nx=SL[l+1],pr=nx?Math.min(100,Math.floor((s-SL[l])/(nx-SL[l])*100)):100;
-  $("chn").innerHTML='<div class="cd"><b>🎤 '+esc(S.pseudo||"Toi")+'</b><br>Niveau streamer '+(l+1)+' · '+SLN[l]+'<br>'+fmt(s)+' abonnés'+(nx?' · prochain niveau à '+fmt(nx):' · niveau maximum')+'<div class="bar"><i style="width:'+pr+'%"></i></div></div>';
+  $("chn").innerHTML='<div class="cd"><b>🎤 '+esc(S.pseudo||__L("Toi","You"))+'</b><br>'+__L('Niveau streamer ','Streamer level ')+(l+1)+' · '+SLN[l]+'<br>'+fmt(s)+__L(' abonnés',' subscribers')+(nx?__L(' · prochain niveau à ',' · next level at ')+fmt(nx):__L(' · niveau maximum',' · max level'))+'<div class="bar"><i style="width:'+pr+'%"></i></div></div>';
   var W=LB.on&&lbData&&lbData.top&&lbData.top.length>0;
-  $("rkh").textContent=W?"Classement mondial":"Classement des streamers";
+  $("rkh").textContent=W?__L("Classement mondial","World ranking"):__L("Classement des streamers","Streamer ranking");
   if(W){
-    $("rks").textContent="Les vrais joueurs du monde entier, mis à jour toutes les minutes.";
-    $("rkt").textContent=lbData.rank?"Ta place : n°"+lbData.rank+" sur "+lbData.total+" joueurs":"";
+    $("rks").textContent=__L("Les vrais joueurs du monde entier, mis à jour toutes les minutes.","Real players from all over the world, updated every minute.");
+    $("rkt").textContent=lbData.rank?__L("Ta place : n°","Your rank: #")+lbData.rank+__L(" sur "," of ")+lbData.total+__L(" joueurs"," players"):"";
     var mine=lbData.me;
-    $("rk").innerHTML=lbData.top.map(function(r,i){var m=mine&&r.pseudo===mine.pseudo&&Number(r.subs)===Number(mine.subs);return'<div class="rk'+(m?' me':'')+'"><span>'+(i+1)+'</span><b>'+esc(r.pseudo)+'</b><em>'+fmt(Number(r.subs))+'</em></div>'}).join("")+(lbData.rank&&lbData.rank>50?'<div class="rk me"><span>'+lbData.rank+'</span><b>'+esc(S.pseudo||"Toi")+'</b><em>'+fmt(subs())+'</em></div>':"")
+    $("rk").innerHTML=lbData.top.map(function(r,i){var m=mine&&r.pseudo===mine.pseudo&&Number(r.subs)===Number(mine.subs);return'<div class="rk'+(m?' me':'')+'"><span>'+(i+1)+'</span><b>'+esc(r.pseudo)+'</b><em>'+fmt(Number(r.subs))+'</em></div>'}).join("")+(lbData.rank&&lbData.rank>50?'<div class="rk me"><span>'+lbData.rank+'</span><b>'+esc(S.pseudo||__L("Toi","You"))+'</b><em>'+fmt(subs())+'</em></div>':"")
   }else{
     var rk=ranking(),me=0;rk.forEach(function(r,i){if(r.me)me=i+1});
-    $("rks").textContent=LB.on?"Connexion au classement mondial… En attendant, voici des streamers rivaux du jeu.":"Tu te mesures à des streamers rivaux du jeu. Le classement mondial en ligne n’est pas disponible dans cette version.";
-    $("rkt").textContent="Ta place : n°"+me+" sur "+rk.length;
+    $("rks").textContent=LB.on?__L("Connexion au classement mondial… En attendant, voici des streamers rivaux du jeu.","Connecting to the world ranking… In the meantime, here are rival streamers from the game."):__L("Tu te mesures à des streamers rivaux du jeu. Le classement mondial en ligne n’est pas disponible dans cette version.","You compete against rival streamers from the game. The online world ranking is not available in this version.");
+    $("rkt").textContent=__L("Ta place : n°","Your rank: #")+me+__L(" sur "," of ")+rk.length;
     $("rk").innerHTML=rk.map(function(r,i){return'<div class="rk'+(r.me?' me':'')+'"><span>'+(i+1)+'</span><b>'+esc(r.n)+'</b><em>'+fmt(r.s)+'</em></div>'}).join("")
   }
-  $("trs").textContent=trN()+" / "+TR.length+" trophées · chaque trophée donne +2 % de revenus (total +"+(2*trN())+" %)";
+  $("trs").textContent=trN()+" / "+TR.length+__L(" trophées · chaque trophée donne +2 % de revenus (total +"," trophies · each trophy gives +2% income (total +")+(2*trN())+" %)";
   $("trl").innerHTML='<div class="trw">'+TR.map(function(q){var ok=s>=q[0];return'<div class="trp'+(ok?' ok':'')+'"><span>'+q[2]+'</span><b>'+q[1]+'</b><small>'+fmt(q[0])+' abonnés</small></div>'}).join("")+'</div>'}
-function chanTick(){var L=sLvl(),N=trN();if(L>S.sl){S.sl=L;toast("Niveau streamer "+(L+1)+" : "+SLN[L]+" !")}if(N>S.tn){S.tn=N;toast("Trophée débloqué : "+TR[N-1][1]+" "+TR[N-1][2])}
-  $("pseu").textContent="🎤 "+(S.pseudo||"Toi")+" · Niv "+(L+1)+" · "+fmt(subs())+" abonnés";
-  var on6=$("p6").classList.contains("on");if(S.pseudo)lbSync(on6&&Date.now()-lbLast>15000);if(on6)renderChan()}
-function viewTrophy(){tg.x=TX+2;tg.rad=15;tg.th=.62;tg.ph=1;window.scrollTo(0,0);toast("Salle des trophées")}
+function chanTick(){var L=sLvl(),N=trN();if(L>S.sl){S.sl=L;toast(__L("Niveau streamer ","Streamer level ")+(L+1)+" : "+SLN[L]+" !")}if(N>S.tn){S.tn=N;toast(__L("Trophée débloqué : ","Trophy unlocked: ")+TR[N-1][1]+" "+TR[N-1][2])}
+  $("pseu").textContent="🎤 "+(S.pseudo||"Toi")+__L(" · Niv "," · Lv ")+(L+1)+" · "+fmt(subs())+__L(" abonnés"," subscribers");
+  var on6=$("p6").classList.contains("on");if(S.pseudo)lbSync(on6&&Date.now()-lbLast>15000);if(on6){renderChan();renderFans()}}
+function viewTrophy(){tg.x=TX+2;tg.rad=15;tg.th=.62;tg.ph=1;window.scrollTo(0,0);toast(__L("Salle des trophées","Trophy room"))}
 var LB={url:"https://dsusopmsomtqecnjnnlg.supabase.co/functions/v1/leaderboard",on:true},lbData=null,lbLast=0;
 function uuid4(){try{if(window.crypto&&crypto.randomUUID)return crypto.randomUUID()}catch(e){}return"xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g,function(c){var r=Math.random()*16|0;return(c==="x"?r:(r&3|8)).toString(16)})}
 function lbSync(force){if(!LB.on||!S.pseudo||S.ch<0)return;var n=Date.now();if(!force&&n-lbLast<60000)return;lbLast=n;if(!S.dev){S.dev=uuid4();save()}
-  try{fetch(LB.url,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action:"submit",device_id:S.dev,pseudo:S.pseudo,subs:subs(),level:sLvl()+1})}).then(function(r){return r.json()}).then(function(d){if(d&&d.ok)lbData=d;else if(d&&d.error==="pseudo_interdit"){S.pseudo="";save();toast("Ce pseudo n’est pas autorisé, choisis-en un autre");showPseudo()}}).catch(function(){})}catch(e){}}
+  try{fetch(LB.url,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action:"submit",device_id:S.dev,pseudo:S.pseudo,subs:subs(),level:sLvl()+1})}).then(function(r){return r.json()}).then(function(d){if(d&&d.ok)lbData=d;else if(d&&d.error==="pseudo_interdit"){S.pseudo="";save();toast(__L("Ce pseudo n’est pas autorisé, choisis-en un autre","This username isn’t allowed, please choose another one"));showPseudo()}}).catch(function(){})}catch(e){}}
 function esc2(){}
 
 function cost(i){return Math.ceil(EQL(view)[i].c*PM[view]*disc()*Math.pow(1.17,S.r[view].own[i]))}
@@ -295,7 +321,7 @@ function mixer(){var g=new T.Group();bx(g,.9,.1,.5,0x2a2a35,0,.05,0);for(var i=0
 function reg(o,pos,fn,ry,opt){o.position.set(pos[0],pos[1],pos[2]);o.rotation.y=ry||0;if(opt&&opt.face)o.rotation.y=Math.atan2(opt.face[0]-pos[0],opt.face[1]-pos[2]);o.scale.setScalar(.001);o.visible=false;sc.add(o);var v={o:o,fn:fn,k:0,by:pos[1],ph0:Math.random()*6};for(var k in opt)v[k]=opt[k];VIS.push(v);return v}
 function deskP(){var g=new T.Group();bx(g,.2,.04,.2,0x222222,0,.02,0);var p=bx(g,.3,.55,.04,0x111111,0,.32,0);p.rotation.x=-.2;bx(p,.26,.48,.02,0x22d3ee,0,0,.03,0x22d3ee);return g}
 function putChar(r,o){if(mains[r])sc.remove(mains[r]);if(sleepers[r])sc.remove(sleepers[r]);var m=r<2?seated(o):makeChar(o,1,false);if(r===2){cy(m.head,.28,.28,.3,0xffffff,0,.5,0);sp(m.head,.34,0xffffff,0,.7,0)}m.position.set(OX[r],r===4?.7:0,-1.7);sc.add(m);mains[r]=m;var z=makeChar(o,1,false);z.rotation.x=-1.5708;z.position.set(OX[r]+3.5,.68,4.3);z.visible=false;sc.add(z);sleepers[r]=z}
-function setChar(i){if(!sc)return;[0,1,2,3,4].forEach(function(r){putChar(r,CH[(i+r)%3])})}
+function setChar(i){if(!sc)return;[0,1,2,3,4].forEach(function(r){putChar(r,skinned(CH[(i+r)%3]))})}
 function kitchen(r,rg,E,ox){
   bx(sc,3.6,.9,.9,0xe5e7eb,ox,.45,-.7);bx(sc,3.8,.08,1.05,0x9a7b5a,ox,.94,-.7);
   function veg(){var g=new T.Group();bx(g,.7,.04,.45,0xd6b27c,0,.02,0);sp(g,.07,0xef4444,-.2,.1,0);sp(g,.07,0x22c55e,0,.1,.08);cy(g,.04,.04,.25,0xf97316,.2,.08,-.05).rotation.z=1.57;bx(g,.3,.02,.05,0xcccccc,.3,.06,.15);return g}
@@ -376,7 +402,7 @@ function buildCafe(r){
   var wr=new T.Group();bx(wr,.2,5,14,0x6b8f87,ox+11.6,2.5,2);sc.add(wr);walls.push({o:wr,k:"xr",v:ox+11.5});
   [[-2.25,5.5],[6.25,5.5]].forEach(function(p){var m=bx(sc,.15,1.4,p[1],0x93c5fd,ox+.5,.7,p[0]);m.material.transparent=true;m.material.opacity=.35});
   var l1=new T.PointLight(0xffe2b0,1,22);l1.position.set(ox-5,3.8,1.5);sc.add(l1);var l2=new T.PointLight(0xd0e8ff,1,22);l2.position.set(ox+6,3.8,1.5);sc.add(l2);
-  var s1=sign("CAFÉ","#fbbf24",3.2);s1.position.set(ox-5.25,3.9,-4.97);sc.add(s1);var s2=sign("PERSONNEL","#22d3ee",3.6);s2.position.set(ox+6,3.9,-4.97);sc.add(s2);
+  var s1=sign(__L("CAFÉ","CAFE"),"#fbbf24",3.2);s1.position.set(ox-5.25,3.9,-4.97);sc.add(s1);var s2=sign(__L("PERSONNEL","STAFF"),"#22d3ee",3.6);s2.position.set(ox+6,3.9,-4.97);sc.add(s2);
   bx(sc,7,1.1,.9,0x6b4f3a,ox-6.5,.55,-3.2);bx(sc,7.2,.06,1.0,0xe5e7eb,ox-6.5,1.12,-3.2);
   [-9,-7.5,-6,-4.5].forEach(function(x){cy(sc,.22,.22,.08,0xf59e0b,ox+x,.75,-2.2);cy(sc,.04,.04,.7,0x555555,ox+x,.35,-2.2)});
   [2.4,3.3,4.2,5.1,6,6.9].forEach(function(x,i){bx(sc,.8,2.2,.6,[0x2563eb,0x16a34a,0xdc2626,0xca8a04,0x7c3aed,0x0891b2][i],ox+x,1.1,-4.6);bx(sc,.05,.4,.05,0xe5e7eb,ox+x+.3,1.2,-4.28)});
@@ -444,20 +470,20 @@ function buildRoom(r,pal){
   COL.forEach(function(c,i){var g=seated(c.o);rg(g,[1.9,0,-1.6],function(){return collabOn()&&S.gi===i&&view===r},0,{talk:g,ph:i*2+1})});
 }
 function setView(n){var p=PRE[n];tg.th=p[0];tg.ph=p[1];tg.rad=p[2]*(view===5?1.7:1);Array.prototype.forEach.call(document.querySelectorAll("#vw button"),function(b){b.classList.toggle("on",b.dataset.v===n)})}
-function switchRoom(r){if(!unl(r)){toast("Studio verrouillé : ouvre-le dans l’onglet Matériel");tabTo(0);return}view=r;tg.x=OX[r]+CX[r];tg.rad=r===5?23:13.5;upd()}
+function switchRoom(r){if(!unl(r)){toast(__L("Studio verrouillé : ouvre-le dans l’onglet Matériel","Studio locked: open it in the Gear tab"));tabTo(0);return}view=r;tg.x=OX[r]+CX[r];tg.rad=r===5?23:13.5;upd()}
 function tabTo(n){document.querySelectorAll("#tabs button")[n].click()}
 function buildHall(){
   var x0=-5.4,x1=TX+9.1,w=x1-x0,cx=(x0+x1)/2;
   var fm=new T.Mesh(new T.BoxGeometry(w,.2,3.4),new T.MeshStandardMaterial({color:0xcfc9e6,roughness:.6}));fm.position.set(cx,-.1,11.1);fm.receiveShadow=true;sc.add(fm);
   bx(sc,w,.02,.22,0xfbbf24,cx,.01,11.4);
-  var NM=["STUDIO 1","STUDIO 2","LIVE CUISINE","LIVE MUSIQUE","LIVE ORBITE"],CL=["#22d3ee","#fbbf24","#f97316","#f472b6","#22d3ee"],WC=[0x3b2f63,0x0f4c5c,0x7c2d12,0x4a1d6b,0x1c2233];
+  var NM=["STUDIO 1","STUDIO 2",__L("LIVE CUISINE","LIVE COOKING"),__L("LIVE MUSIQUE","LIVE MUSIC"),__L("LIVE ORBITE","LIVE ORBIT")],CL=["#22d3ee","#fbbf24","#f97316","#f472b6","#22d3ee"],WC=[0x3b2f63,0x0f4c5c,0x7c2d12,0x4a1d6b,0x1c2233];
   for(var r=0;r<5;r++){var ox=OX[r],dx=ox+2;
     bx(sc,5.5,1.1,.2,WC[r],ox-2.35,.55,9.1);bx(sc,5.5,1.1,.2,WC[r],ox+6.35,.55,9.1);
     bx(sc,.22,2.8,.3,0xe5e7eb,dx-1.6,1.4,9.1);bx(sc,.22,2.8,.3,0xe5e7eb,dx+1.6,1.4,9.1);
     var s=sign(NM[r],CL[r],2.8);s.rotation.x=-1.5708;s.position.set(dx,.03,10.1);sc.add(s);
-    var a=sign("CAF\u00c9 \u2192","#fde68a",2.4);a.rotation.x=-1.5708;a.position.set(dx+3.2,.03,12.3);sc.add(a)}
-  (function(){var dx=TX+2;bx(sc,5.5,1.1,.2,0x3a2e1a,TX-2.35,.55,9.1);bx(sc,5.5,1.1,.2,0x3a2e1a,TX+6.35,.55,9.1);bx(sc,.22,2.8,.3,0xe5e7eb,dx-1.6,1.4,9.1);bx(sc,.22,2.8,.3,0xe5e7eb,dx+1.6,1.4,9.1);var s=sign("TROPH\u00c9ES","#fbbf24",2.8);s.rotation.x=-1.5708;s.position.set(dx,.03,10.1);sc.add(s)})();
-  var c=sign("CAF\u00c9T\u00c9RIA","#fbbf24",4);c.rotation.x=-1.5708;c.position.set(OX[5]-5.25,.03,10.1);sc.add(c)}
+    var a=sign(__L("CAF\u00c9 \u2192","CAFE →"),"#fde68a",2.4);a.rotation.x=-1.5708;a.position.set(dx+3.2,.03,12.3);sc.add(a)}
+  (function(){var dx=TX+2;bx(sc,5.5,1.1,.2,0x3a2e1a,TX-2.35,.55,9.1);bx(sc,5.5,1.1,.2,0x3a2e1a,TX+6.35,.55,9.1);bx(sc,.22,2.8,.3,0xe5e7eb,dx-1.6,1.4,9.1);bx(sc,.22,2.8,.3,0xe5e7eb,dx+1.6,1.4,9.1);var s=sign(__L("TROPH\u00c9ES","TROPHIES"),"#fbbf24",2.8);s.rotation.x=-1.5708;s.position.set(dx,.03,10.1);sc.add(s)})();
+  var c=sign(__L("CAF\u00c9T\u00c9RIA","CAFETERIA"),"#fbbf24",4);c.rotation.x=-1.5708;c.position.set(OX[5]-5.25,.03,10.1);sc.add(c)}
 var cityB=[],cityM=[],cars=[],fwM=[],TX=94.9;
 function plaque(c1,c2){var g=new T.Group();bx(g,.95,.95,.08,c2,0,0,0);var cv=document.createElement("canvas");cv.width=cv.height=128;var x=cv.getContext("2d");var gr=x.createLinearGradient(0,0,128,128);gr.addColorStop(0,c1);gr.addColorStop(1,"#222");x.fillStyle=gr;x.fillRect(0,0,128,128);x.fillStyle="#fff";x.beginPath();x.moveTo(48,36);x.lineTo(48,92);x.lineTo(94,64);x.closePath();x.fill();var m=new T.Mesh(new T.PlaneGeometry(.8,.8),new T.MeshBasicMaterial({map:new T.CanvasTexture(cv)}));m.position.z=.05;g.add(m);g.position.y=.5;var w=new T.Group();w.add(g);return w}
 function cupT(c,k){var g=new T.Group();cy(g,.25,.28,.08,c,0,.04,0);cy(g,.05,.05,.3,c,0,.22,0);cy(g,.3,.14,.32,c,0,.5,0);g.scale.setScalar(k||1);return g}
@@ -470,7 +496,7 @@ function buildTrophy(){
   var wl=new T.Group();bx(wl,.2,5,14,0x2a2147,ox-5.1,2.5,2);sc.add(wl);walls.push({o:wl,k:"x",v:ox-5});
   var wr=new T.Group();bx(wr,.2,5,14,0x2a2147,ox+9.1,2.5,2);sc.add(wr);walls.push({o:wr,k:"xr",v:ox+9});
   var L1=new T.PointLight(0xffe0a0,.9,18);L1.position.set(ox+2,4,1);sc.add(L1);var L2=new T.PointLight(0x9ad0ff,.6,14);L2.position.set(ox+2,3.5,-3);sc.add(L2);
-  var sg=sign("TROPH\u00c9ES","#fbbf24",5);sg.position.set(ox+2,3.8,-4.95);sc.add(sg);
+  var sg=sign(__L("TROPH\u00c9ES","TROPHIES"),"#fbbf24",5);sg.position.set(ox+2,3.8,-4.95);sc.add(sg);
   var LB=["100","1 K","10 K","100 K","500 K","1 M","5 M","10 M","50 M","100 M"];
   var MK=[
     function(){var g=plaque("#cd7f32",0x7c4a1e);return g},
@@ -511,7 +537,7 @@ function buildCity(){
   tc.forEach(function(c){var d=winTex(c,0,false),n=winTex(c,.55,true);var m=new T.MeshStandardMaterial({map:d,emissive:0xffffff,emissiveMap:n,emissiveIntensity:0,roughness:.85});MT.push(m);cityM.push(m)});
   var seed=12345;function rnd(){seed=(seed*16807)%2147483647;return(seed-1)/2147483646}
   var ZI=[[-100,-57],[-49,-17],[-9,17],[25,57],[65,100]],XA=[[-100,-57],[-49,-17],[-9,38],[46,108],[116,148],[156,190]],XM=[[-100,-57],[-49,-17],[116,148],[156,190]];
-  ZI.forEach(function(zi,ki){(ki===2?XM:XA).forEach(function(xi){
+  if(!window.LOWQ)ZI.forEach(function(zi,ki){(ki===2?XM:XA).forEach(function(xi){
     var nx=Math.floor((xi[1]-xi[0])/17),nz=Math.floor((zi[1]-zi[0])/17);if(nx<1||nz<1)return;
     var cw=(xi[1]-xi[0])/nx,cd=(zi[1]-zi[0])/nz;
     for(var a2=0;a2<nx;a2++)for(var b2=0;b2<nz;b2++){
@@ -523,12 +549,12 @@ function buildCity(){
   for(var lx=-6;lx<=104;lx+=14){cy(sc,.07,.09,3.4,0x333333,lx,1.7,15.6);sp(sc,.25,0xfff2b0,lx,3.5,15.6,0xfff2b0)}
   var cc=[0xef4444,0x3b82f6,0xfacc15,0xffffff,0x22c55e,0xf97316,0x8b5cf6],ci=0;
   function addCar(ax,c,dir,a,b,off){var car=new T.Group();bx(car,2.2,.6,1.1,cc[ci++%7],0,.5,0);bx(car,1.1,.5,.95,0x1f2937,-.1,1.0,0);car.userData={ax:ax,c:c,dir:dir,a:a,b:b,s:rnd()*(b-a)*(off?.5:1)+(off?(b-a)*.5:0),v:5+rnd()*4};sc.add(car);cars.push(car)}
-  HZ.forEach(function(z,i){addCar("x",z+2,1,-190,290);addCar("x",z-2,-1,-190,290);if(i<2){addCar("x",z+2,1,-190,290,1);addCar("x",z-2,-1,-190,290,1)}});
-  VX.forEach(function(x,i){addCar("z",x-2,1,-190,190);addCar("z",x+2,-1,-190,190);if(i<2){addCar("z",x-2,1,-190,190,1);addCar("z",x+2,-1,-190,190,1)}})}
+  if(!window.LOWQ)HZ.forEach(function(z,i){addCar("x",z+2,1,-190,290);addCar("x",z-2,-1,-190,290);if(i<2){addCar("x",z+2,1,-190,290,1);addCar("x",z-2,-1,-190,290,1)}});
+  if(!window.LOWQ)VX.forEach(function(x,i){addCar("z",x-2,1,-190,190);addCar("z",x+2,-1,-190,190);if(i<2){addCar("z",x-2,1,-190,190,1);addCar("z",x+2,-1,-190,190,1)}})}
 function moveCar(c,t){var d=c.userData,L=d.b-d.a,u=(d.s+d.v*t)%L,p=d.dir>0?d.a+u:d.b-u;
   if(d.ax==="x"){c.position.set(p,0,d.c);c.rotation.y=d.dir>0?0:3.1416}else{c.position.set(d.c,0,p);c.rotation.y=d.dir>0?-1.5708:1.5708}}
 function build3D(){
-  var d=$("stage");R=new T.WebGLRenderer({antialias:true});R.setPixelRatio(Math.min(devicePixelRatio||1,2));d.insertBefore(R.domElement,d.firstChild);
+  var d=$("stage");R=new T.WebGLRenderer({antialias:true});R.setPixelRatio(window.LOWQ?1:(Math.min(devicePixelRatio||1,2)));d.insertBefore(R.domElement,d.firstChild);
   sc=new T.Scene();sc.background=new T.Color(0x140d2b);cam=new T.PerspectiveCamera(44,1,.1,400);
   amb=new T.AmbientLight(0xb0a0e8,.8);sc.add(amb);hemi=new T.HemisphereLight(0xcfc8ff,0x2a1a3a,.5);sc.add(hemi);dl0=new T.DirectionalLight(0xfff0e0,.8);sc.add(dl0,dl0.target);dl0.castShadow=true;dl0.shadow.mapSize.set(2048,2048);var sh2=dl0.shadow.camera;sh2.left=-16;sh2.right=16;sh2.top=16;sh2.bottom=-16;sh2.near=1;sh2.far=50;dl0.shadow.bias=-.0004;R.shadowMap.enabled=true;R.shadowMap.type=T.PCFSoftShadowMap;R.toneMapping=T.ACESFilmicToneMapping;R.toneMappingExposure=1.25;
   buildRoom(0,{w1:0x3b2f63,w2:0x33295a,sn:"PULSE",sc:"#22d3ee"});
@@ -569,16 +595,16 @@ var rows={eq:[],de:[],co:[],as:[],lv:[],ac:[],ul:null,ul3:null};
 function mk(parent,ic,t,fn){var b=document.createElement("button");b.className="row";b.innerHTML='<span class="ic">'+ic+'</span><span class="tx"><b>'+t+'</b><small></small></span><span class="pr"></span><span class="n"></span>';b.onclick=fn;parent.appendChild(b);return{b:b,s:b.querySelector("small"),p:b.querySelector(".pr"),n:b.querySelector(".n"),t:b.querySelector("b"),i:b.querySelector(".ic")}}
 function setR(r,sub,price,ok,n,done){r.s.textContent=sub;r.p.textContent=price;r.b.disabled=!ok;r.b.classList.toggle("ok",!!ok);r.b.classList.toggle("done",!!done);if(n!==undefined)r.n.textContent=n}
 function build(){
-  rows.ul=mk($("unlock"),"🏢","Ouvrir le Studio 2",function(){if(S.u2||S.m<U2)return;S.m-=U2;S.u2=1;toast("Studio 2 ouvert ! Le Studio 1 continue de rapporter.");switchRoom(1);adInter()});
-  rows.ul3=mk($("unlock"),"🍳","Ouvrir le Live Cuisine",function(){if(S.u3||!S.u2||S.m<U3)return;S.m-=U3;S.u3=1;toast("Live Cuisine ouvert : cuisine, réactions, lives !");switchRoom(2);adInter()});
-  rows.sl=mk($("slv"),"🏗️","Niveau du studio",function(){var rr=S.r[view];if(rr.sl>=4)return;var c=slCost(view,rr.sl);if(S.m<c)return;S.m-=c;rr.sl++;toast(SN[view]+" niveau "+(rr.sl+1));upd()});
+  rows.ul=mk($("unlock"),"🏢",__L("Ouvrir le Studio 2","Open Studio 2"),function(){if(S.u2||S.m<U2)return;S.m-=U2;S.u2=1;toast(__L("Studio 2 ouvert ! Le Studio 1 continue de rapporter.","Studio 2 opened! Studio 1 keeps earning."));switchRoom(1);adInter()});
+  rows.ul3=mk($("unlock"),"🍳",__L("Ouvrir le Live Cuisine","Open Live Cooking"),function(){if(S.u3||!S.u2||S.m<U3)return;S.m-=U3;S.u3=1;toast(__L("Live Cuisine ouvert : cuisine, réactions, lives !","Live Cooking opened: cooking, reactions, live shows!"));switchRoom(2);adInter()});
+  rows.sl=mk($("slv"),"🏗️",__L("Niveau du studio","Studio level"),function(){var rr=S.r[view];if(rr.sl>=4)return;var c=slCost(view,rr.sl);if(S.m<c)return;S.m-=c;rr.sl++;toast(SN[view]+__L(" niveau "," level ")+(rr.sl+1));upd()});
   EQ.forEach(function(e,i){rows.eq.push(mk($("shop"),e.i,e.n,function(){var c=cost(i);if(S.m<c||S.r[view].own[i]>=CAP[S.r[view].sl])return;S.m-=c;S.r[view].own[i]++;S.nb++;upd()}))});
-  DECO.forEach(function(e,i){rows.de.push(mk($("deco"),e.i,e.n,function(){if(view===2||view===4||view===5||S.r[view].deco[i]||S.m<dCost(i))return;S.m-=dCost(i);S.r[view].deco[i]=1;toast(e.n+" installé(e) dans la salle");upd()}))});
+  DECO.forEach(function(e,i){rows.de.push(mk($("deco"),e.i,e.n,function(){if(view===2||view===4||view===5||S.r[view].deco[i]||S.m<dCost(i))return;S.m-=dCost(i);S.r[view].deco[i]=1;toast(e.n+__L(" installé(e) dans la salle"," installed in the room"));upd()}))});
   COL.forEach(function(c,i){rows.co.push(mk($("collab"),c.i,c.n,function(){
-    if(!S.col[i]){if(S.m>=c.c){S.m-=c.c;S.col[i]=1;toast(c.n+" rejoint ton équipe")}}
-    else if(!collabOn()&&Date.now()>=S.cd){S.cb=Date.now()+30000;S.cd=Date.now()+90000;S.gi=i;S.nc++;toast("Collab avec "+c.n+" : revenus ×3 pendant 30 s")}upd()}))});
+    if(!S.col[i]){if(S.m>=c.c){S.m-=c.c;S.col[i]=1;toast(c.n+__L(" rejoint ton équipe"," joined your team"))}}
+    else if(!collabOn()&&Date.now()>=S.cd){S.cb=Date.now()+30000;S.cd=Date.now()+90000;S.gi=i;S.nc++;toast(__L("Collab avec ","Collab with ")+c.n+__L(" : revenus ×3 pendant 30 s",": income ×3 for 30 s"))}upd()}))});
   AS.forEach(function(a,i){rows.as.push(mk($("asst"),a.i,a.n,function(){var c=Math.ceil(a.c*Math.pow(a.g,S.as[i]));if(S.as[i]>=a.max||S.m<c)return;S.m-=c;S.as[i]++;upd()}))});
-  EQ.forEach(function(e,i){rows.lv.push(mk($("lvls"),e.i,e.n,function(){var c=lvCost(i),rr=S.r[view];if(!rr.own[i]||rr.lv[i]>=5||S.m<c)return;S.m-=c;rr.lv[i]++;toast(e.n+" niveau "+(rr.lv[i]+1));upd()}))});
+  EQ.forEach(function(e,i){rows.lv.push(mk($("lvls"),e.i,e.n,function(){var c=lvCost(i),rr=S.r[view];if(!rr.own[i]||rr.lv[i]>=5||S.m<c)return;S.m-=c;rr.lv[i]++;toast(e.n+__L(" niveau "," level ")+(rr.lv[i]+1));upd()}))});
   ACH.forEach(function(a){rows.ac.push(mk($("ach"),"🏆",a[0],function(){}))});
   $("chs").innerHTML=CH.map(function(c,i){function h(x){return "#"+("000000"+x.toString(16)).slice(-6)}return '<button data-i="'+i+'"><span class="av" style="--s:'+h(c.s)+';--h:'+h(c.h)+';--t:'+h(c.t)+'"></span>'+c.n+"</button>"}).join("");
   Array.prototype.forEach.call($("chs").children,function(b){b.onclick=function(){S.ch=+b.dataset.i;setChar(S.ch);$("pick").style.display="none";save();maybeGuide()}});
@@ -586,26 +612,26 @@ function build(){
   Array.prototype.forEach.call(document.querySelectorAll("#vw button"),function(b){b.onclick=function(){setView(b.dataset.v)}});
 }
 function upd(){
-  ACH.forEach(function(a,i){if(!S.ach[i]&&a[2]()){S.ach[i]=1;toast("Succès : "+a[0]+" (+2 %)")}});
+  ACH.forEach(function(a,i){if(!S.ach[i]&&a[2]()){S.ach[i]=1;toast(__L("Succès : ","Award: ")+a[0]+" (+2 %)")}});
   var rr=S.r[view],now=Date.now(),sn=" · "+SN[view];
-  $("money").textContent=fmt(S.m)+" €";$("cps").textContent=fmt(cps())+" € / seconde";$("cv").textContent="+"+fmt(clickVal())+" €";
-  var bt=dnTxt()+"<br>";if(buffOn())bt+="🔥 Buzz ×7 · "+Math.ceil((S.buff-now)/1000)+" s<br>";if(collabOn())bt+="🤝 Collab ×3 · "+Math.ceil((S.cb-now)/1000)+" s";if(trOn())bt+="<br>📈 Tendance ×3 : "+EQ[S.tr.i].n;$("buff").innerHTML=bt;
-  $("t0").textContent="Équipement"+sn;$("t1").textContent="Décoration"+sn;$("t3").textContent="Niveaux"+sn;
-  $("ri").textContent="Studio 1 : "+fmt(share(0))+" €/s"+ritx()+" — tous tes studios rapportent en même temps.";
+  $("money").textContent=fmt(S.m)+" €";$("cps").textContent=fmt(cps())+__L(" € / seconde"," € / second");$("cv").textContent="+"+fmt(clickVal())+" €";
+  var bt=dnTxt()+"<br>";if(buffOn())bt+="🔥 Buzz ×7 · "+Math.ceil((S.buff-now)/1000)+" s<br>";if(collabOn())bt+="🤝 Collab ×3 · "+Math.ceil((S.cb-now)/1000)+" s";if(trOn())bt+=__L("<br>📈 Tendance ×3 : ","<br>📈 Trend ×3: ")+EQ[S.tr.i].n;bt+=jtBt();$("buff").innerHTML=bt;
+  $("t0").textContent=__L("Équipement","Gear")+sn;$("t1").textContent=__L("Décoration","Decor")+sn;$("t3").textContent=__L("Niveaux","Upgrades")+sn;
+  $("ri").textContent=__L("Studio 1 : ","Studio 1: ")+fmt(share(0))+" €/s"+ritx()+__L(" — tous tes studios rapportent en même temps."," — all your studios earn at the same time.");
   chips();
-  setR(rows.ul,S.u2?"Studio 2 ouvert : prix ×30, revenus ×25":"Une 2e salle plus luxueuse : prix ×30, revenus ×25. Le Studio 1 continue de rapporter.",S.u2?"Ouvert ✓":fmt(U2)+" €",!S.u2&&S.m>=U2,"",S.u2);
-  setR(rows.ul3,S.u3?"Live Cuisine ouvert : cuisine, réactions, public":"Scène de live : cuisine, réactions, public. Prix ×900, revenus ×700. Demande le Studio 2.",S.u3?"Ouvert ✓":fmt(U3)+" €",S.u2&&!S.u3&&S.m>=U3,"",S.u3);
-  EQL(view).forEach(function(e,i){var c=cost(i);rows.eq[i].t.textContent=rows.lv[i].t.textContent=e.n;rows.eq[i].i.textContent=rows.lv[i].i.textContent=e.i;var cap=CAP[rr.sl],full=rr.own[i]>=cap;setR(rows.eq[i],full?"Maximum atteint : améliore le studio":e.d+" · +"+fmt(e.p*IM[view]*Math.pow(2,rr.lv[i])*mil(rr.own[i]))+" €/s"+nxt(rr.own[i])+(trOn()&&S.tr.i===i?" · 📈 ×3":""),full?"Max":fmt(c)+" €",S.m>=c&&!full,rr.own[i]||"");
-    var lc=lvCost(i),mx=rr.lv[i]>=5;setR(rows.lv[i],!rr.own[i]?"Achète-le d’abord":"Niveau "+(rr.lv[i]+1)+"/6 · revenus ×"+Math.pow(2,rr.lv[i]),mx?"Max":rr.own[i]?fmt(lc)+" €":"",!mx&&rr.own[i]>0&&S.m>=lc,"",mx)});
-  var sc2=rr.sl<4?slCost(view,rr.sl):0;setR(rows.sl,"Niveau "+(rr.sl+1)+"/5 · max "+CAP[rr.sl]+" par équipement"+(rr.sl<4?" → "+CAP[rr.sl+1]:""),rr.sl>=4?"Max":fmt(sc2)+" €",rr.sl<4&&S.m>=sc2,rr.sl+1,rr.sl>=4);
-  var nd=view===2||view===4||view===5;$("deco").style.display=nd?"none":"block";$("nodeco").style.display=nd?"block":"none";DECO.forEach(function(e,i){var c=dCost(i);setR(rows.de[i],rr.deco[i]?"Dans la salle · +5 % de revenus":"+5 % de revenus",rr.deco[i]?"Acquis ✓":fmt(c)+" €",!rr.deco[i]&&S.m>=c,"",rr.deco[i])});
+  setR(rows.ul,S.u2?__L("Studio 2 ouvert : prix ×30, revenus ×25","Studio 2 opened: price ×30, income ×25"):__L("Une 2e salle plus luxueuse : prix ×30, revenus ×25. Le Studio 1 continue de rapporter.","A second, more luxurious room: price ×30, income ×25. Studio 1 keeps earning."),S.u2?__L("Ouvert ✓","Open ✓"):fmt(U2)+" €",!S.u2&&S.m>=U2,"",S.u2);
+  setR(rows.ul3,S.u3?__L("Live Cuisine ouvert : cuisine, réactions, public","Live Cooking opened: cooking, reactions, audience"):__L("Scène de live : cuisine, réactions, public. Prix ×900, revenus ×700. Demande le Studio 2.","Live stage: cooking, reactions, audience. Price ×900, income ×700. Requires Studio 2."),S.u3?__L("Ouvert ✓","Open ✓"):fmt(U3)+" €",S.u2&&!S.u3&&S.m>=U3,"",S.u3);
+  EQL(view).forEach(function(e,i){var c=cost(i);rows.eq[i].t.textContent=rows.lv[i].t.textContent=e.n;rows.eq[i].i.textContent=rows.lv[i].i.textContent=e.i;var cap=CAP[rr.sl],full=rr.own[i]>=cap;setR(rows.eq[i],full?__L("Maximum atteint : améliore le studio","Maximum reached: upgrade the studio"):e.d+" · +"+fmt(e.p*IM[view]*Math.pow(2,rr.lv[i])*mil(rr.own[i]))+" €/s"+nxt(rr.own[i])+(trOn()&&S.tr.i===i?" · 📈 ×3":""),full?"Max":fmt(c)+" €",S.m>=c&&!full,rr.own[i]||"");
+    var lc=lvCost(i),mx=rr.lv[i]>=5;setR(rows.lv[i],!rr.own[i]?__L("Achète-le d’abord","Buy it first"):__L("Niveau ","Level ")+(rr.lv[i]+1)+__L("/6 · revenus ×","/6 · income ×")+Math.pow(2,rr.lv[i]),mx?"Max":rr.own[i]?fmt(lc)+" €":"",!mx&&rr.own[i]>0&&S.m>=lc,"",mx)});
+  var sc2=rr.sl<4?slCost(view,rr.sl):0;setR(rows.sl,__L("Niveau ","Level ")+(rr.sl+1)+__L("/5 · max ","/5 · max ")+CAP[rr.sl]+__L(" par équipement"," per item")+(rr.sl<4?" → "+CAP[rr.sl+1]:""),rr.sl>=4?"Max":fmt(sc2)+" €",rr.sl<4&&S.m>=sc2,rr.sl+1,rr.sl>=4);
+  var nd=view===2||view===4||view===5;$("deco").style.display=nd?"none":"block";$("nodeco").style.display=nd?"block":"none";DECO.forEach(function(e,i){var c=dCost(i);setR(rows.de[i],rr.deco[i]?__L("Dans la salle · +5 % de revenus","In the room · +5% income"):__L("+5 % de revenus","+5% income"),rr.deco[i]?__L("Acquis ✓","Owned ✓"):fmt(c)+" €",!rr.deco[i]&&S.m>=c,"",rr.deco[i])});
   COL.forEach(function(c,i){var r=rows.co[i],on=collabOn()&&S.gi===i,cdl=Math.ceil((S.cd-now)/1000);
-    if(!S.col[i])setR(r,"+10 % de revenus en permanence",fmt(c.c)+" €",S.m>=c.c);
-    else setR(r,on?"En direct dans ta salle !":cdl>0?"Disponible dans "+cdl+" s":"Inviter · ×3 pendant 30 s",on?"":"Inviter",!collabOn()&&cdl<=0,"",on)});
-  AS.forEach(function(a,i){var c=Math.ceil(a.c*Math.pow(a.g,S.as[i])),mx=S.as[i]>=a.max;setR(rows.as[i],a.d+" · niveau "+S.as[i]+"/"+a.max,mx?"Max":fmt(c)+" €",!mx&&S.m>=c,S.as[i]||"",mx)});
-  ACH.forEach(function(a,i){setR(rows.ac[i],a[1]+(S.ach[i]?" · obtenu":""),S.ach[i]?"✓":"",false,"",S.ach[i])});
-  var g=starsGain();$("pd").textContent="Étoiles : "+S.stars+" (+10 % chacune). "+(g>0?"Tu peux en gagner "+g+" de plus.":"Gagne plus pour en obtenir.");
-  $("pre").disabled=g<1;$("st1").textContent="Niveau créateur "+crLvl();$("st2").textContent="Total : "+fmt(S.tot)+" €";$("st3").textContent="Vidéos : "+S.clicks;upd2();chanTick();
+    if(!S.col[i])setR(r,__L("+10 % de revenus en permanence","+10% income permanently"),fmt(c.c)+" €",S.m>=c.c);
+    else setR(r,on?__L("En direct dans ta salle !","Live in your room!"):cdl>0?__L("Disponible dans ","Available in ")+cdl+" s":__L("Inviter · ×3 pendant 30 s","Invite · ×3 for 30 s"),on?"":__L("Inviter","Invite"),!collabOn()&&cdl<=0,"",on)});
+  AS.forEach(function(a,i){var c=Math.ceil(a.c*Math.pow(a.g,S.as[i])),mx=S.as[i]>=a.max;setR(rows.as[i],a.d+__L(" · niveau "," · level ")+S.as[i]+"/"+a.max,mx?"Max":fmt(c)+" €",!mx&&S.m>=c,S.as[i]||"",mx)});
+  ACH.forEach(function(a,i){setR(rows.ac[i],a[1]+(S.ach[i]?__L(" · obtenu"," · obtained"):""),S.ach[i]?"✓":"",false,"",S.ach[i])});
+  var g=starsGain();$("pd").textContent=__L("Étoiles : ","Stars: ")+S.stars+__L(" (+10 % chacune). "," (+10% each). ")+(g>0?__L("Tu peux en gagner ","You can earn ")+g+__L(" de plus."," more."):__L("Gagne plus pour en obtenir.","Earn more to get some."));
+  $("pre").disabled=g<1;$("st1").textContent=__L("Niveau créateur ","Creator level ")+crLvl();$("st2").textContent=__L("Total : ","Total: ")+fmt(S.tot)+" €";$("st3").textContent=__L("Vidéos : ","Videos: ")+S.clicks;upd2();chanTick();upd3();
 }
 function film(x,y){var v=clickVal();gain(v);S.clicks++;act[view]=1;fl[view]=1;
   var st=$("stage"),r=st.getBoundingClientRect(),f=document.createElement("div");f.className="fl";f.textContent="+"+fmt(v)+" ♥";f.style.left=(x-r.left-20)+"px";f.style.top=(y-r.top-20)+"px";st.appendChild(f);setTimeout(function(){f.remove()},900);upd()}
@@ -613,22 +639,22 @@ $("rec").onclick=function(e){e.stopPropagation();var r=this.getBoundingClientRec
 Array.prototype.forEach.call(document.querySelectorAll("#tabs button"),function(b){b.onclick=function(){Array.prototype.forEach.call(document.querySelectorAll("#tabs button,.pg"),function(x){x.classList.remove("on")});b.classList.add("on");$("p"+b.dataset.p).classList.add("on");window.scrollTo(0,0)}});
 $("chg").onclick=function(){$("pick").style.display="flex"};
 $("pre").onclick=function(){var g=starsGain();if(g<1)return;var b=$("pre");
-  if(!b.dataset.sure){b.dataset.sure="1";$("pt").textContent="Confirmer ? Tu perds tout sauf étoiles, succès et collabs";setTimeout(function(){delete b.dataset.sure;$("pt").textContent="Repars à zéro avec des étoiles"},4000);return}
-  delete b.dataset.sure;$("pt").textContent="Repars à zéro avec des étoiles";var o=S,n=fresh();n.stars=o.stars+g;n.ch=o.ch;n.ach=o.ach;n.col=o.col;n.nc=o.nc;n.seen=o.seen;n.ph=o.ph;n.adb=o.adb;n.sp=o.sp;n.tl=o.tl;n.day=o.day;n.streak=o.streak;n.mday=o.mday;n.msn=o.msn;n.nb=o.nb;n.nbz=o.nbz;n.tuto=o.tuto;n.bzDone=o.bzDone;n.lt=o.lt;n.pseudo=o.pseudo;n.ct=o.ct;n.sl=o.sl;n.tn=o.tn;n.dev=o.dev;n.tr=o.tr;n.m=o.tl[4]>0?Math.pow(10,o.tl[4]+2):0;S=n;view=0;tg.x=2;tg.rad=13.5;toast("Renaissance ! "+S.stars+" étoiles");upd();save()};
-$("rs").onclick=function(){var b=$("rs");if(b.dataset.s){S=fresh();view=0;tg.x=2;tg.rad=13.5;delete b.dataset.s;b.textContent="Réinitialiser";$("pick").style.display="flex";upd();save()}else{b.dataset.s="1";b.textContent="Confirmer ?";setTimeout(function(){delete b.dataset.s;b.textContent="Réinitialiser"},3500)}};
+  if(!b.dataset.sure){b.dataset.sure="1";$("pt").textContent=__L("Confirmer ? Tu perds tout sauf étoiles, succès et collabs","Confirm? You lose everything except stars, awards and collabs");setTimeout(function(){delete b.dataset.sure;$("pt").textContent=__L("Repars à zéro avec des étoiles","Restart from zero with stars")},4000);return}
+  delete b.dataset.sure;$("pt").textContent=__L("Repars à zéro avec des étoiles","Restart from zero with stars");var o=S,n=fresh();n.stars=o.stars+g;n.ch=o.ch;n.ach=o.ach;n.col=o.col;n.nc=o.nc;n.seen=o.seen;n.ph=o.ph;n.adb=o.adb;n.sp=o.sp;n.tl=o.tl;n.day=o.day;n.streak=o.streak;n.mday=o.mday;n.msn=o.msn;n.nb=o.nb;n.nbz=o.nbz;n.tuto=o.tuto;n.bzDone=o.bzDone;n.lt=o.lt;n.pseudo=o.pseudo;n.ct=o.ct;n.sl=o.sl;n.tn=o.tn;n.dev=o.dev;n.tr=o.tr;n.vs=o.vs;n.ni=o.ni;n.skin=o.skin;n.skins=o.skins;n.ev=o.ev;n.cloud=o.cloud;n.m=o.tl[4]>0?Math.pow(10,o.tl[4]+2):0;S=n;view=0;tg.x=2;tg.rad=13.5;toast(__L("Renaissance ! ","Rebirth! ")+S.stars+__L(" étoiles"," stars"));upd();save()};
+$("rs").onclick=function(){var b=$("rs");if(b.dataset.s){S=fresh();view=0;tg.x=2;tg.rad=13.5;delete b.dataset.s;b.textContent=__L("Réinitialiser","Reset");$("pick").style.display="flex";upd();save()}else{b.dataset.s="1";b.textContent=__L("Confirmer ?","Confirm?");setTimeout(function(){delete b.dataset.s;b.textContent=__L("Réinitialiser","Reset")},3500)}};
 function spawn(){if(S.bzDone||S.ch<0||!S.tuto)return;var z=$("buzz"),st=$("stage");z.style.left=(70+Math.random()*(st.clientWidth-250))+"px";z.style.top=(90+Math.random()*(st.clientHeight-190))+"px";z.style.display="block";clearTimeout(spawn.h);spawn.h=setTimeout(function(){z.style.display="none"},12000)}
 $("buzz").onclick=function(e){e.stopPropagation();this.style.display="none";S.nbz++;S.bzDone=1;S.buff=Date.now()+20000;toast("Buzz viral ! Revenus ×7 pendant 20 s. Ensuite, le ×7 vient du bouton 🎬 Pub");upd();save()};
 function schedule(){setTimeout(function(){spawn();schedule()},(45000+Math.random()*45000)*Math.max(.2,1-.2*S.tl[3]))}
-function save(){try{S.t=Date.now();localStorage.setItem("pulseStudio3",JSON.stringify(S));var e=$("sv");if(e)e.textContent=new Date().toLocaleTimeString("fr-FR")}catch(x){}}
-function norm(o){var f=fresh();if(!o.r)o.r=[{own:o.own,lv:o.lv,deco:o.deco},rfresh()];while(o.r.length<6)o.r.push(rfresh());for(var k in f)if(o[k]===undefined)o[k]=f[k];if(!o.lt)o.lt=o.tot||0;["col","as","tl","sf"].forEach(function(k){while(o[k].length<f[k].length)o[k].push(0)});o.r.forEach(function(rm,ri){if(rm.sl===undefined){var mx=Math.max.apply(null,rm.own.concat([0])),l=0;while(l<4&&mx>CAP[l])l++;rm.sl=l}if(!rm.an)rm.an=[0,0];if(rm.an[0]>0){for(var l=0;l<rm.an[0];l++)o.m+=15000*PM[ri]*Math.pow(3.2,l);rm.an[0]=0}["own","lv","deco"].forEach(function(k){while(rm[k].length<f.r[0][k].length)rm[k].push(0)})});return o}
+function save(){try{S.t=Date.now();localStorage.setItem("pulseStudio3",JSON.stringify(S));var e=$("sv");if(e)e.textContent=new Date().toLocaleTimeString(__L("fr-FR","en-US"))}catch(x){}}
+function norm(o){var f=fresh();if(!o.r)o.r=[{own:o.own,lv:o.lv,deco:o.deco},rfresh()];while(o.r.length<6)o.r.push(rfresh());for(var k in f)if(o[k]===undefined)o[k]=f[k];if(!o.lt)o.lt=o.tot||0;if(!o.skins||o.skins.length<5)o.skins=[1,0,0,0,0];if(!o.ev||typeof o.ev!=="object")o.ev={next:0,pol:0};if(!o.jg)o.jg={n:"",until:0,next:0};["col","as","tl","sf"].forEach(function(k){while(o[k].length<f[k].length)o[k].push(0)});o.r.forEach(function(rm,ri){if(rm.sl===undefined){var mx=Math.max.apply(null,rm.own.concat([0])),l=0;while(l<4&&mx>CAP[l])l++;rm.sl=l}if(!rm.an)rm.an=[0,0];if(rm.an[0]>0){for(var l=0;l<rm.an[0];l++)o.m+=15000*PM[ri]*Math.pow(3.2,l);rm.an[0]=0}["own","lv","deco"].forEach(function(k){while(rm[k].length<f.r[0][k].length)rm[k].push(0)})});return o}
 function load(){try{var d=localStorage.getItem("pulseStudio3")||localStorage.getItem("pulseStudio2");if(d)S=norm(JSON.parse(d))}catch(e){}}
 
 var STAFF=[
-{n:"Serveurs",i:"🍽️",c:300,g:1.5,max:8,b:.02,d:"+2 % de revenus chacun · ils servent dans la cafétéria"},
-{n:"Cuisiniers",i:"👨‍🍳",c:2500,g:1.7,max:4,b:.03,d:"+3 % de revenus chacun · ils cuisinent derrière le comptoir"},
-{n:"Baristas",i:"☕",c:8000,g:2,max:2,b:.04,d:"+4 % de revenus chacun · ils préparent les cafés"},
-{n:"Responsable",i:"📋",c:40000,g:2,max:1,b:.08,d:"+8 % de revenus · il fait le tour des salles"},
-{n:"Agent d’entretien",i:"🧹",c:15000,g:2,max:1,b:.05,d:"+5 % de revenus · il garde tout propre"}];
+{n:__L("Serveurs","Waiters"),i:"🍽️",c:300,g:1.5,max:8,b:.02,d:__L("+2 % de revenus chacun · ils servent dans la cafétéria","+2% income each · they serve in the cafeteria")},
+{n:__L("Cuisiniers","Cooks"),i:"👨‍🍳",c:2500,g:1.7,max:4,b:.03,d:__L("+3 % de revenus chacun · ils cuisinent derrière le comptoir","+3% income each · they cook behind the counter")},
+{n:"Baristas",i:"☕",c:8000,g:2,max:2,b:.04,d:__L("+4 % de revenus chacun · ils préparent les cafés","+4% income each · they make the coffees")},
+{n:__L("Responsable","Floor manager"),i:"📋",c:40000,g:2,max:1,b:.08,d:__L("+8 % de revenus · il fait le tour des salles","+8% income · walks around the rooms")},
+{n:__L("Agent d’entretien","Janitor"),i:"🧹",c:15000,g:2,max:1,b:.05,d:__L("+5 % de revenus · il garde tout propre","+5% income · keeps everything clean")}];
 function staffB(){var q=0;STAFF.forEach(function(t,i){q+=t.b*S.sf[i]});return q}
 function sfCost(i){return Math.ceil(STAFF[i].c*Math.pow(STAFF[i].g,S.sf[i])*disc())}
 function unl(r){return r===0||!!S["u"+(r+1)]}
@@ -636,46 +662,46 @@ var NM=[.5,.7,.85,1,1.15,1.3];
 function isNight(){return S.ph%360>=240}
 function dayF(){var p=S.ph%360;if(p>=345)return (p-345)/15;if(p>=240)return 0;if(p>=225)return (240-p)/15;return 1}
 function nmul(r){return (isNight()&&r!==5)?NM[S.r[r].an[1]]:1}
-function dnTxt(){var p=S.ph%360,n=isNight(),rem=Math.ceil(n?360-p:240-p);return (n?"🌙 Nuit":"☀️ Jour")+" · "+Math.floor(rem/60)+":"+("0"+rem%60).slice(-2)}
+function dnTxt(){var p=S.ph%360,n=isNight(),rem=Math.ceil(n?360-p:240-p);return (n?__L("🌙 Nuit","🌙 Night"):__L("☀️ Jour","☀️ Day"))+" · "+Math.floor(rem/60)+":"+("0"+rem%60).slice(-2)}
 function maxLv(){var m=0;S.r.forEach(function(x){m=Math.max(m,Math.max.apply(null,x.lv))});return m}
 function ritx(){var q="";for(var r=1;r<6;r++)if(unl(r))q+=" · "+SN[r]+" : "+fmt(share(r))+" €/s";return q}
-function chips(){var N=["Studio 1","Studio 2","Live","Musique","Orbite","Café"];for(var r=0;r<6;r++){var b=$("r"+r);b.classList.toggle("on",view===r);b.textContent=N[r]+(unl(r)?"":" 🔒")}}
+function chips(){var N=["Studio 1","Studio 2","Live",__L("Musique","Music"),__L("Orbite","Orbit"),__L("Café","Cafe")];for(var r=0;r<6;r++){var b=$("r"+r);b.classList.toggle("on",view===r);b.textContent=N[r]+(unl(r)?"":" 🔒")}}
 function aCost(k,l){return Math.ceil([15000,8000][k]*PM[view]*disc()*Math.pow(3.2,l))}
 var TAL=[
-{n:"Clic en or",i:"👆",d:"Gain par clic ×2 par niveau",max:5,c:function(l){return l+1}},
-{n:"Négociateur",i:"🏷️",d:"−4 % sur tous les prix par niveau",max:10,c:function(l){return l+1}},
-{n:"Nuits productives",i:"🌙",d:"+1 h de gains hors ligne par niveau (jusqu’à 8 h)",max:7,c:function(l){return l+1}},
-{n:"Pub plus rapide",i:"⚡",d:"La pub Buzz se recharge 10 s plus vite par niveau",max:4,c:function(l){return l+2}},
-{n:"Capital de départ",i:"💰",d:"Après une Renaissance, tu démarres avec plus d’argent",max:5,c:function(l){return l+2}}];
+{n:__L("Clic en or","Golden click"),i:"👆",d:__L("Gain par clic ×2 par niveau","Income per click ×2 per level"),max:5,c:function(l){return l+1}},
+{n:__L("Négociateur","Negotiator"),i:"🏷️",d:__L("−4 % sur tous les prix par niveau","−4% on all prices per level"),max:10,c:function(l){return l+1}},
+{n:__L("Nuits productives","Productive nights"),i:"🌙",d:__L("+1 h de gains hors ligne par niveau (jusqu’à 8 h)","+1 h offline earnings per level (up to 8 h)"),max:7,c:function(l){return l+1}},
+{n:"Pub plus rapide",i:"⚡",d:__L("La pub Buzz se recharge 10 s plus vite par niveau","The ad Buzz recharges 10 s faster per level"),max:4,c:function(l){return l+2}},
+{n:__L("Capital de départ","Starting capital"),i:"💰",d:__L("Après une Renaissance, tu démarres avec plus d’argent","After a Rebirth, you start with more money"),max:5,c:function(l){return l+2}}];
 var MIL=[10,25,50,100,150,200,300,400,500];
 function mil(n){var c=0;MIL.forEach(function(x){if(n>=x)c++});return Math.pow(1.6,c)}
-function nxt(n){for(var i=0;i<MIL.length;i++)if(n<MIL[i])return " · ×1,6 à "+MIL[i];return ""}
+function nxt(n){for(var i=0;i<MIL.length;i++)if(n<MIL[i])return __L(" · ×1,6 à "," · ×1.6 at ")+MIL[i];return ""}
 function disc(){return Math.max(.3,1-.04*S.tl[1])}
 function trOn(){return S.tr.i>=0&&S.tr.until>Date.now()}
 function today(d){return new Date(d||Date.now()).toISOString().slice(0,10)}
-var MD={clk:{v:function(){return S.clicks},g:function(){return 60+10*crLvl()},t:function(g){return "Tourne "+g+" vidéos"}},
-earn:{v:function(){return S.tot},g:function(){return Math.max(5000,Math.round(cps()*1500))},t:function(g){return "Gagne "+fmt(g)+" €"}},
-buy:{v:function(){return S.nb},g:function(){return 25},t:function(g){return "Achète "+g+" équipements"}},
-col:{v:function(){return S.nc},g:function(){return 1},t:function(g){return "Lance "+g+" collab"}},
-bz:{v:function(){return S.nbz},g:function(){return 1},t:function(g){return "Lance "+g+" buzz viral"}}};
+var MD={clk:{v:function(){return S.clicks},g:function(){return 60+10*crLvl()},t:function(g){return __L("Tourne ","Film ")+g+__L(" vidéos"," videos")}},
+earn:{v:function(){return S.tot},g:function(){return Math.max(5000,Math.round(cps()*1500))},t:function(g){return __L("Gagne ","Earn ")+fmt(g)+" €"}},
+buy:{v:function(){return S.nb},g:function(){return 25},t:function(g){return __L("Achète ","Buy ")+g+__L(" équipements"," items")}},
+col:{v:function(){return S.nc},g:function(){return 1},t:function(g){return __L("Lance ","Trigger ")+g+__L(" collab"," collab")}},
+bz:{v:function(){return S.nbz},g:function(){return 1},t:function(g){return __L("Lance ","Trigger ")+g+__L(" buzz viral"," viral buzz")}}};
 function newMsn(){var ks=Object.keys(MD).sort(function(){return Math.random()-.5}).slice(0,3);S.msn=ks.map(function(k){return{k:k,g:MD[k].g(),b:MD[k].v(),c:0}});S.mday=today()}
 function msnRew(){return Math.max(2000,Math.round(cps()*1200))}
 function dailyRew(st){return Math.max(1000,Math.round(cps()*900))*Math.min(st,7)}
-var VER="2.8",LOG=["Nouveau : le niveau du studio ! Améliore chaque studio pour pouvoir acheter plus d’équipements du même type","Des lumières dorées s’allument au fond de chaque studio quand tu montes de niveau"];
+var VER="3.0",LOG=[__L("Nouveau : le Journal télévisé ! Des invités arrivent en voiture, interviewe-les pour gagner des € et des abonnés","New: the News show! Guests arrive by car, interview them to earn € and subscribers"),__L("Un conseil « Meilleur achat » te guide, avec une étoile sur la ligne conseillée","A “Best buy” tip guides you, with a star on the recommended row"),__L("Événement du jour (×1,5 sur un studio), vidéos virales, sponsors, polémiques et commentaires de fans","Daily event (×1.5 on one studio), viral videos, sponsors, controversies and fan comments"),__L("Garde-robe : change la tenue de tes créateurs avec des étoiles ou une pub","Wardrobe: change your creators’ outfits with stars or an ad"),__L("Sauvegarde en ligne par code, mode gros texte, animations réduites et version anglaise","Online save by code, large text mode, reduced motion and English version"),__L("Les très grands nombres ont de nouvelles abréviations (Tn, Td, Qn) : plus de chiffres géants","Very large numbers have new abbreviations (Tn, Td, Qn): no more giant figures"),__L("Gains hors ligne identiques que tu fermes le jeu ou que tu le laisses en veille : le Manager et les Nuits productives comptent toujours","Offline earnings are the same whether you close the game or leave it asleep: the Manager and Productive Nights always count"),__L("Le jeu économise la batterie quand tu changes d’appli et s’adapte tout seul aux téléphones moins puissants","The game saves battery when you switch apps and adapts by itself to less powerful phones"),__L("Nouveau : le niveau du studio ! Améliore chaque studio pour pouvoir acheter plus d’équipements du même type","New: studio levels! Upgrade each studio to buy more equipment of the same type"),__L("Des lumières dorées s’allument au fond de chaque studio quand tu montes de niveau","Golden lights turn on at the back of each studio when you level up")];
 function showNews(){$("nv").textContent=VER;$("nl").innerHTML=LOG.map(function(x){return "<li>"+x+"</li>"}).join("");$("news").style.display="flex"}
 var gix=0;
-function gSteps(){return[["🎬","Bienvenue chez Pulse Studio !","Tu construis ton empire de créateur. Appuie sur le bouton REC (ou touche l’écran 3D) pour filmer et gagner des €."],
-["🎙️","Le matériel","Dans l’onglet Matériel, achète micro, caméra, lumières et écrans. Chaque achat augmente tes revenus par seconde, même quand tu n’es pas là."],
-["🏢","Un immeuble, plusieurs studios","Gagne de l’argent pour ouvrir de nouveaux studios et la cafétéria avec son personnel. Améliore chaque studio pour pouvoir acheter plus d’équipements. Change de salle avec les boutons à gauche de l’écran. Tourne la caméra avec le doigt et zoome pour voir la ville."],
-["🌙","Jour et nuit","Le jour dure 4 minutes, la nuit 2 minutes. La nuit, tes revenus baissent, sauf si tu as une chambre pour que ton créateur dorme."],
-["📺","Abonnés et classement","Plus tu gagnes d’argent, plus tu as d’abonnés. Ils font monter ton niveau de streamer et débloquent des trophées dans la salle des trophées (+2 % de revenus chacun). Compare-toi aux autres streamers dans l’onglet Abonnés."],["🔥","Le Buzz ×7",S.bzDone?"Le Buzz viral multiplie tes revenus par 7 pendant 20 secondes. Pour le lancer, appuie sur le bouton 🎬 Pub : regarde la pub et profite du ×7, disponible toutes les 1 min 30.":"Appuie sur le bouton doré ci-dessous pour essayer : tes revenus sont multipliés par 7 pendant 20 secondes ! C’est juste pour l’essai. Ensuite, le Buzz ×7 se lance avec le bouton 🎬 Pub, toutes les 1 min 30."]]}
-function gDraw(){var st=gSteps(),s=st[gix];$("gi").textContent=s[0];$("gt").textContent=s[1];$("gp").textContent=s[2];$("gd").innerHTML=st.map(function(q,k){return"<i"+(k===gix?' class="on"':"")+"></i>"}).join("");$("gn").textContent=gix===st.length-1?"C’est parti !":"Suivant";var q=$("gb7");q.style.display=gix===st.length-1?"block":"none";q.disabled=!!S.bzDone;q.textContent=S.bzDone?"🔥 Déjà essayé : le ×7 vient du bouton 🎬 Pub":"🔥 Essayer le Buzz ×7"}
+function gSteps(){return[["🎬",__L("Bienvenue chez Pulse Studio !","Welcome to Pulse Studio!"),__L("Tu construis ton empire de créateur. Appuie sur le bouton REC (ou touche l’écran 3D) pour filmer et gagner des €.","You are building your creator empire. Press the Film button (or tap the 3D screen) to shoot videos and earn €.")],
+["🎙️",__L("Le matériel","Your gear"),__L("Dans l’onglet Matériel, achète micro, caméra, lumières et écrans. Chaque achat augmente tes revenus par seconde, même quand tu n’es pas là.","In the Gear tab, buy microphones, cameras, lights and screens. Every purchase increases your income per second, even when you are away.")],
+["🏢",__L("Un immeuble, plusieurs studios","One building, many studios"),__L("Gagne de l’argent pour ouvrir de nouveaux studios et la cafétéria avec son personnel. Améliore chaque studio pour pouvoir acheter plus d’équipements. Change de salle avec les boutons à gauche de l’écran. Tourne la caméra avec le doigt et zoome pour voir la ville.","Earn money to open new studios and the cafeteria with its staff. Upgrade each studio to buy more items. Switch rooms with the buttons on the left of the screen. Rotate the camera with your finger or mouse and zoom to see the city.")],
+["🌙",__L("Jour et nuit","Day and night"),__L("Le jour dure 4 minutes, la nuit 2 minutes. La nuit, tes revenus baissent, sauf si tu as une chambre pour que ton créateur dorme.","Day lasts 4 minutes, night 2 minutes. At night your income drops, unless you have a bedroom so your creator can sleep.")],
+["📺",__L("Abonnés et classement","Subscribers and ranking"),__L("Plus tu gagnes d’argent, plus tu as d’abonnés. Ils font monter ton niveau de streamer et débloquent des trophées dans la salle des trophées (+2 % de revenus chacun). Compare-toi aux autres streamers dans l’onglet Abonnés.","The more money you earn, the more subscribers you get. They raise your streamer level and unlock trophies in the trophy room (+2% income each). Compare yourself with other streamers in the Subs tab.")],["🔥",__L("Le Buzz ×7","The ×7 Buzz"),S.bzDone?__L("Le Buzz viral multiplie tes revenus par 7 pendant 20 secondes. Pour le lancer, appuie sur le bouton 🎬 Pub : regarde la pub et profite du ×7, disponible toutes les 1 min 30.","The viral Buzz multiplies your income by 7 for 20 seconds. To start it, press the 🎬 Ad button: watch the ad and enjoy the ×7, available every 1 min 30."):__L("Appuie sur le bouton doré ci-dessous pour essayer : tes revenus sont multipliés par 7 pendant 20 secondes ! C’est juste pour l’essai. Ensuite, le Buzz ×7 se lance avec le bouton 🎬 Pub, toutes les 1 min 30.","Press the golden button below to try it: your income is multiplied by 7 for 20 seconds! This is just a trial. After that, the Buzz ×7 is started with the 🎬 Ad button, every 1 min 30.")]]}
+function gDraw(){var st=gSteps(),s=st[gix];$("gi").textContent=s[0];$("gt").textContent=s[1];$("gp").textContent=s[2];$("gd").innerHTML=st.map(function(q,k){return"<i"+(k===gix?' class="on"':"")+"></i>"}).join("");$("gn").textContent=gix===st.length-1?__L("C’est parti !","Let’s go!"):__L("Suivant","Next");var q=$("gb7");q.style.display=gix===st.length-1?"block":"none";q.disabled=!!S.bzDone;q.textContent=S.bzDone?__L("🔥 Déjà essayé : le ×7 vient du bouton 🎬 Pub","🔥 Already tried: the ×7 now comes from the 🎬 Ad button"):__L("🔥 Essayer le Buzz ×7","🔥 Try the ×7 Buzz")}
 function showGuide(){gix=0;gDraw();$("guide").style.display="flex"}
 function gEnd(){$("guide").style.display="none";S.tuto=1;save()}
-$("gb7").onclick=function(){if(S.bzDone)return;S.bzDone=1;S.buff=Date.now()+20000;toast("Buzz viral ! Revenus ×7 pendant 20 s");upd();save();gDraw()};$("gh").onclick=showGuide;
+$("gb7").onclick=function(){if(S.bzDone)return;S.bzDone=1;S.buff=Date.now()+20000;toast(__L("Buzz viral ! Revenus ×7 pendant 20 s","Viral buzz! Income ×7 for 20 s"));upd();save();gDraw()};$("gh").onclick=showGuide;
 $("gn").onclick=function(){if(gix>=gSteps().length-1)gEnd();else{gix++;gDraw()}};$("gs").onclick=gEnd;
 function showPseudo(){$("pin").value=S.pseudo||"";$("pseudo").style.display="flex"}
-$("pok").onclick=function(){var v=$("pin").value.replace(/\s+/g," ").trim();if(!/^[A-Za-z0-9À-ÿ_\-. ]{2,14}$/.test(v)){toast("Pseudo : 2 à 14 caractères (lettres, chiffres, - _ .)");return}S.pseudo=v;$("pseudo").style.display="none";save();upd();lbSync(true);maybeGuide()};
+$("pok").onclick=function(){var v=$("pin").value.replace(/\s+/g," ").trim();if(!/^[A-Za-z0-9À-ÿ_\-. ]{2,14}$/.test(v)){toast(__L("Pseudo : 2 à 14 caractères (lettres, chiffres, - _ .)","Username: 2 to 14 characters (letters, numbers, - _ .)"));return}S.pseudo=v;$("pseudo").style.display="none";save();upd();lbSync(true);maybeGuide()};
 $("gps").onclick=showPseudo;$("trv").onclick=viewTrophy;
 function maybeGuide(){if(S.ch<0)return;if($("news").style.display==="flex"||$("pick").style.display==="flex")return;if(!S.pseudo){showPseudo();return}if(S.tuto)return;showGuide()}
 $("nk").onclick=function(){$("news").style.display="none";S.seen=VER;save();maybeGuide()};
@@ -683,49 +709,121 @@ var ADS={test:false,client:"ca-pub-8151486169178097",slot:"0000000000"};
 function adCd(){return S.adb>Date.now()}
 function mmss(ms){var q=Math.max(0,Math.ceil(ms/1000));return Math.floor(q/60)+":"+("0"+q%60).slice(-2)}
 var adReady=false,adBusy=false;
-function adUI(){var b=$("adb");if(!b)return;b.style.display=(ADS.test||adReady)?"block":"none";b.disabled=adBusy||buffOn()||adCd();b.textContent=buffOn()?"🔥 Buzz en cours":adCd()?"🎬 Pub dans "+mmss(S.adb-Date.now()):(adBusy?"Pub…":"🎬 Pub : Buzz viral")}
-function grantAd(){S.buff=Date.now()+20000;S.nbz++;S.adb=Date.now()+Math.max(30000,90000-10000*S.tl[3]);adBusy=false;toast("Buzz viral ! Revenus ×7 pendant 20 s");upd();save()}
-function watchAd(){if(adBusy||buffOn()||adCd())return;adBusy=true;adUI();
-  PPAds.reward("x2_revenus",function(ok,why){if(ok){grantAd();if(why==="free")toast("Bonus offert !")}else{adBusy=false;try{adUI()}catch(e){}toast("Regarde la pub jusqu’au bout pour avoir le bonus")}})}
+function adUI(){var b=$("adb");if(!b)return;b.style.display=(ADS.test||adReady)?"block":"none";b.disabled=adBusy||buffOn()||adCd();b.textContent=buffOn()?__L(__L("🔥 Buzz en cours","🔥 Buzz active"),"🔥 Buzz active"):adCd()?__L("🎬 Pub dans ","🎬 Ad in ")+mmss(S.adb-Date.now()):(adBusy?__L("Pub…","Ad…"):__L("🎬 Pub : Buzz viral","🎬 Ad: Viral Buzz"))}
+var adCb=null;
+function grantAd(){if(adCb){var f=adCb;adCb=null;adBusy=false;f();upd();save();return}S.buff=Date.now()+20000;S.nbz++;S.adb=Date.now()+Math.max(30000,90000-10000*S.tl[3]);adBusy=false;toast(__L("Buzz viral ! Revenus ×7 pendant 20 s","Viral buzz! Income ×7 for 20 s"));upd();save()}
+function watchAd(cb){if(adBusy||(!cb&&(buffOn()||adCd())))return;adCb=typeof cb==="function"?cb:null;adBusy=true;adUI();
+  if(ADS.test){var o=$("adov"),n=10;o.style.display="flex";$("adn").textContent=__L("Reste jusqu’à la fin pour recevoir ton bonus","Stay until the end to get your bonus");$("adskip").style.display="none";$("adt").textContent=__L("Pub de test… ","Test ad… ")+n+" s";var iv=setInterval(function(){n--;if(n>0){$("adt").textContent=__L("Pub de test… ","Test ad… ")+n+" s";return}clearInterval(iv);o.style.display="none";grantAd()},1000);return}
+  PPAds.reward("x2_revenus",function(ok,why){if(ok){var free=why==="free";grantAd();if(free)toast(__L("Bonus offert !","Free bonus!"))}else{adBusy=false;adCb=null;try{adUI()}catch(e){}toast(__L("Regarde la pub jusqu’au bout pour avoir le bonus","Watch the ad to the end to get the bonus"))}})}
 var interOn=false;
-function adInter(){PPAds.inter("ouverture_studio")}
-function initAds(){$("adb").onclick=watchAd;var box=$("ad");if(box)box.style.display="none"}
+function adInter(){if(interOn)return;
+  if(ADS.test){interOn=true;var o=$("adov"),k=$("adskip"),n=0,iv;o.style.display="flex";$("adt").textContent=__L("Pub de test","Test ad");$("adn").textContent=__L("Merci de soutenir le jeu !","Thanks for supporting the game!");k.style.display="inline-block";k.disabled=true;k.textContent=__L("Passer dans 5 s","Skip in 5 s");
+    var end=function(){clearInterval(iv);o.style.display="none";k.style.display="none";interOn=false};
+    iv=setInterval(function(){n++;if(n<5)k.textContent=__L("Passer dans ","Skip in ")+(5-n)+" s";else{k.disabled=false;k.textContent=__L("Passer ▶","Skip ▶")}if(n>=15)end()},1000);
+    k.onclick=function(){if(!k.disabled)end()};return}
+  PPAds.inter("ouverture_studio")}
+function initAds(){$("adb").onclick=function(){watchAd()};adReady=true;var box=$("ad");if(box)box.style.display="none"}
 function build2(){$("ver").textContent=VER;
-  rows.uk=[3,4].map(function(r){var c=r===3?U4:U5,nm=SN[r];return mk($("unlock"),r===3?"🎸":"🚀","Ouvrir le "+nm,function(){var f="u"+(r+1);if(S[f]||!unl(r-1)||S.m<c)return;S.m-=c;S[f]=1;toast(nm+" ouvert !");switchRoom(r);adInter()})});
-  rows.u6=mk($("unlock"),"☕","Ouvrir la Cafétéria et la salle du personnel",function(){if(S.u6||S.m<U6)return;S.m-=U6;S.u6=1;toast("Cafétéria ouverte !");switchRoom(5);adInter()});
+  rows.uk=[3,4].map(function(r){var c=r===3?U4:U5,nm=SN[r];return mk($("unlock"),r===3?"🎸":"🚀",__L("Ouvrir le ","Open ")+nm,function(){var f="u"+(r+1);if(S[f]||!unl(r-1)||S.m<c)return;S.m-=c;S[f]=1;toast(nm+__L(" ouvert !"," opened!"));switchRoom(r);adInter()})});
+  rows.u6=mk($("unlock"),"☕",__L("Ouvrir la Cafétéria et la salle du personnel","Open the Cafeteria and staff room"),function(){if(S.u6||S.m<U6)return;S.m-=U6;S.u6=1;toast(__L("Cafétéria ouverte !","Cafeteria opened!"));switchRoom(5);adInter()});
   rows.sf=STAFF.map(function(st,i){return mk($("staff"),st.i,st.n,function(){var n=S.sf[i],c=sfCost(i);if(!S.u6||n>=st.max||S.m<c)return;S.m-=c;S.sf[i]++;toast(st.n+" : "+S.sf[i]);upd()})});
-  rows.an=[0,1].map(function(k){return mk($("annex"),k?"🛏️":"🍽️",k?"Chambre":"Cafétéria",function(){var l=S.r[view].an[k];if(l>=5)return;var c=aCost(k,l);if(S.m<c)return;S.m-=c;S.r[view].an[k]++;toast((k?"Chambre":"Cafétéria")+" niveau "+(l+1));upd()})});if(S.ch<0)S.seen=VER;else if(S.seen!==VER)showNews();
-  rows.dr=mk($("daily"),"🎁","Cadeau du jour",function(){var t=today();if(S.day===t)return;S.streak=S.day===today(Date.now()-864e5)?S.streak+1:1;var r=dailyRew(S.streak);gain(r);S.day=t;if(S.streak%7===0){S.stars++;toast("Série de 7 jours : +1 étoile !")}else toast("Cadeau du jour : +"+fmt(r)+" €");upd()});
-  rows.ms=[0,1,2].map(function(i){return mk($("missions"),"🎯","Mission",function(){var m=S.msn&&S.msn[i];if(!m||m.c||MD[m.k].v()-m.b<m.g)return;m.c=1;var r=msnRew();gain(r);toast("Mission accomplie : +"+fmt(r)+" €");if(S.msn.every(function(x){return x.c})){S.stars++;toast("3 missions terminées : +1 étoile !")}upd()})});
+  rows.an=[0,1].map(function(k){return mk($("annex"),k?"🛏️":"🍽️",k?__L("Chambre","Bedroom"):__L("Cafétéria","Cafeteria"),function(){var l=S.r[view].an[k];if(l>=5)return;var c=aCost(k,l);if(S.m<c)return;S.m-=c;S.r[view].an[k]++;toast((k?__L("Chambre","Bedroom"):__L("Cafétéria","Cafeteria"))+__L(" niveau "," level ")+(l+1));upd()})});if(S.ch<0)S.seen=VER;else if(S.seen!==VER)showNews();
+  rows.dr=mk($("daily"),"🎁",__L("Cadeau du jour","Daily gift"),function(){var t=today();if(S.day===t)return;S.streak=S.day===today(Date.now()-864e5)?S.streak+1:1;var r=dailyRew(S.streak);gain(r);S.day=t;if(S.streak%7===0){S.stars++;toast(__L("Série de 7 jours : +1 étoile !","7-day streak: +1 star!"))}else toast(__L("Cadeau du jour : +","Daily gift: +")+fmt(r)+" €");upd()});
+  rows.ms=[0,1,2].map(function(i){return mk($("missions"),"🎯","Mission",function(){var m=S.msn&&S.msn[i];if(!m||m.c||MD[m.k].v()-m.b<m.g)return;m.c=1;var r=msnRew();gain(r);toast(__L("Mission accomplie : +","Mission complete: +")+fmt(r)+" €");if(S.msn.every(function(x){return x.c})){S.stars++;toast(__L("3 missions terminées : +1 étoile !","3 missions done: +1 star!"))}upd()})});
   rows.tl=TAL.map(function(t,i){return mk($("talents"),t.i,t.n,function(){var l=S.tl[i],c=t.c(l);if(l>=t.max||S.stars-S.sp<c)return;S.sp+=c;S.tl[i]++;upd()})});
-  $("bk").onclick=function(){var c=btoa(unescape(encodeURIComponent(JSON.stringify(S))));$("bkt").value=c;try{var cp=navigator.clipboard&&navigator.clipboard.writeText(c);if(cp&&cp.catch)cp.catch(function(){})}catch(e){}toast("Code de sauvegarde créé")};
-  $("im").onclick=function(){try{S=norm(JSON.parse(decodeURIComponent(escape(atob($("bkt").value.trim())))));save();setChar(S.ch<0?0:S.ch);upd();toast("Sauvegarde restaurée")}catch(e){toast("Code invalide")}};
+  $("bk").onclick=function(){var c=btoa(unescape(encodeURIComponent(JSON.stringify(S))));$("bkt").value=c;try{var cp=navigator.clipboard&&navigator.clipboard.writeText(c);if(cp&&cp.catch)cp.catch(function(){})}catch(e){}toast(__L("Code de sauvegarde créé","Save code created"))};
+  $("im").onclick=function(){try{S=norm(JSON.parse(decodeURIComponent(escape(atob($("bkt").value.trim())))));save();setChar(S.ch<0?0:S.ch);upd();toast(__L("Sauvegarde restaurée","Save restored"))}catch(e){toast(__L("Code invalide","Invalid code"))}};
 }
 function upd2(){
   var now=Date.now();adUI();if(!rows.dr)return;if(S.mday!==today()||!S.msn)newMsn();
   var t=today(),st=S.day===t?S.streak:(S.day===today(now-864e5)?S.streak+1:1);
-  setR(rows.dr,S.day===t?"Reviens demain · série de "+S.streak+" jour"+(S.streak>1?"s":""):"Jour "+st+" de série (7e jour : +1 étoile) · +"+fmt(dailyRew(st))+" €",S.day===t?"Pris ✓":"Récupérer",S.day!==t,"",S.day===t);
-  rows.ms.forEach(function(r,i){var m=S.msn[i],p=Math.min(m.g,MD[m.k].v()-m.b),ok=p>=m.g&&!m.c;r.t.textContent=MD[m.k].t(m.g);setR(r,(m.c?"Terminée":fmt(p)+" / "+fmt(m.g))+" · +"+fmt(msnRew())+" €",m.c?"✓":ok?"Récupérer":"",ok,"",m.c)});
-  TAL.forEach(function(t2,i){var l=S.tl[i],mx=l>=t2.max,c=t2.c(l);setR(rows.tl[i],t2.d+" · niveau "+l+"/"+t2.max,mx?"Max":c+" ★",!mx&&S.stars-S.sp>=c,"",mx)});
-  [3,4].forEach(function(r,j){var c=r===3?U4:U5,f="u"+(r+1);setR(rows.uk[j],S[f]?SN[r]+" ouvert":(unl(r-1)?"Prix ×"+fmt(PM[r])+", revenus ×"+fmt(IM[r])+" · tous les studios rapportent en même temps":"Ouvre d’abord le "+SN[r-1]),S[f]?"Ouvert ✓":fmt(c)+" €",unl(r-1)&&!S[f]&&S.m>=c,"",S[f])});
-  setR(rows.u6,S.u6?"Cafétéria ouverte : prix ×3, revenus ×2,5 · et une salle du personnel":"Un bâtiment à part avec une cafétéria, des serveurs et une salle du personnel. Prix ×3, revenus ×2,5",S.u6?"Ouvert ✓":fmt(U6)+" €",!S.u6&&S.m>=U6,"",S.u6);
-  STAFF.forEach(function(st,i){var n=S.sf[i],mx=n>=st.max,c=sfCost(i);setR(rows.sf[i],st.d+" · "+n+"/"+st.max,mx?"Max":S.u6?fmt(c)+" €":"Ouvre la cafétéria",S.u6&&!mx&&S.m>=c,n||"",mx)});
+  setR(rows.dr,S.day===t?__L("Reviens demain · série de ","Come back tomorrow · streak of ")+S.streak+__L(" jour"," day")+(S.streak>1?"s":""):__L("Jour ","Day ")+st+__L(" de série (7e jour : +1 étoile) · +"," streak (day 7: +1 star) · +")+fmt(dailyRew(st))+" €",S.day===t?__L("Pris ✓","Claimed ✓"):__L("Récupérer","Claim"),S.day!==t,"",S.day===t);
+  rows.ms.forEach(function(r,i){var m=S.msn[i],p=Math.min(m.g,MD[m.k].v()-m.b),ok=p>=m.g&&!m.c;r.t.textContent=MD[m.k].t(m.g);setR(r,(m.c?__L("Terminée","Done"):fmt(p)+" / "+fmt(m.g))+" · +"+fmt(msnRew())+" €",m.c?"✓":ok?__L("Récupérer","Claim"):"",ok,"",m.c)});
+  TAL.forEach(function(t2,i){var l=S.tl[i],mx=l>=t2.max,c=t2.c(l);setR(rows.tl[i],t2.d+__L(" · niveau "," · level ")+l+"/"+t2.max,mx?"Max":c+" ★",!mx&&S.stars-S.sp>=c,"",mx)});
+  [3,4].forEach(function(r,j){var c=r===3?U4:U5,f="u"+(r+1);setR(rows.uk[j],S[f]?SN[r]+__L(" ouvert"," open"):(unl(r-1)?__L("Prix ×","Price ×")+fmt(PM[r])+__L(", revenus ×",", income ×")+fmt(IM[r])+__L(" · tous les studios rapportent en même temps"," · all studios earn at the same time"):__L("Ouvre d’abord le ","Open first: ")+SN[r-1]),S[f]?__L("Ouvert ✓","Open ✓"):fmt(c)+" €",unl(r-1)&&!S[f]&&S.m>=c,"",S[f])});
+  setR(rows.u6,S.u6?__L("Cafétéria ouverte : prix ×3, revenus ×2,5 · et une salle du personnel","Cafeteria opened: price ×3, income ×2.5 · plus a staff room"):__L("Un bâtiment à part avec une cafétéria, des serveurs et une salle du personnel. Prix ×3, revenus ×2,5","A separate building with a cafeteria, waiters and a staff room. Price ×3, income ×2.5"),S.u6?__L("Ouvert ✓","Open ✓"):fmt(U6)+" €",!S.u6&&S.m>=U6,"",S.u6);
+  STAFF.forEach(function(st,i){var n=S.sf[i],mx=n>=st.max,c=sfCost(i);setR(rows.sf[i],st.d+" · "+n+"/"+st.max,mx?"Max":S.u6?fmt(c)+" €":__L("Ouvre la cafétéria","Open the cafeteria"),S.u6&&!mx&&S.m>=c,n||"",mx)});
   var ra=S.r[view].an,wc=[0,1,1,2,2,3];
-  setR(rows.an[0],"Niveau "+ra[0]+"/5 · +"+8*ra[0]+" % de revenus · "+wc[ra[0]]+" serveur"+(wc[ra[0]]>1?"s":""),ra[0]>=5?"Max":fmt(aCost(0,ra[0]))+" €",ra[0]<5&&S.m>=aCost(0,ra[0]),ra[0]||"",ra[0]>=5);
-  setR(rows.an[1],"Niveau "+ra[1]+"/5 · revenus de nuit ×"+String(NM[ra[1]]).replace(".",",")+" (sans chambre : ×0,5)",ra[1]>=5?"Max":fmt(aCost(1,ra[1]))+" €",ra[1]<5&&S.m>=aCost(1,ra[1]),ra[1]||"",ra[1]>=5);
-  $("t1b").textContent="Chambre · "+SN[view];$("t1b").style.display=$("t1s").style.display=$("annex").style.display=view===5?"none":"block";rows.an[0].b.style.display="none";
-  $("pd2").textContent="Étoiles disponibles : "+(S.stars-S.sp)+" · chaque étoile gagnée donne aussi +10 % de revenus.";
+  setR(rows.an[0],__L("Niveau ","Level ")+ra[0]+"/5 · +"+8*ra[0]+__L(" % de revenus · ","% income · ")+wc[ra[0]]+__L(" serveur"," waiter")+(wc[ra[0]]>1?"s":""),ra[0]>=5?"Max":fmt(aCost(0,ra[0]))+" €",ra[0]<5&&S.m>=aCost(0,ra[0]),ra[0]||"",ra[0]>=5);
+  setR(rows.an[1],__L("Niveau ","Level ")+ra[1]+__L("/5 · revenus de nuit ×","/5 · night income ×")+String(NM[ra[1]]).replace(".",",")+__L(" (sans chambre : ×0,5)"," (no bedroom: ×0.5)"),ra[1]>=5?"Max":fmt(aCost(1,ra[1]))+" €",ra[1]<5&&S.m>=aCost(1,ra[1]),ra[1]||"",ra[1]>=5);
+  $("t1b").textContent=__L("Chambre · ","Bedroom · ")+SN[view];$("t1b").style.display=$("t1s").style.display=$("annex").style.display=view===5?"none":"block";rows.an[0].b.style.display="none";
+  $("pd2").textContent=__L("Étoiles disponibles : ","Available stars: ")+(S.stars-S.sp)+__L(" · chaque étoile gagnée donne aussi +10 % de revenus."," · every star earned also gives +10% income.");
 }
-load();build();build2();initAds();
-try{if(!T)throw 0;build3D()}catch(e){$("stage").insertAdjacentHTML("beforeend",'<p style="position:absolute;top:90px;left:0;right:0;text-align:center;color:#d8d2f2;padding:0 20px">La vue 3D n’est pas disponible sur cet appareil, mais le jeu fonctionne.</p>')}
+
+/* ---------- v3.0 : conseils, journal TV, événements, fans, garde-robe, options, sauvegarde en ligne ---------- */
+function bestBuy(){var rr=S.r[view],best=null,cap=CAP[rr.sl],mu=mulAll()*nmul(view)*(evRoom()===view?1.5:1);
+  EQL(view).forEach(function(e,i){var o=rr.own[i],l=rr.lv[i],b=e.p*IM[view]*Math.pow(2,l)*mu;
+    if(o<cap){var g=b*((o+1)*mil(o+1)-o*mil(o)),c=cost(i);if(g>0){var t=c/g;if(!best||t<best.t)best={i:i,k:"eq",t:t,c:c}}}
+    if(o>0&&l<5){var g2=b*o*mil(o),c2=lvCost(i),t2=c2/g2;if(!best||t2<best.t)best={i:i,k:"lv",t:t2,c:c2}}});return best}
+var GN=["Chef Marco","Dr Lumi","Capitaine Zed","Miss Paillette","Pr Octave","DJ Néon","Maya la sportive","Chef Yuki","Léon le mime","Sœur Cécile"];
+var FT=[["{p}, ta dernière vidéo est géniale 🔥","{p}, your last video is awesome 🔥"],["Quand est-ce que tu ouvres un nouveau studio ?","When are you opening a new studio?"],["Je suis là depuis la toute première vidéo !","I've been here since the very first video!"],["Le décor de ton studio est trop beau 😍","Your studio decor is so good 😍"],["Abonné ! Continue comme ça {p}","Subscribed! Keep it up {p}"],["Le journal télé de ce soir était top 📰","Tonight's news show was great 📰"],["Bravo pour tes abonnés 👏","Congrats on the subs 👏"],["On veut une collab avec toi !","We want a collab with you!"],["Meilleure chaîne du moment, point.","Best channel right now, period."],["Ton café est trop mignon ☕","Your cafe is so cute ☕"],["Haha, le chef Marco est trop drôle","Haha, Chef Marco is hilarious"],["Je regarde tout en boucle 🍿","Binge-watching everything 🍿"]];
+var FV=[["VIRAL ! Tout le monde en parle 🚀","VIRAL! Everyone's talking about it 🚀"],["Je partage ça à tous mes potes !","Sharing this with all my friends!"]];
+var FN=["Mia","Kévin","Luna","Théo","Zoé","Noah","Léa","Sam","Inès","Hugo","Chloé","Max"];
+var fans=[],fanLast=0,fanN=0;
+function fanSay(k){var A=k==="viral"?FV:FT,t=A[Math.floor(Math.random()*A.length)],n=FN[Math.floor(Math.random()*FN.length)]+(Math.random()<.5?"_"+Math.floor(Math.random()*99):"");
+  var txt=__L(t[0],t[1]).replace("{p}",S.pseudo||__L("toi","you"));fans.push({n:n,t:txt});if(fans.length>8)fans.shift();fanN++;
+  var q=$("tick");q.textContent="💬 "+n+" : "+txt;q.classList.add("on");clearTimeout(fanSay.h);fanSay.h=setTimeout(function(){q.classList.remove("on")},5000);renderFans()}
+function renderFans(){var e=$("fans");if(!e||!$("p6").classList.contains("on"))return;e.innerHTML=fans.slice().reverse().map(function(f){return'<div class="fan"><b>'+esc(f.n)+'</b> '+esc(f.t)+'</div>'}).join("")||'<p class="sub">…</p>'}
+function jtCost(){return Math.ceil(50000*Math.pow(4,S.jt)*disc())}
+function guestTick(n){if(S.jt<1)return;var g=S.jg;if(!g.next)g.next=n+60000;
+  if(g.n&&n>g.until)g.n="";
+  if(!g.n&&n>g.next){g.n=GN[Math.floor(Math.random()*GN.length)];g.until=n+45000;g.next=n+Math.max(70000,200000-25000*S.jt)+Math.random()*60000;toast(__L("🚗 ","🚗 ")+g.n+__L(" arrive pour le journal !"," is arriving for the news show!"))}}
+function evTick(n){var e=S.ev;if(!e.next)e.next=n+120000;
+  if(n>e.next){e.next=n+180000+Math.random()*180000;var k=Math.floor(Math.random()*3),sb;
+    if(k===0){sb=Math.ceil(10+subs()*.04);S.vs+=sb;toast(__L("📈 Ta dernière vidéo devient virale ! +"+sb+__L(" abonnés"," subscribers"),"📈 Your latest video goes viral! +"+sb+" subscribers"));fanSay("viral")}
+    else if(k===1){var gg=cps()*150+300;gain(gg);toast(__L("💰 Un sponsor te verse "+fmt(gg)+" €","💰 A sponsor pays you "+fmt(gg)+" €"))}
+    else{e.pol=n+40000;sb=Math.ceil(5+subs()*.02);S.vs+=sb;toast(__L("😬 Polémique ! Revenus −15 % pendant 40 s, mais +"+sb+" abonnés curieux","😬 Controversy! Income −15% for 40 s, but +"+sb+" curious subscribers"))}}
+  if(n-fanLast>11000){fanLast=n;fanSay("n")}}
+function jtBt(){return polOn()?"<br>😬 "+__L("Polémique −15 %","Controversy −15%"):""}
+function evTxt(){return "🎉 "+__L("Événement du jour : ","Today’s event: ")+SN[evRoom()]+" ×1"+DEC+"5"}
+var SK=[{n:__L("Classique","Classic"),c:0,i:"👕"},{n:"Streetwear",c:2,i:"🧢",t:0xef4444,p:0x111827},{n:__L("Costume","Suit"),c:3,i:"🤵",t:0x1e293b,p:0x0f172a,h:0x111111},{n:__L("Néon","Neon"),c:5,i:"🟢",t:0x22ff99,p:0x1a0b3a},{n:__L("Doré","Golden"),c:10,i:"👑",t:0xfbbf24,p:0x78350f,h:0xfff1a8}];
+function skinned(o){var k=SK[S.skin|0];if(!k||!k.t)return o;var r={};for(var q in o)r[q]=o[q];r.t=k.t;r.p=k.p;if(k.h)r.h=k.h;return r}
+function adOK(){return ADS.test||adReady}
+function build3(){
+  rows.jt=mk($("jt"),"📰",__L("Journal télévisé","News show"),function(){if(!S.u2||S.jt>=5)return;var c=jtCost();if(S.m<c)return;S.m-=c;S.jt++;toast(__L("Journal télévisé niveau ","News show level ")+S.jt);upd()});
+  rows.sk=SK.map(function(k,i){return mk($("skins"),k.i,k.n,function(){
+    if(!S.skins[i]){if(S.stars-S.sp>=k.c){S.sp+=k.c;S.skins[i]=1}else if(adOK()){watchAd(function(){S.skins[i]=1;S.skin=i;if(S.ch>=0&&sc)setChar(S.ch);toast(k.n+" ✓")});return}else return}
+    S.skin=i;if(S.ch>=0&&sc)setChar(S.ch);toast(__L("Tenue : ","Outfit: ")+k.n);upd()})});
+  $("obig").onclick=function(){PREF.big=PREF.big?0:1;prefSave()};$("ocalm").onclick=function(){PREF.calm=PREF.calm?0:1;prefSave()};
+  $("olang").onclick=function(){try{localStorage.setItem("pulseLang",LANG==="fr"?"en":"fr")}catch(e){}save();location.reload()};
+  var CS={url:"https://dsusopmsomtqecnjnnlg.supabase.co/functions/v1/cloudsave"};
+  function call(b){return fetch(CS.url,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(b)}).then(function(r){return r.json()})}
+  function showCode(){$("cm").textContent=S.cloud?__L("Ton code : ","Your code: ")+S.cloud+__L(" · garde-le précieusement, il donne accès à ta partie"," · keep it safe, it gives access to your game"):""}
+  showCode();
+  $("cs").onclick=function(){var d=btoa(unescape(encodeURIComponent(JSON.stringify(S))));$("cm").textContent="…";
+    call({action:"put",code:S.cloud||"",data:d}).then(function(r){if(r&&r.ok){S.cloud=r.code;save();showCode();toast(__L("Partie sauvegardée en ligne","Game saved online"))}else{$("cm").textContent=r&&r.error==="slow"?__L("Attends quelques secondes puis réessaie","Wait a few seconds and retry"):__L("Impossible de sauvegarder pour l’instant","Could not save right now")}}).catch(function(){$("cm").textContent=__L("Pas de connexion","No connection")})};
+  $("cl").onclick=function(){var c=$("cc").value.trim().toUpperCase().replace(/[^A-Z0-9]/g,"");if(c.length!==8){toast(__L("Le code fait 8 caractères","The code is 8 characters"));return}
+    call({action:"get",code:c}).then(function(r){if(r&&r.ok&&r.data){try{var old=S;S=norm(JSON.parse(decodeURIComponent(escape(atob(r.data)))));S.cloud=c;save();if(sc)setChar(S.ch<0?0:S.ch);upd();showCode();toast(__L("Partie chargée !","Game loaded!"))}catch(e){S=old;toast(__L("Sauvegarde illisible","Unreadable save"))}}else toast(__L("Code introuvable","Code not found"))}).catch(function(){toast(__L("Pas de connexion","No connection"))})}}
+function prefSave(){try{localStorage.setItem("pulsePrefs",JSON.stringify(PREF))}catch(e){}document.documentElement.classList.toggle("big",!!PREF.big);document.documentElement.classList.toggle("calm",!!PREF.calm);upd3()}
+function upd3(){
+  $("rec").classList.toggle("pls",S.clicks<3&&S.ch>=0);
+  var bb=bestBuy(),txt="";
+  if(S.ch<0)txt="";else if(S.clicks<3)txt=__L("👆 Appuie sur 🎬 Tourner pour gagner tes premiers €","👆 Tap 🎬 Film to earn your first €");
+  else if(bb){var t=bb.t<90?Math.ceil(bb.t)+" s":bb.t<5400?Math.ceil(bb.t/60)+" min":__L("plus d’une heure","over an hour");
+    txt="💡 "+(bb.k==="eq"?__L("Meilleur achat : ","Best buy: "):__L("Meilleure amélioration (onglet Niveaux) : ","Best upgrade (Levels tab): "))+EQL(view)[bb.i].n+" · "+__L("rentabilisé en ","pays off in ")+t+(S.m>=bb.c?" · "+__L("tu peux l’acheter !","you can buy it!"):" · "+__L("il te manque ","you need ")+fmt(bb.c-S.m)+" €")}
+  var hd=$("hint");hd.style.display=txt?"block":"none";if(hd.textContent!==txt)hd.textContent=txt;
+  rows.eq.forEach(function(r,i){r.b.classList.toggle("best",!!bb&&bb.k==="eq"&&bb.i===i)});rows.lv.forEach(function(r,i){r.b.classList.toggle("best",!!bb&&bb.k==="lv"&&bb.i===i)});
+  if(rows.jt){var c=jtCost();setR(rows.jt,!S.u2?__L("Ouvre d’abord le Studio 2","Open Studio 2 first"):__L("Niveau "+S.jt+"/5 · +"+6*S.jt+" % de revenus · plus d’invités","Level "+S.jt+"/5 · +"+6*S.jt+"% income · more guests"),S.jt>=5?"Max":S.u2?fmt(c)+" €":"🔒",S.u2&&S.jt<5&&S.m>=c,S.jt||"",S.jt>=5);
+    $("jts").textContent=__L("Des invités arrivent en voiture pour une interview : touche leur bulle sous l’écran pour gagner des € et des abonnés. Chaque niveau : +6 % de revenus.","Guests arrive by car for an interview: tap their bubble on screen to earn € and subscribers. Each level: +6% income.")}
+  var gb=$("guest"),on=S.jg.n&&S.jg.until>Date.now();if(on){var gt="🚗 "+S.jg.n+" — "+__L("touche pour l’interviewer","tap to interview");if(gb.textContent!==gt)gb.textContent=gt;gb.style.display="block"}else gb.style.display="none";
+  if(rows.sk)SK.forEach(function(k,i){var own=S.skins[i],sel=S.skin===i;setR(rows.sk[i],own?(sel?__L("Tenue portée","Worn"):__L("Acquise · touche pour porter","Owned · tap to wear")):__L("Coûte ","Costs ")+k.c+" ★ · "+__L("ou regarde une pub","or watch an ad"),own?(sel?"✓":__L("Porter","Wear")):k.c+" ★",own?!sel:(S.stars-S.sp>=k.c||adOK()),"",sel)});
+  var e4=$("st4"),et=evTxt();if(e4.textContent!==et)e4.textContent=et;
+  $("obig").textContent=__L("Gros texte : ","Large text: ")+(PREF.big?__L("oui","on"):__L("non","off"));$("ocalm").textContent=__L("Animations réduites : ","Reduced motion: ")+(PREF.calm?__L("oui","on"):__L("non","off"));$("olang").textContent="Language : "+(LANG==="fr"?"Français":"English")}
+$("guest").onclick=function(e){e.stopPropagation();var g=S.jg;if(!g.n||g.until<Date.now())return;var r=cps()*60*(1+.3*S.jt)+500,sb=Math.ceil(5+subs()*.01);gain(r);S.vs+=sb;S.ni++;toast(__L("Interview de "+g.n+" : +"+fmt(r)+" € et +"+sb+__L(" abonnés"," subscribers"),"Interview with "+g.n+": +"+fmt(r)+" € and +"+sb+" subscribers"));g.n="";this.style.display="none";upd();save()};
+ACH.push([__L("Journaliste","Reporter"),__L("Ouvrir le Journal télévisé","Open the News show"),function(){return S.jt>=1}],[__L("Invité vedette","Star guest"),__L("Interviewer 5 invités","Interview 5 guests"),function(){return S.ni>=5}]);
+
+load();build();build2();build3();initAds();
+try{if(!T)throw 0;build3D()}catch(e){$("stage").insertAdjacentHTML("beforeend",'<p style="position:absolute;top:90px;left:0;right:0;text-align:center;color:#d8d2f2;padding:0 20px">'+__L('La vue 3D n’est pas disponible sur cet appareil, mais le jeu fonctionne.','3D view is not available on this device, but the game still works.')+'</p>')}
 if(S.ch<0)$("pick").style.display="flex";else maybeGuide();
 var away=Math.min(3600*(1+S.tl[2]),Math.max(0,(Date.now()-S.t)/1000));
-if(away>30&&cps()>0){var off=cps()*away*(.5+.1*S.as[2]);gain(off);toast("Pendant ton absence : +"+fmt(off)+" €")}
+if(away>30&&cps()>0){var off=cps()*away*(.5+.1*S.as[2]);gain(off);toast(__L("Pendant ton absence : +","While you were away: +")+fmt(off)+" €")}
 upd();var last=Date.now(),sv=0;
-setInterval(function(){var n=Date.now(),dt=(n-last)/1000;last=n;S.ph+=dt;if(!S.tr.next)S.tr.next=n+60000;if(n>S.tr.next){S.tr.i=Math.floor(Math.random()*7);S.tr.until=n+180000;S.tr.next=n+420000;toast("📈 Tendance : "+EQ[S.tr.i].n+" ×3 pendant 3 min")}gain(cps()*dt);upd();if(++sv>=50){sv=0;save()}},100);
+setInterval(function(){var n=Date.now(),dt=(n-last)/1000;last=n;S.ph+=dt;guestTick(n);evTick(n);if(!S.tr.next)S.tr.next=n+60000;if(n>S.tr.next){S.tr.i=Math.floor(Math.random()*7);S.tr.until=n+180000;S.tr.next=n+420000;toast(__L("📈 Tendance : ","📈 Trend: ")+EQ[S.tr.i].n+__L(" ×3 pendant 3 min"," ×3 for 3 min"))}if(dt>120){var ef=Math.min(dt,3600*(1+S.tl[2])),of=cps()*ef*(.5+.1*S.as[2]);if(of>0){gain(of);toast(__L("Pendant ton absence : +","While you were away: +")+fmt(of)+" €")}}else gain(cps()*dt);if(!document.hidden)upd();if(++sv>=50){sv=0;save()}},100);
 setInterval(function(){if(S.as[0]>0){gain(clickVal()*S.as[0]);S.clicks+=S.as[0];act[view]=Math.max(act[view],.5)}},1000);
-document.addEventListener("visibilitychange",function(){if(document.hidden)save()});window.addEventListener("pagehide",save);window.addEventListener("beforeunload",save);try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist()}catch(e){}
+document.addEventListener("visibilitychange",function(){if(document.hidden)save();else upd()});window.addEventListener("pagehide",save);window.addEventListener("beforeunload",save);try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist()}catch(e){}
 schedule();setTimeout(spawn,20000);
+/* qualité auto : si l’écran rame deux fois de suite, on baisse la netteté 3D (plus fluide, moins de chauffe) */
+(function(){var n=0,t0=performance.now(),slow=0;function f(t){n++;if(t-t0>=2500){var fps=n*1000/(t-t0);n=0;t0=t;try{if(!document.hidden&&typeof R!=="undefined"&&R&&R.getPixelRatio&&R.getPixelRatio()>1){slow=fps<26?slow+1:0;if(slow>=2){R.setPixelRatio(1);resize();slow=0}}}catch(e){}}requestAnimationFrame(f)}requestAnimationFrame(f)})();
 </script>
 <script>if('serviceWorker' in navigator){var had=!!navigator.serviceWorker.controller;navigator.serviceWorker.addEventListener('controllerchange',function(){if(had){try{save()}catch(e){}location.reload()}});window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){})})}</script>
 </body>

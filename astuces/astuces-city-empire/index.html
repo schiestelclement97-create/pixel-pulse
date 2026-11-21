@@ -28,7 +28,7 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="stylesheet" href="../../style.css?v=05dfc5f7">
+<link rel="stylesheet" href="../../style.css?v=634fbeb1">
 <meta name="google-adsense-account" content="ca-pub-8151486169178097">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8151486169178097" crossorigin="anonymous"></script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "City Empire : 12 astuces pour passer du village à la mégapole", "description": "Routes, zones, électricité, missions et recherche : les bons réflexes pour faire grandir ta ville sans tomber dans le rouge.", "inLanguage": "fr", "image": "https://playpixelpulsing.fr/img/og/city-empire.png", "datePublished": "2026-11-15", "dateModified": "2026-11-15", "author": {"@type": "Organization", "name": "Pixel Pulse", "url": "https://playpixelpulsing.fr/", "logo": "https://playpixelpulsing.fr/img/icon-512.png"}, "publisher": {"@type": "Organization", "name": "Pixel Pulse", "url": "https://playpixelpulsing.fr/", "logo": "https://playpixelpulsing.fr/img/icon-512.png"}, "mainEntityOfPage": "https://playpixelpulsing.fr/astuces/astuces-city-empire/", "about": {"@type": "VideoGame", "name": "City Empire", "url": "https://playpixelpulsing.fr/city-empire/"}}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://playpixelpulsing.fr/"}, {"@type": "ListItem", "position": 2, "name": "Astuces", "item": "https://playpixelpulsing.fr/astuces/"}, {"@type": "ListItem", "position": 3, "name": "City Empire : 12 astuces pour passer du village à la mégapole", "item": "https://playpixelpulsing.fr/astuces/astuces-city-empire/"}]}</script>
@@ -131,6 +131,13 @@
 </div></div>
 <script>
 (function(){
+var df=document.getElementById('defi');
+if(df){try{var D=JSON.parse(df.getAttribute('data-d')),G=JSON.parse(df.getAttribute('data-g')),now=new Date(),day=Math.floor((Date.UTC(now.getFullYear(),now.getMonth(),now.getDate()))/864e5),c=D[day%D.length],g=G[c[0]];
+ if(g){document.getElementById('defi-game').textContent=g[0];document.getElementById('defi-t').textContent=c[1];document.getElementById('defi-img').src='/img/jeux/'+c[0]+'-400.webp';var go=document.getElementById('defi-go');go.href=g[2]||g[1];go.setAttribute('data-slug',c[0]);
+ try{document.getElementById('defi-date').textContent='· '+now.toLocaleDateString(document.documentElement.lang,{weekday:'long',day:'numeric',month:'long'});}catch(e){}}
+ document.getElementById('surprise').addEventListener('click',function(){var last='';try{last=(JSON.parse(localStorage.getItem('pp_recent')||'[]')[0]||{}).s||''}catch(e){}
+  var ks=Object.keys(G).filter(function(k){return k!==last&&G[k][2]}),k=ks[Math.floor(Math.random()*ks.length)];location.href=G[k][1];});
+}catch(e){}}
 var T={"copied": "Lien copié !", "copy": "Copier le lien", "resume": "Continuer", "votes": "votes", "vote1": "vote", "thanks": "Merci pour ta note !", "no_votes": "Sois le premier à noter ce jeu"};
 var box=document.getElementById('soon'),nm=document.getElementById('soon-name'),cl=document.getElementById('soon-close');
 function show(n){if(!box)return;nm.textContent=n;box.hidden=false;cl.focus();}

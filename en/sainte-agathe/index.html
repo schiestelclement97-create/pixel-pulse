@@ -28,7 +28,7 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="stylesheet" href="../../style.css?v=05dfc5f7">
+<link rel="stylesheet" href="../../style.css?v=634fbeb1">
 <meta name="google-adsense-account" content="ca-pub-8151486169178097">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8151486169178097" crossorigin="anonymous"></script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Sainte-Agathe : Hôpital Hanté", "url": "https://playpixelpulsing.fr/en/sainte-agathe/", "description": "A first-person horror game: find the 5 fuses, restart the generator and escape Sainte-Agathe hospital before the monsters find you. November 2026. On a dare, you sneak into Sainte-Agathe psychiatric hospital, closed in 1987 after 43 patients vanished. The door slams shut behind you. By itself. The only way out: the courtyard gate, locked by electricity.", "image": ["https://playpixelpulsing.fr/img/og/sainte-agathe.png", "https://playpixelpulsing.fr/img/captures/sainte-agathe-1.webp", "https://playpixelpulsing.fr/img/captures/sainte-agathe-2.webp", "https://playpixelpulsing.fr/img/captures/sainte-agathe-3.webp"], "genre": ["Horror", "Survival"], "gamePlatform": ["Web browser", "PC", "Mobile"], "applicationCategory": "Game", "operatingSystem": "Web", "inLanguage": "en", "playMode": "SinglePlayer", "isAccessibleForFree": true, "keywords": "free horror game, browser horror game, online horror game, hospital escape horror, scary game", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "EUR", "availability": "https://schema.org/InStock", "url": "https://playpixelpulsing.fr/jouer/sainte-agathe/index.html?lang=en"}, "author": {"@type": "Organization", "name": "Pixel Pulse", "url": "https://playpixelpulsing.fr/", "logo": "https://playpixelpulsing.fr/img/icon-512.png"}, "publisher": {"@type": "Organization", "name": "Pixel Pulse", "url": "https://playpixelpulsing.fr/", "logo": "https://playpixelpulsing.fr/img/icon-512.png"}}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://playpixelpulsing.fr/en/"}, {"@type": "ListItem", "position": 2, "name": "Games", "item": "https://playpixelpulsing.fr/en/#jeux"}, {"@type": "ListItem", "position": 3, "name": "Sainte-Agathe : Hôpital Hanté", "item": "https://playpixelpulsing.fr/en/sainte-agathe/"}]}</script>
@@ -131,6 +131,13 @@ new IntersectionObserver(function(x){b.hidden=x[0].isIntersecting||x[0].bounding
 </div></div>
 <script>
 (function(){
+var df=document.getElementById('defi');
+if(df){try{var D=JSON.parse(df.getAttribute('data-d')),G=JSON.parse(df.getAttribute('data-g')),now=new Date(),day=Math.floor((Date.UTC(now.getFullYear(),now.getMonth(),now.getDate()))/864e5),c=D[day%D.length],g=G[c[0]];
+ if(g){document.getElementById('defi-game').textContent=g[0];document.getElementById('defi-t').textContent=c[1];document.getElementById('defi-img').src='/img/jeux/'+c[0]+'-400.webp';var go=document.getElementById('defi-go');go.href=g[2]||g[1];go.setAttribute('data-slug',c[0]);
+ try{document.getElementById('defi-date').textContent='· '+now.toLocaleDateString(document.documentElement.lang,{weekday:'long',day:'numeric',month:'long'});}catch(e){}}
+ document.getElementById('surprise').addEventListener('click',function(){var last='';try{last=(JSON.parse(localStorage.getItem('pp_recent')||'[]')[0]||{}).s||''}catch(e){}
+  var ks=Object.keys(G).filter(function(k){return k!==last&&G[k][2]}),k=ks[Math.floor(Math.random()*ks.length)];location.href=G[k][1];});
+}catch(e){}}
 var T={"copied": "Link copied!", "copy": "Copy link", "resume": "Continue", "votes": "votes", "vote1": "vote", "thanks": "Thanks for rating!", "no_votes": "Be the first to rate this game"};
 var box=document.getElementById('soon'),nm=document.getElementById('soon-name'),cl=document.getElementById('soon-close');
 function show(n){if(!box)return;nm.textContent=n;box.hidden=false;cl.focus();}

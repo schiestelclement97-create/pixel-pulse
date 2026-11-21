@@ -39,7 +39,7 @@ const sty=document.createElement('style');sty.textContent=css;document.head.appe
 const Z=window.Z={},st=Z.st={get:k=>{try{return localStorage.getItem(k)}catch(e){return null}},set:(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}},del:k=>{try{localStorage.removeItem(k)}catch(e){}}};
 Z.cfg=CFG;
 /* ---------- langue ---------- */
-Z.L=CFG.cg?'en':(st.get('zb_lang')||((navigator.language||'').slice(0,2)==='fr'?'fr':'en'));
+Z.L=CFG.cg?'en':(st.get('zb_lang')||((/[?&]lang=(fr|en)\b/.exec(location.search)||[])[1])||((navigator.language||'').slice(0,2)==='fr'?'fr':'en'));
 Z.t=(a,b)=>Z.L==='fr'?a:b;
 Z.setLang=l=>{Z.L=l;st.set('zb_lang',l)};
 Z.name=()=>{let n=st.get('zb_nm');if(!n){n='Zen'+(100+(Math.random()*900|0));st.set('zb_nm',n)}return n};
@@ -641,4 +641,5 @@ oAdd('beforeinstallprompt',e=>{e.preventDefault();dp=e;if(!cur)bar()});
 if(CG){try{window.CrazyGames&&CrazyGames.SDK&&CrazyGames.SDK.init().catch(()=>{})}catch(e){}}
 else{try{if('serviceWorker' in navigator&&/^https?:/.test(location.protocol))navigator.serviceWorker.register('sw.js').catch(()=>{})}catch(e){}}
 dayGift();setInterval(()=>{if(!cur&&!document.querySelector('.zov'))bar()},30000);
-</script></body></html>
+</script><script src="/jouer/pp-more.js" defer></script>
+</body></html>

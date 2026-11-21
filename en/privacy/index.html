@@ -28,7 +28,7 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="stylesheet" href="../../style.css?v=634fbeb1">
+<link rel="stylesheet" href="../../style.css?v=729711b8">
 <meta name="google-adsense-account" content="ca-pub-8151486169178097">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8151486169178097" crossorigin="anonymous"></script>
 
@@ -88,7 +88,12 @@ if(df){try{var D=JSON.parse(df.getAttribute('data-d')),G=JSON.parse(df.getAttrib
  document.getElementById('surprise').addEventListener('click',function(){var last='';try{last=(JSON.parse(localStorage.getItem('pp_recent')||'[]')[0]||{}).s||''}catch(e){}
   var ks=Object.keys(G).filter(function(k){return k!==last&&G[k][2]}),k=ks[Math.floor(Math.random()*ks.length)];location.href=G[k][1];});
 }catch(e){}}
-var T={"copied": "Link copied!", "copy": "Copy link", "resume": "Continue", "votes": "votes", "vote1": "vote", "thanks": "Thanks for rating!", "no_votes": "Be the first to rate this game"};
+var T={"copied": "Link copied!", "copy": "Copy link", "resume": "Continue", "votes": "votes", "vote1": "vote", "thanks": "Thanks for rating!", "no_votes": "Be the first to rate this game", "lang": "en", "cat": {"pulse-forge": ["Pulse Forge", "/en/pulse-forge/", "Dig, prop, become the king of the mine.", "tycoon"], "sainte-agathe": ["Sainte-Agathe : Hôpital Hanté", "/en/sainte-agathe/", "Escape the psychiatric hospital… if they let you leave.", "horreur"], "city-empire": ["City Empire", "/en/city-empire/", "Build your city, from a small village to a megacity.", "tycoon"], "pulse-studio-tycoon": ["Pulse Studio Tycoon", "/en/pulse-studio-tycoon/", "Build your streaming empire in 3D.", "tycoon"], "tv-empire-tycoon": ["TV Empire Tycoon", "/en/tv-empire-tycoon/", "Turn a small TV newsroom into a television empire.", "tycoon"], "zen-games": ["Zen Games", "/en/zen-games/", "4 zen puzzles in one peaceful garden.", "zen"]}, "back1": "Back from", "back2": "Fancy a change? Try", "backgo": "Discover"};
+try{var pf=JSON.parse(sessionStorage.getItem('pp_from')||'null');sessionStorage.removeItem('pp_from');
+ if(pf&&T.cat[pf.s]&&Date.now()-pf.t<6*3600e3){var me=pf.s,rc=[];try{rc=JSON.parse(localStorage.getItem('pp_recent')||'[]').map(function(x){return x.s})}catch(e){}
+  var ks=Object.keys(T.cat).filter(function(k){return k!==me});ks.sort(function(a,b){var fa=T.cat[a][3]===T.cat[me][3]?1:0,fb=T.cat[b][3]===T.cat[me][3]?1:0,ra=rc.indexOf(a)<0?0:1,rb=rc.indexOf(b)<0?0:1;return (fa-fb)||(ra-rb)||(Math.random()-.5)});
+  var y=ks[0],g=T.cat[y],m=document.querySelector('main');
+  if(y&&m){var bs=document.createElement('div');bs.className='wrap';bs.innerHTML='<div class="backstrip"><img src="../../img/jeux/'+y+'-400.webp" width="88" height="55" alt=""><p><small>'+T.back1+' '+T.cat[me][0]+'</small><b>'+T.back2+' '+g[0]+'</b><span>'+g[2]+'</span></p><a class="btn btn-play" href="'+g[1]+'">'+T.backgo+'</a></div>';m.insertBefore(bs,m.firstChild);}}}catch(e){}
 var box=document.getElementById('soon'),nm=document.getElementById('soon-name'),cl=document.getElementById('soon-close');
 function show(n){if(!box)return;nm.textContent=n;box.hidden=false;cl.focus();}
 function hide(){if(box)box.hidden=true;}

@@ -186,5 +186,6 @@ if (matchMedia('(pointer: coarse)').matches) document.body.classList.add('coarse
 document.addEventListener('contextmenu', (e) => e.preventDefault());
 document.addEventListener('mousedown', (e) => { if (e.button === 2 && document.pointerLockElement) dispatchEvent(new KeyboardEvent('keydown', { key: 'r', code: 'KeyR' })); });
 </script>
+<script src="/jouer/pp-more.js" defer></script>
 </body>
 </html>

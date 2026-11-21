@@ -826,5 +826,6 @@ schedule();setTimeout(spawn,20000);
 (function(){var n=0,t0=performance.now(),slow=0;function f(t){n++;if(t-t0>=2500){var fps=n*1000/(t-t0);n=0;t0=t;try{if(!document.hidden&&typeof R!=="undefined"&&R&&R.getPixelRatio&&R.getPixelRatio()>1){slow=fps<26?slow+1:0;if(slow>=2){R.setPixelRatio(1);resize();slow=0}}}catch(e){}}requestAnimationFrame(f)}requestAnimationFrame(f)})();
 </script>
 <script>if('serviceWorker' in navigator){var had=!!navigator.serviceWorker.controller;navigator.serviceWorker.addEventListener('controllerchange',function(){if(had){try{save()}catch(e){}location.reload()}});window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){})})}</script>
+<script src="/jouer/pp-more.js" defer></script>
 </body>
 </html>

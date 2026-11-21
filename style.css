@@ -324,6 +324,13 @@ a[aria-busy="true"]{opacity:.7;cursor:progress}
 @media (max-width:820px){.duo-grid{grid-template-columns:1fr}}
 
 @media (min-width:961px){#grille{grid-template-columns:repeat(3,minmax(0,1fr))}}
+/* retour d'un jeu */
+.backstrip{display:flex;align-items:center;gap:14px;margin-top:16px;background:var(--surface);border-radius:16px;padding:10px 12px;box-shadow:0 1px 0 var(--line),0 10px 30px rgb(var(--shadow) / .08);border:2px solid color-mix(in srgb,var(--mint) 40%,transparent);animation:bsin .4s ease-out}
+.backstrip img{width:88px;height:55px;object-fit:cover;border-radius:10px;flex:none}
+.backstrip p{flex:1;min-width:0;display:grid;gap:1px;margin:0}.backstrip small{color:var(--muted);font-weight:700}.backstrip span{color:var(--muted);font-size:.9rem}
+@keyframes bsin{from{opacity:0;transform:translateY(-6px)}}
+@media (prefers-reduced-motion:reduce){.backstrip{animation:none}}
+@media (max-width:520px){.backstrip img{width:64px;height:40px}.backstrip span{display:none}}
 /* défi du jour */
 .defi{display:grid;grid-template-columns:160px minmax(0,1fr) auto;gap:20px;align-items:center;background:var(--surface);border-radius:var(--radius);padding:16px 20px 16px 16px;box-shadow:0 1px 0 var(--line),0 14px 40px rgb(var(--shadow) / .08);border:2px solid color-mix(in srgb,var(--pulse) 35%,transparent)}
 .defi img{width:160px;height:100px;object-fit:cover;border-radius:12px}

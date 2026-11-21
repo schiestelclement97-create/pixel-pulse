@@ -68,7 +68,7 @@
 <section class="section" aria-labelledby="shots-h" style="padding-top:0"><h2 id="shots-h" style="margin-bottom:18px">Screenshots</h2><div class="gallery"><figure><a href="../../img/captures/pulse-forge-1.webp" target="_blank" rel="noopener"><img src="../../img/captures/pulse-forge-1-640.webp" srcset="../../img/captures/pulse-forge-1-640.webp 640w, ../../img/captures/pulse-forge-1.webp 1280w" sizes="(max-width:600px) 100vw, 560px" width="780" height="1688" alt="The surface, the elevator and the first tunnels" loading="lazy" decoding="async"></a><figcaption>The surface, the elevator and the first tunnels</figcaption></figure><figure><a href="../../img/captures/pulse-forge-2.webp" target="_blank" rel="noopener"><img src="../../img/captures/pulse-forge-2-640.webp" srcset="../../img/captures/pulse-forge-2-640.webp 640w, ../../img/captures/pulse-forge-2.webp 1280w" sizes="(max-width:600px) 100vw, 560px" width="780" height="1688" alt="Deep tunnels: gold, ruby and obsidian" loading="lazy" decoding="async"></a><figcaption>Deep tunnels: gold, ruby and obsidian</figcaption></figure></div></section>
 <section class="game-cols section" style="padding-top:0">
 <div class="prose"><h2>About the game</h2><p>In Pulse Forge you take over a small coal mine. Your miners cut the ore, the elevator brings it up and the truck sells it. Upgrade every link of the chain, hire bosses so it all runs by itself, then open new seams: copper, silver, gold, ruby, obsidian, meteorite, down to the Pulse Core.</p><p>But the deeper you dig, the harder the rock pushes. Set props before the pressure brings a tunnel down. Every day, a rich seam, orders to deliver and dawn events change how you play. And when the mine hits bottom, start the retreat: pull out your own props for a fortune while staying ahead of the collapse front.</p>
-<ul class="tags" aria-label="Highlights"><li>8 seams to open</li><li>Bosses and offline earnings</li><li>Daily seam and orders</li><li>Retreat mode and shop</li></ul></div>
+<ul class="tags" aria-label="Highlights"><li>8 seams to open</li><li>Bosses and offline earnings</li><li>Daily seam and orders</li><li>Retreat mode and shop</li></ul><div class="guide-link"><p>Need help? Our tips to get started and go further in Pulse Forge.</p><a class="btn btn-ghost" href="../../en/tips/pulse-forge-tips/index.html">Read the tips</a></div></div>
 <div><h2>How to play</h2><ol class="steps"><li><span>Tap the miner to fill the cart, then the elevator and the truck.</span></li><li><span>Upgrade tunnels, the elevator and selling with the green button.</span></li><li><span>Hire bosses: the mine keeps running while you are away.</span></li><li><span>Watch the pressure and set props to avoid collapses.</span></li></ol></div>
 </section>
 <section class="section" aria-labelledby="autres" style="padding-top:0">
@@ -116,13 +116,7 @@ new IntersectionObserver(function(x){b.hidden=x[0].isIntersecting||x[0].bounding
 </div>
 <div class="wrap copy">© 2026 Pixel Pulse. All rights reserved.</div>
 </footer>
-<div class="soon" id="soon" hidden>
-<div class="soon-box" role="dialog" aria-modal="true" aria-labelledby="soon-t">
-<p class="eyebrow">Coming soon</p>
-<h2 id="soon-t"><span id="soon-name">This game</span> is coming very soon</h2>
-<p>It is being installed on Pixel Pulse. Come back in a few days! Meanwhile, the other games are ready to play.</p>
-<div class="soon-actions"><a class="btn btn-play" href="../../en/index.html#jeux"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M2 1h3v1h2v1h2v1h2v1h1v4h-1v1H9v1H7v1H5v1H2z" fill="currentColor"/></svg>All games</a><button class="btn btn-ghost" type="button" id="soon-close">Close</button></div>
-</div></div>
+
 <div class="soon" id="appdlg" hidden>
 <div class="soon-box app-box" role="dialog" aria-modal="true" aria-labelledby="app-t">
 <button type="button" class="app-x" id="app-close" aria-label="Close">×</button>
@@ -139,11 +133,11 @@ new IntersectionObserver(function(x){b.hidden=x[0].isIntersecting||x[0].bounding
 (function(){
 var T={"copied": "Link copied!", "copy": "Copy link", "resume": "Continue", "votes": "votes", "vote1": "vote", "thanks": "Thanks for rating!", "no_votes": "Be the first to rate this game"};
 var box=document.getElementById('soon'),nm=document.getElementById('soon-name'),cl=document.getElementById('soon-close');
-function show(n){nm.textContent=n;box.hidden=false;cl.focus();}
-function hide(){box.hidden=true;}
-cl.addEventListener('click',hide);
+function show(n){if(!box)return;nm.textContent=n;box.hidden=false;cl.focus();}
+function hide(){if(box)box.hidden=true;}
+if(box){cl.addEventListener('click',hide);
 box.addEventListener('click',function(ev){if(ev.target===box)hide();});
-document.addEventListener('keydown',function(ev){if(ev.key==='Escape')hide();});
+document.addEventListener('keydown',function(ev){if(ev.key==='Escape')hide();});}
 function remember(slug){try{var k='pp_recent',a=JSON.parse(localStorage.getItem(k)||'[]').filter(function(x){return x.s!==slug});a.unshift({s:slug,t:Date.now()});localStorage.setItem(k,JSON.stringify(a.slice(0,4)));}catch(e){}}
 document.addEventListener('click',function(ev){
   var a=ev.target.closest&&ev.target.closest('a[data-game]'); if(!a)return;

@@ -125,7 +125,7 @@
 <div class="duo-box"><div class="duo-head"><h2 id="news-h">News</h2><a class="more" href="../en/news/index.html">All news</a></div>
 <ol class="mini"><li><a href="../en/pulse-forge/index.html"><time datetime="2026-11-21">November 21, 2026</time><b>New game: Pulse Forge ⛏️</b></a></li><li><a href="../en/pulse-studio-tycoon/index.html"><time datetime="2026-11-16">November 16, 2026</time><b>Pulse Studio Tycoon 3.0: the TV News show</b></a></li><li><a href="../en/city-empire/index.html"><time datetime="2026-11-16">November 16, 2026</time><b>City Empire and Zen Games updated</b></a></li><li><a href="../en/news/index.html"><time datetime="2026-11-15">November 15, 2026</time><b>New home page and an app to install 📲</b></a></li></ol></div>
 <div class="duo-box"><div class="duo-head"><h2 id="tips-h">Tips & guides</h2><a class="more" href="../en/tips/index.html">All tips</a></div>
-<ul class="mini"><li><a href="../en/tips/sainte-agathe-tips/index.html"><img src="../img/jeux/sainte-agathe-400.webp" width="72" height="45" alt="" loading="lazy"><span><small>Sainte-Agathe : Hôpital Hanté</small><b>Sainte-Agathe: tips to survive and escape the haunted hospital</b></span></a></li><li><a href="../en/tips/city-empire-tips/index.html"><img src="../img/jeux/city-empire-400.webp" width="72" height="45" alt="" loading="lazy"><span><small>City Empire</small><b>City Empire: 12 tips to grow from village to megacity</b></span></a></li><li><a href="../en/tips/tv-empire-tycoon-tips/index.html"><img src="../img/jeux/tv-empire-tycoon-400.webp" width="72" height="45" alt="" loading="lazy"><span><small>TV Empire Tycoon</small><b>TV Empire Tycoon: the guide to building your TV empire</b></span></a></li><li><a href="../en/tips/pulse-studio-tycoon-tips/index.html"><img src="../img/jeux/pulse-studio-tycoon-400.webp" width="72" height="45" alt="" loading="lazy"><span><small>Pulse Studio Tycoon</small><b>Pulse Studio Tycoon: tips to become the top streamer</b></span></a></li></ul></div>
+<ul class="mini"><li><a href="../en/tips/pulse-forge-tips/index.html"><img src="../img/jeux/pulse-forge-400.webp" width="72" height="45" alt="" loading="lazy"><span><small>Pulse Forge</small><b>Pulse Forge: the guide to building the richest mine</b></span></a></li><li><a href="../en/tips/sainte-agathe-tips/index.html"><img src="../img/jeux/sainte-agathe-400.webp" width="72" height="45" alt="" loading="lazy"><span><small>Sainte-Agathe : Hôpital Hanté</small><b>Sainte-Agathe: tips to survive and escape the haunted hospital</b></span></a></li><li><a href="../en/tips/city-empire-tips/index.html"><img src="../img/jeux/city-empire-400.webp" width="72" height="45" alt="" loading="lazy"><span><small>City Empire</small><b>City Empire: 12 tips to grow from village to megacity</b></span></a></li><li><a href="../en/tips/tv-empire-tycoon-tips/index.html"><img src="../img/jeux/tv-empire-tycoon-400.webp" width="72" height="45" alt="" loading="lazy"><span><small>TV Empire Tycoon</small><b>TV Empire Tycoon: the guide to building your TV empire</b></span></a></li></ul></div>
 </div></section>
 
 <section class="section" aria-labelledby="faq"><div class="wrap">
@@ -146,13 +146,7 @@
 </div>
 <div class="wrap copy">© 2026 Pixel Pulse. All rights reserved.</div>
 </footer>
-<div class="soon" id="soon" hidden>
-<div class="soon-box" role="dialog" aria-modal="true" aria-labelledby="soon-t">
-<p class="eyebrow">Coming soon</p>
-<h2 id="soon-t"><span id="soon-name">This game</span> is coming very soon</h2>
-<p>It is being installed on Pixel Pulse. Come back in a few days! Meanwhile, the other games are ready to play.</p>
-<div class="soon-actions"><a class="btn btn-play" href="../en/index.html#jeux"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M2 1h3v1h2v1h2v1h2v1h1v4h-1v1H9v1H7v1H5v1H2z" fill="currentColor"/></svg>All games</a><button class="btn btn-ghost" type="button" id="soon-close">Close</button></div>
-</div></div>
+
 <div class="soon" id="appdlg" hidden>
 <div class="soon-box app-box" role="dialog" aria-modal="true" aria-labelledby="app-t">
 <button type="button" class="app-x" id="app-close" aria-label="Close">×</button>
@@ -169,11 +163,11 @@
 (function(){
 var T={"copied": "Link copied!", "copy": "Copy link", "resume": "Continue", "votes": "votes", "vote1": "vote", "thanks": "Thanks for rating!", "no_votes": "Be the first to rate this game"};
 var box=document.getElementById('soon'),nm=document.getElementById('soon-name'),cl=document.getElementById('soon-close');
-function show(n){nm.textContent=n;box.hidden=false;cl.focus();}
-function hide(){box.hidden=true;}
-cl.addEventListener('click',hide);
+function show(n){if(!box)return;nm.textContent=n;box.hidden=false;cl.focus();}
+function hide(){if(box)box.hidden=true;}
+if(box){cl.addEventListener('click',hide);
 box.addEventListener('click',function(ev){if(ev.target===box)hide();});
-document.addEventListener('keydown',function(ev){if(ev.key==='Escape')hide();});
+document.addEventListener('keydown',function(ev){if(ev.key==='Escape')hide();});}
 function remember(slug){try{var k='pp_recent',a=JSON.parse(localStorage.getItem(k)||'[]').filter(function(x){return x.s!==slug});a.unshift({s:slug,t:Date.now()});localStorage.setItem(k,JSON.stringify(a.slice(0,4)));}catch(e){}}
 document.addEventListener('click',function(ev){
   var a=ev.target.closest&&ev.target.closest('a[data-game]'); if(!a)return;

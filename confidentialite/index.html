@@ -49,6 +49,8 @@
 <h2>Classements en ligne</h2><p>Si tu choisis un pseudo, ce pseudo et ton score sont envoyés à notre base de données (service Supabase, hébergée dans l'Union européenne) pour afficher les classements. Ne mets pas ton vrai nom ni d'information personnelle dans ton pseudo. Pour faire supprimer une entrée, écris-nous.</p>
 <h2>Notes des jeux</h2><p>Quand tu notes un jeu, ta note (1 à 5 étoiles) est enregistrée avec un identifiant anonyme tiré au hasard et gardé dans ton navigateur, pour qu'une seule note compte par appareil. Aucune autre information n'est envoyée (service Supabase, hébergé dans l'Union européenne).</p>
 <h2>Publicité</h2><p>Le site affiche des publicités Google AdSense, et certains jeux proposent de regarder une publicité en échange d'un bonus. Google et ses partenaires peuvent utiliser des cookies pour afficher et mesurer ces publicités. Lorsque la loi l'exige, ton consentement est demandé avant tout cookie publicitaire, et tu peux le retirer à tout moment.</p>
+<p>Des fournisseurs tiers, dont Google, utilisent des cookies pour diffuser des annonces en fonction de tes visites précédentes sur ce site ou sur d'autres sites. Grâce au cookie publicitaire, Google et ses partenaires peuvent adapter les annonces selon ta navigation. Tu peux désactiver la publicité personnalisée dans les <a href="https://adssettings.google.com" target="_blank" rel="noopener">paramètres des annonces Google</a>, ou désactiver les cookies de certains fournisseurs tiers sur <a href="https://www.aboutads.info/choices/" target="_blank" rel="noopener">aboutads.info</a>. Pour en savoir plus : <a href="https://policies.google.com/technologies/partner-sites?hl=fr" target="_blank" rel="noopener">comment Google utilise les données des sites qui utilisent ses services</a>.</p>
+<p>Dans l'Espace économique européen, au Royaume-Uni et en Suisse, une fenêtre de consentement certifiée par Google s'affiche à ta première visite. Tu peux revenir sur ton choix à tout moment avec le lien « Confidentialité » qui apparaît en bas de l'écran.</p>
 <h2>Hébergement</h2><p>Le site est hébergé par GitHub, Inc. (service GitHub Pages), 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, États-Unis, github.com. L'hébergeur enregistre des journaux techniques (adresse IP, date, page demandée) pour assurer la sécurité et le bon fonctionnement du service.</p>
 <h2>Tes droits</h2><p>Conformément au RGPD, tu peux demander l'accès, la rectification ou la suppression des données te concernant en écrivant à :</p><p class="mail">contact@playpixelpulsing.fr</p>
 <p>Tu peux aussi adresser une réclamation à la CNIL (cnil.fr).</p></div></div></main>
@@ -64,13 +66,7 @@
 </div>
 <div class="wrap copy">© 2026 Pixel Pulse. Tous droits réservés.</div>
 </footer>
-<div class="soon" id="soon" hidden>
-<div class="soon-box" role="dialog" aria-modal="true" aria-labelledby="soon-t">
-<p class="eyebrow">Bientôt disponible</p>
-<h2 id="soon-t"><span id="soon-name">Ce jeu</span> arrive très bientôt</h2>
-<p>Il est en train d'être installé sur Pixel Pulse. Reviens dans quelques jours ! En attendant, les autres jeux sont déjà jouables.</p>
-<div class="soon-actions"><a class="btn btn-play" href="../index.html#jeux"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M2 1h3v1h2v1h2v1h2v1h1v4h-1v1H9v1H7v1H5v1H2z" fill="currentColor"/></svg>Tous les jeux</a><button class="btn btn-ghost" type="button" id="soon-close">Fermer</button></div>
-</div></div>
+
 <div class="soon" id="appdlg" hidden>
 <div class="soon-box app-box" role="dialog" aria-modal="true" aria-labelledby="app-t">
 <button type="button" class="app-x" id="app-close" aria-label="Fermer">×</button>
@@ -87,11 +83,11 @@
 (function(){
 var T={"copied": "Lien copié !", "copy": "Copier le lien", "resume": "Continuer", "votes": "votes", "vote1": "vote", "thanks": "Merci pour ta note !", "no_votes": "Sois le premier à noter ce jeu"};
 var box=document.getElementById('soon'),nm=document.getElementById('soon-name'),cl=document.getElementById('soon-close');
-function show(n){nm.textContent=n;box.hidden=false;cl.focus();}
-function hide(){box.hidden=true;}
-cl.addEventListener('click',hide);
+function show(n){if(!box)return;nm.textContent=n;box.hidden=false;cl.focus();}
+function hide(){if(box)box.hidden=true;}
+if(box){cl.addEventListener('click',hide);
 box.addEventListener('click',function(ev){if(ev.target===box)hide();});
-document.addEventListener('keydown',function(ev){if(ev.key==='Escape')hide();});
+document.addEventListener('keydown',function(ev){if(ev.key==='Escape')hide();});}
 function remember(slug){try{var k='pp_recent',a=JSON.parse(localStorage.getItem(k)||'[]').filter(function(x){return x.s!==slug});a.unshift({s:slug,t:Date.now()});localStorage.setItem(k,JSON.stringify(a.slice(0,4)));}catch(e){}}
 document.addEventListener('click',function(ev){
   var a=ev.target.closest&&ev.target.closest('a[data-game]'); if(!a)return;

@@ -328,6 +328,24 @@ a[aria-busy="true"]{opacity:.7;cursor:progress}
 .gallery.portrait{grid-template-columns:repeat(auto-fill,minmax(150px,260px));justify-content:start}
 .gallery.portrait img{aspect-ratio:auto;max-height:560px;object-fit:contain;background:#120c08}
 @media (max-width:600px){.gallery.portrait{grid-template-columns:1fr 1fr}}
+/* pages jeu : commandes, FAQ, historique */
+.gm-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(24px,4vw,48px)}
+.gm-grid h2{font-size:1.4rem;margin-bottom:14px}
+.ctrls{display:grid;gap:12px}.ctrl{background:var(--surface);border-radius:14px;padding:14px 16px;box-shadow:0 1px 0 var(--line)}
+.ctrl h3{font-size:1rem}.ctrl p{color:var(--muted);margin-top:4px}
+.note{margin:0;padding:16px 18px;border-left:4px solid var(--pulse);background:var(--surface);border-radius:0 14px 14px 0;font-style:italic;color:var(--ink)}
+.note-post{display:block;margin-top:12px;color:var(--muted);text-decoration:none}.note-post b{color:var(--pulse-ink);text-decoration:underline;text-underline-offset:3px}
+.hist{list-style:none;margin:0;padding:0 0 0 16px;display:grid;gap:14px;border-left:2px solid var(--line)}
+.hist li{display:grid;gap:2px}.hist time{font-weight:800;font-size:.8rem;color:var(--pulse-ink)}.hist span{color:var(--muted);font-size:.95rem}
+@media (max-width:820px){.gm-grid{grid-template-columns:1fr}}
+/* journal */
+.posts{display:grid;gap:22px;margin-top:28px}
+.post-it{display:grid;grid-template-columns:260px minmax(0,1fr);gap:20px;align-items:center;background:var(--surface);border-radius:var(--radius);padding:14px;box-shadow:0 1px 0 var(--line)}
+.post-it img{width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:12px}
+.post-it h2{font-size:1.3rem;margin:4px 0 6px}.post-it h2 a{text-decoration:none}.post-it h2 a:hover{text-decoration:underline}
+.post-it p{color:var(--muted)}
+.byline{margin-top:28px;color:var(--muted);font-style:italic}
+@media (max-width:640px){.post-it{grid-template-columns:1fr}}
 /* retour d'un jeu */
 .backstrip{display:flex;align-items:center;gap:14px;margin-top:16px;background:var(--surface);border-radius:16px;padding:10px 12px;box-shadow:0 1px 0 var(--line),0 10px 30px rgb(var(--shadow) / .08);border:2px solid color-mix(in srgb,var(--mint) 40%,transparent);animation:bsin .4s ease-out}
 .backstrip img{width:88px;height:55px;object-fit:cover;border-radius:10px;flex:none}
